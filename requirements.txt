@@ -1,0 +1,9 @@
+flask
+werkzeug
+gunicorn
+requests
+sqlalchemy
+Flask-SQLAlchemy
+Flask-WTF==0.8.4
+Flask-SuperAdmin
+psycopg2
