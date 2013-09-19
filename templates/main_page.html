@@ -1,5 +1,115 @@
 {% extends "base.html" %}
 
+{% block head %}
+<style>
+    .jumbotron {
+        /* Background image */
+        background: url({{ url_for('static', filename="img/header.jpg") }}) no-repeat;
+        background-position-x:50%;
+        height:412px;
+    }
+
+    .jumbotron h1 {
+        /* Text */
+        text-shadow: 3px 0 0 #000;
+        color:white;
+    }
+
+    .jumbotron .signup-btn {
+        margin-top: 150px;
+    }
+
+    h2 {
+        margin-bottom:20px;
+    }
+
+    h2 .item-num {
+        position: relative;
+        padding:12px 16px;
+        font-size:16pt;
+        border:2px solid black;
+        font-weight: bold;
+        border-radius: 25px;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block script_tags %}
+    <!-- holder.js generates gray placeholder images -->
+    <script src="{{ url_for('static',filename='lib/bootstrap/assets/js/holder.js') }}"></script>
+
+    <script src="{{ url_for('static',filename='js/main_page.js') }}"></script>
+{% endblock %}
+
 {% block body %}
-    <h1>Apollo!</h1>
+    <div data-scroll-img="top50" class="jumbotron">
+      <div class="container">
+        <h1>Take Control Of Your Data</h1>
+        <div class="signup-btn col-md-1 col-md-offset-11">
+            <a href="#" class="btn btn-lg btn-primary">Sign up</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <h2><span class="item-num">1</span> Connect Your Data Streams</h2>
+
+        <div class="row">
+            <div class="col-md-3">
+                <img data-src="holder.js/260x180" alt="...">
+            </div>
+            <div class="col-md-3 col-md-offset-5">
+                <h3>Thumbnail label</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar lacus mi, in eleifend tortor placerat ac. Vivamus vestibulum ipsum ut ligula facilisis pellentesque. Quisque vitae mauris ipsum. Etiam nec mauris tellus. In interdum, erat vitae rutrum fringilla, nisl ligula vulputate odio, eget adipiscing ligula enim auctor elit. Pellentesque iaculis dapibus nulla luctus placerat. Nullam at suscipit metus.
+                </p>
+            </div>
+        </div>
+
+        <h2><span class="item-num">2</span> Share With Researchers</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Thumbnail label</h3>
+                <p>
+                    In volutpat eros molestie, laoreet augue in, molestie nisi. Nulla facilisi. Nunc in lobortis nunc, ut iaculis orci. Donec eget nisl odio. Mauris vel eros nisi. Fusce bibendum pretium augue, nec ornare arcu consequat non. Vivamus sed eros condimentum, volutpat nisi in, fringilla mi. Praesent odio quam, pellentesque in orci commodo, fermentum vestibulum augue. Morbi venenatis felis purus, quis lobortis sapien vulputate nec.
+                </p>
+            </div>
+            <div class="col-md-3 col-md-offset-5">
+                <img data-src="holder.js/260x180" alt="...">
+            </div>
+        </div>
+
+        <h2><span class="item-num">3</span> Get Insights Tailored to You</h2>
+
+        <div class="row">
+            <div class="col-md-3">
+                <img data-src="holder.js/260x180" alt="...">
+            </div>
+            <div class="col-md-3 col-md-offset-5">
+                <h3>Thumbnail label</h3>
+                <p>
+                    In volutpat eros molestie, laoreet augue in, molestie nisi. Nulla facilisi. Nunc in lobortis nunc, ut iaculis orci. Donec eget nisl odio. Mauris vel eros nisi. Fusce bibendum pretium augue, nec ornare arcu consequat non.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div data-scroll-img="bottom50" class="jumbotron">
+      <div class="container">
+      </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center">
+                        Apollo: The Human Data Project © 2013 All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 {% endblock %}
