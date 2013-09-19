@@ -17,13 +17,23 @@
       <script src="{{ url_for('static', filename='assets/js/respond.min.js') }}"></script>
     <![endif]-->
 
+    <style>
+    .logo {
+      width:200px;
+    }
+
+    .sign-in-btns {
+      position: relative;
+      top:50px;
+    }
+    </style>
+
     {% block head %}
     
     {% endblock %}
   </head>
   <body>
-    <nav class="navbar navbar-default" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
+<!--     <nav class="navbar navbar-default" role="navigation">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
           <span class="sr-only">Toggle navigation</span>
@@ -36,10 +46,24 @@
         </a>
       </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
-      </div><!-- /.navbar-collapse -->
-    </nav>
+      </div>
+    </nav> -->
+    <div class="well">
+      <div class="row">
+        <div class="col-md-4">
+          <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
+        </div>
+        <div class="sign-in-btns col-md-2 col-md-offset-6">
+          <a href="#" class="btn btn-primary">
+            Sign up
+          </a>
+          <a href="#" class="btn btn-info">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
 
     {% block body %}
     {% endblock %}
