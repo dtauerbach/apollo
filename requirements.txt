@@ -3,6 +3,7 @@ werkzeug
 gunicorn
 requests
 sqlalchemy
+Flask-CSRF
 Flask-SQLAlchemy
 Flask-WTF==0.8.4
 Flask-SuperAdmin
