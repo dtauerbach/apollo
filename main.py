@@ -2,7 +2,7 @@ import logging, os, sys
 import config
 from flask import Flask
 from flask import render_template as _render_template
-from flask import request
+from flask import redirect, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
@@ -62,12 +62,16 @@ def create_user():
     user_datastore.create_user(email='me@paulsawaya.com', password='batman',confirmed_at=datetime.now())
     db.session.commit()
 
-# CSRF protection flaskext
-#csrf(app)
-
 @app.route('/')
 def main_page():
+    if current_user.is_authenticated():
+        return redirect(url_for('dashboard'))
     return render_template('main_page.html')
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)
