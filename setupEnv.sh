@@ -1,0 +1,1 @@
+export SESSION_SECRET_KEY='4bc479ed7fb04975985f4c77bf8a99cf'

@@ -17,13 +17,72 @@
       <script src="{{ url_for('static', filename='assets/js/respond.min.js') }}"></script>
     <![endif]-->
 
+    <style>
+    .logo {
+      width:200px;
+    }
+
+    .sign-in-btns {
+      position: relative;
+      top:50px;
+    }
+    </style>
+
     {% block head %}
     
     {% endblock %}
   </head>
   <body>
+<!--     <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          Apollo
+        </a>
+      </div>
+
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+      </div>
+    </nav> -->
+    <div class="well">
+      <div class="row">
+        <div class="col-md-4">
+          <a href="{{ url_for('main_page') }}">
+            <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
+          </a>
+        </div>
+        <div class="sign-in-btns col-md-2 col-md-offset-6">
+          <a data-toggle="modal" href="#signupModal" class="btn btn-primary">
+            Sign up
+          </a>
+          <a data-toggle="modal" href="#loginModal" class="btn btn-info">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+
     {% block body %}
     {% endblock %}
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center">
+                        Apollo: The Human Data Project © 2013 All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% include "partials/login_modals.html" %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ url_for('static', filename='lib/jquery-1.10.2.min.js') }}"></script>
