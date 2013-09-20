@@ -18,7 +18,6 @@ function updateScrollingJumbotrons() {
         // Is this jumbotron out of view? If so, bail.
         if (scrollPos > elPos.top + elHeight ||
             scrollPos+winHeight < elPos.top) {
-            console.log('bail for ', el);
             return;
         }
         // Calculate the new background position value, such that it reaches

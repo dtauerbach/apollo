@@ -5,7 +5,7 @@ from flask import render_template
 app = Flask(__name__)
 
 @app.route('/')
-def hello():
+def main_page():
     return render_template('main_page.html')
 
 if __name__ == '__main__':

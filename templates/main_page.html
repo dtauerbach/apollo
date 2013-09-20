@@ -11,7 +11,7 @@
 
     .jumbotron h1 {
         /* Text */
-        text-shadow: 3px 0 0 #000;
+        text-shadow: 3px 2px 1px #000;
         color:white;
     }
 
@@ -43,13 +43,14 @@
 {% endblock %}
 
 {% block body %}
+
     <div data-scroll-img="top50" class="jumbotron">
-      <div class="container">
-        <h1>Take Control Of Your Data</h1>
-        <div class="signup-btn col-md-1 col-md-offset-11">
-            <a href="#" class="btn btn-lg btn-primary">Sign up</a>
+        <div class="container">
+            <h1>Take Control Of Your Data</h1>
+            <div class="signup-btn col-md-1 col-md-offset-11">
+                <a data-toggle="modal" href="#signupModal" class="btn btn-lg btn-primary">Sign up</a>
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="container">
@@ -99,17 +100,5 @@
       <div class="container">
       </div>
     </div>
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="text-center">
-                        Apollo: The Human Data Project © 2013 All Rights Reserved.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
 {% endblock %}

@@ -52,13 +52,15 @@
     <div class="well">
       <div class="row">
         <div class="col-md-4">
-          <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
+          <a href="{{ url_for('main_page') }}">
+            <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
+          </a>
         </div>
         <div class="sign-in-btns col-md-2 col-md-offset-6">
-          <a href="#" class="btn btn-primary">
+          <a data-toggle="modal" href="#signupModal" class="btn btn-primary">
             Sign up
           </a>
-          <a href="#" class="btn btn-info">
+          <a data-toggle="modal" href="#loginModal" class="btn btn-info">
             Log in
           </a>
         </div>
@@ -67,6 +69,20 @@
 
     {% block body %}
     {% endblock %}
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center">
+                        Apollo: The Human Data Project © 2013 All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% include "partials/login_modals.html" %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ url_for('static', filename='lib/jquery-1.10.2.min.js') }}"></script>
