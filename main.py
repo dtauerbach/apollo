@@ -1,26 +1,20 @@
-import logging
-import os, sys
+import logging, os, sys
+import config
 from flask import Flask
 from flask import render_template
 from flask import request
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.mail import Mail
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
     UserMixin, RoleMixin, login_required
 #from flaskext.csrf import csrf
 
 # Create app
 app = Flask(__name__)
-try:
-    app.secret_key = os.environ['SESSION_SECRET_KEY']
-except KeyError:
-    print "Env vars missing. Did you run setupEnv.sh?"
-    sys.exit(1)
-app.config['DEBUG'] = True
-app.config['SECRET_KEY'] = 'super-secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/testdb'
-app.config['SECURITY_CONFIRMABLE'] = True
-app.config['SECURITY_REGISTERABLE'] = True
-app.config['SECURITY_RECOVERABLE'] = True
+app.config.from_object(config)
+
+mail = Mail(app)
+app.extensions['mail'] = mail
 
 # Create database connection object
 db = SQLAlchemy(app)
