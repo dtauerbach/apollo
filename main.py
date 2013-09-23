@@ -6,7 +6,7 @@ from flask import request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
-    UserMixin, RoleMixin, login_required
+    UserMixin, RoleMixin, login_required, current_user
 #from flaskext.csrf import csrf
 
 # Create app
@@ -52,10 +52,14 @@ security = Security(app, user_datastore)
 # CSRF protection flaskext
 #csrf(app)
 
+@security.context_processor
 @app.route('/')
 def main_page():
-    return render_template('main_page.html')
-
+    login_form = security.login_form() 
+    login_form.next.data = ''
+    return render_template('main_page.html',
+                           login_user_form=login_form,
+                           current_user=current_user)
 
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)

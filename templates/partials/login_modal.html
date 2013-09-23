@@ -6,21 +6,30 @@
         <h4 class="modal-title" id="loginModalLabel">Log in</h4>
       </div>
       <div class="modal-body">
-        <form action="{{ url_for('login') }}" role="form" class="form-horizontal" method="post">
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        {% from "security/_macros.html" import render_field_with_errors, render_field %}
+        {% include "security/_messages.html" %}
+        <form action="{{ url_for('security.login') }}" role="form" class="form-horizontal" method="post" name="login_user_form">
+          {{ login_user_form.hidden_tag() }}
           <div class="form-group">
             <label for="loginModalEmail" class="col-sm-4">Email address</label>
             <div class="col-sm-8">
-              <input type="email" class="form-control" id="loginModalEmail" placeholder="Enter email">
+              {{ render_field_with_errors(login_user_form.email) }}
+              <!-- <input type="email" class="form-control" id="email" placeholder="Enter email"> -->
             </div>
           </div>
+
+  <!-- {{ render_field_with_errors(login_user_form.remember) }} -->
+  <!-- {{ render_field(login_user_form.next) }} -->
+
           <div class="form-group">
             <label for="loginModalPassword" class="col-sm-4">Password</label>
             <div class="col-sm-8">
-              <input type="password" class="form-control" id="loginModalPassword" placeholder="Password">
+              {{ render_field_with_errors(login_user_form.password) }}
+              <!-- <input type="password" class="form-control" id="password" placeholder="Password"> -->
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">Log in</button>
+          {{ render_field(login_user_form.submit) }}
+          <!-- <button type="submit" class="btn btn-primary">Log in</button> -->
         </form>
         <hr>
         <div class="row">
