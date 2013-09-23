@@ -52,7 +52,6 @@ security = Security(app, user_datastore)
 # CSRF protection flaskext
 #csrf(app)
 
-@security.context_processor
 @app.route('/')
 def main_page():
     login_form = security.login_form() 

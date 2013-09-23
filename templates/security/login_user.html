@@ -1,3 +1,7 @@
+<html>
+<head><title>Customized login</title>
+<body>
+
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -18,6 +22,9 @@
             </div>
           </div>
 
+  <!-- {{ render_field_with_errors(login_user_form.remember) }} -->
+  <!-- {{ render_field(login_user_form.next) }} -->
+
           <div class="form-group">
             <label for="loginModalPassword" class="col-sm-4">Password</label>
             <div class="col-sm-8">
@@ -25,8 +32,6 @@
               <!-- <input type="password" class="form-control" id="password" placeholder="Password"> -->
             </div>
           </div>
-          {{ render_field_with_errors(login_user_form.remember) }}
-          {{ render_field(login_user_form.next) }}
           {{ render_field(login_user_form.submit) }}
           <!-- <button type="submit" class="btn btn-primary">Log in</button> -->
         </form>
@@ -64,3 +69,6 @@
     </div>
   </div>
 </div>
+
+</body>
+</html>
