@@ -11,6 +11,7 @@
     <!-- Bootstrap -->
     <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
 
+    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="{{ url_for('static', filename='assets/js/html5shiv.js') }}"></script>
@@ -22,8 +23,31 @@
     {% endblock %}
   </head>
   <body>
-    {% block toparea %}
-    {% endblock %} 
+    <div class="shortwidth">
+      <div class="row">
+        <div class="col-md-4">
+          <a href="{{ url_for('main_page') }}">
+            <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
+          </a>
+        </div>
+
+        <!-- for debugging -->
+        <div>
+          {{ current_user.email }}
+        </div>
+
+        <div class="navbar">
+          <div class="sign-in-btns col-md-2 col-md-offset-6">
+            <a data-toggle="modal" href="#signupModal" class="btn btn-primary">
+              Sign up
+            </a>
+            <a data-toggle="modal" href="#loginModal" class="btn btn-info">
+              Log in
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     {% block body %}
@@ -39,9 +63,6 @@
             </div>
         </div>
     </footer>
-
-    {% include "partials/login_modal.html" %}
-    {% include "partials/register_modal.html" %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ url_for('static', filename='lib/jquery-1.10.2.min.js') }}"></script>
