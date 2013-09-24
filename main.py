@@ -43,11 +43,12 @@ user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
 
 # Create a user to test with
-# @app.before_first_request
-# def create_user():
-#     db.create_all()
-#     user_datastore.create_user(email='matt@nobien.net', password='password')
-#     db.session.commit()
+@app.before_first_request
+def create_user():
+    from datetime import datetime
+    db.create_all()
+    user_datastore.create_user(email='me@paulsawaya.com', password='batman',confirmed_at=datetime.now())
+    db.session.commit()
 
 # CSRF protection flaskext
 #csrf(app)
@@ -55,7 +56,7 @@ security = Security(app, user_datastore)
 @app.route('/')
 def main_page():
     login_form = security.login_form() 
-    login_form.next.data = ''
+    login_form.next.data  = ''
     return render_template('main_page.html',
                            login_user_form=login_form,
                            current_user=current_user)
