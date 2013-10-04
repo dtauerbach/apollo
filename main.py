@@ -6,7 +6,7 @@ from flask import redirect, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
-    UserMixin, RoleMixin, login_required, current_user
+    UserMixin, RoleMixin, login_required, current_user, forms
 
 # Augment Flask's render_template with variables we want available everywhere
 def render_template(template_name, **kwargs):
