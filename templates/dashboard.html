@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block script_tags %}
+    <!-- holder.js generates gray placeholder images -->
+    <script src="{{ url_for('static',filename='lib/bootstrap/assets/js/holder.js') }}"></script>
+{% endblock %}
+
+{% block head %}
+<style>
+.data-source {
+  height:80px;
+  border: 1px black solid;
+
+  margin: 10px 0px;
+}
+
+.data-source:hover {
+  background-color:rgb(240,240,255);
+  cursor: pointer;
+}
+
+.data-source-square {
+  float:left;
+  margin-right:10px;
+  border: 1px black solid;
+  height:80px;
+  width:80px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center">
+            <h3 class="panel-title">
+              Connect a data stream
+            </h3>
+          </div>
+          <div class="panel-body">
+            <form role="search">
+              <div class="form-group">
+                <div class="input-group merged">
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                  <input type="text" class="form-control" placeholder="Search" />
+                </div>
+              </div>
+            </form>
+
+            <div class="container">
+              <div data-source-name="23andme" data-source-keywords="genes genetics biology disease" class="data-source">
+                <p class="data-source-label text-center">
+                  23andme
+                </p>
+              </div>
+
+              <div data-source-name="jawbone up" data-source-keywords="jawbone exercise wellness quantified self" class="data-source">
+                <p class="data-source-label text-center">
+                  Jawbone UP
+                </p>
+              </div>
+
+              <div data-source-name="kaiser permenante" data-source-keywords="insurance care" class="data-source">
+                <p class="data-source-label text-center">
+                  Kaiser Permenante
+                </p>
+              </div>
+
+              <div data-source-name="nike" data-source-keywords="exercise wellness quantified self running" class="data-source">
+                <p class="data-source-label text-center">
+                  Nike
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="col-md-8">
+          <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+              <h3 class="panel-title">
+                Your data
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="container">
+                <div data-source-name="23andme" class="data-source-square">
+                  <p class="data-source-label text-center">
+                    23andme
+                  </p>
+                </div>
+                <!-- <a href="#">
+                  Download
+                </a> -->
+
+                <div data-source-name="jawbone up" class="data-source-square">
+                  <p class="data-source-label text-center">
+                    Jawbone UP
+                  </p>
+                </div>
+                <!-- <a href="#">
+                  Download
+                </a> -->
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-body">
+              <ul class="nav nav-justified nav-tabs">
+                <li class="active"><a href="#">Insights</a></li>
+                <li><a href="#">Visualizations</a></li>
+                <li><a href="#">Research</a></li>
+              </ul>
+              <img data-src="holder.js/500x300" alt="...">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

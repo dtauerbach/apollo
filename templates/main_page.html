@@ -1,103 +1,10 @@
 {% extends "base.html" %}
 
-{% block head %}
-<style>
-    .well {
-      bcakground-color: white;
-    }
-
-    .shortwidth {
-      width: 80%;
-      margin: 0 auto;
-    }
-
-    .jumbotron {
-        /* Background image */
-        background: url({{ url_for('static', filename="img/header.jpg") }}) no-repeat;
-        background-position-x:50%;
-        height:412px;
-    }
-
-    .jumbotron h1 {
-        /* Text */
-        text-shadow: 3px 2px 1px #000;
-        color:white;
-    }
-
-    .jumbotron .signup-btn {
-        margin-top: 150px;
-    }
-
-    h2 {
-        margin-bottom:20px;
-    }
-
-    h2 .item-num {
-        position: relative;
-        padding:12px 16px;
-        font-size:16pt;
-        border:2px solid black;
-        font-weight: bold;
-        border-radius: 25px;
-        text-align: center;
-    }
-
-    .row {
-        background-color: white;
-        margin: 25px 0px 25px 0px;
-        padding: 25px 0px 25px 0px;
-    }
-
-    .modal .row {
-        margin: 0 0;
-        padding: 0 0;
-    }
-
-    .logo {
-      width:200px;
-    }
-
-    .sign-in-btns {
-      position: relative;
-      top:50px;
-    }
-
-</style>
-{% endblock %}
-
 {% block script_tags %}
     <!-- holder.js generates gray placeholder images -->
     <script src="{{ url_for('static',filename='lib/bootstrap/assets/js/holder.js') }}"></script>
 
     <script src="{{ url_for('static',filename='js/main_page.js') }}"></script>
-{% endblock %}
-
-{% block toparea %}
-    <div class="shortwidth">
-      <div class="row">
-        <div class="col-md-4">
-          <a href="{{ url_for('main_page') }}">
-            <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
-          </a>
-        </div>
-
-        <!-- for debugging -->
-        <div>
-          {{ current_user.email }}
-        </div>
-
-        <div class="navbar">
-          <div class="sign-in-btns col-md-2 col-md-offset-6">
-            <a data-toggle="modal" href="#signupModal" class="btn btn-primary">
-              Sign up
-            </a>
-            <a data-toggle="modal" href="#loginModal" class="btn btn-info">
-              Log in
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
 {% endblock %}
 
 {% block body %}
@@ -158,5 +65,8 @@
       <div class="container">
       </div>
     </div>
+
+    {% include "partials/login_modal.html" %}
+    {% include "partials/register_modal.html" %}
 
 {% endblock %}
