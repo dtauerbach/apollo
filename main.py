@@ -1,13 +1,22 @@
 import logging, os, sys
 import config
 from flask import Flask
-from flask import render_template
-from flask import request
+from flask import render_template as _render_template
+from flask import redirect, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
-    UserMixin, RoleMixin, login_required, current_user
-#from flaskext.csrf import csrf
+    UserMixin, RoleMixin, login_required, current_user, forms
+
+# Augment Flask's render_template with variables we want available everywhere
+def render_template(template_name, **kwargs):
+    default_args = {
+       "user":current_user,
+       "login_user_form": security.login_form(),
+       "register_user_form": security.register_form()
+    }
+    template_args = dict(kwargs.items() + default_args.items())
+    return _render_template(template_name,**template_args)
 
 # Create app
 app = Flask(__name__)
@@ -43,22 +52,26 @@ user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
 
 # Create a user to test with
-# @app.before_first_request
-# def create_user():
-#     db.create_all()
-#     user_datastore.create_user(email='matt@nobien.net', password='password')
-#     db.session.commit()
-
-# CSRF protection flaskext
-#csrf(app)
+@app.before_first_request
+def create_user():
+    from datetime import datetime
+    user = User.query.filter(User.email=='me@paulsawaya.com').first()
+    # Don't create a new user obj if one already exists.
+    if user: return
+    db.create_all()
+    user_datastore.create_user(email='me@paulsawaya.com', password='batman',confirmed_at=datetime.now())
+    db.session.commit()
 
 @app.route('/')
 def main_page():
-    login_form = security.login_form() 
-    login_form.next.data = ''
-    return render_template('main_page.html',
-                           login_user_form=login_form,
-                           current_user=current_user)
+    if current_user.is_authenticated():
+        return redirect(url_for('dashboard'))
+    return render_template('main_page.html')
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)
