@@ -3,6 +3,8 @@
 {% block script_tags %}
     <!-- holder.js generates gray placeholder images -->
     <script src="{{ url_for('static',filename='lib/bootstrap/assets/js/holder.js') }}"></script>
+
+    <script src="{{ url_for('static',filename='js/dashboard.js') }}"></script>
 {% endblock %}
 
 {% block head %}
@@ -26,17 +28,30 @@
   height:80px;
   width:80px;
 }
+
+.collapsed {
+  display:none;
+}
+
 </style>
 {% endblock %}
 
 {% block body %}
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div id="collapse_btn_col" class="col-md-1 collapsed">
+        <button id="uncollapse_btn" class="btn btn-primary btn-md">
+          <span class="glyphicon glyphicon-arrow-right"></span>
+        </button>
+      </div>
+      <div id="panel_col" class="col-md-4">
         <div class="panel panel-primary">
           <div class="panel-heading text-center">
             <h3 class="panel-title">
               Connect a data stream
+              <button id="collapse_btn" class="btn btn-primary btn-xs">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+              </button>
             </h3>
           </div>
           <div class="panel-body">
@@ -79,7 +94,7 @@
       </div>
 
       <div class="container">
-        <div class="col-md-8">
+        <div id="main_col" class="col-md-8">
           <div class="panel panel-primary">
             <div class="panel-heading text-center">
               <h3 class="panel-title">
