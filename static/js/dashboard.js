@@ -10,7 +10,6 @@ $(document).ready(function() {
             return;
         }
 
-        console.log($(panel).find('.data-source'))
         $(panel).find('.data-source').each(function(idx, el) {
             // Search the keywords and the data source name
             var haystackTokens = $(el).attr('data-source-keywords');
