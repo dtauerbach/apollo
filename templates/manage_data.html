@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+.explanation-blurb {
+    display: none;
+}
+
+.radio {
+    font-size:18pt;
+}
+</style>
+{% endblock %}
+
+{% block script_tags %}
+    <script src="{{ url_for('static',filename='js/manage_data.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-8-sm">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur auctor tellus non eleifend accumsan. Nullam ut est id odio pulvinar interdum sit amet non odio. Etiam suscipit sed felis non mattis. Nulla scelerisque imperdiet tortor, a fermentum urna dignissim eu. Nulla nibh ipsum, feugiat ut sodales sit amet, vestibulum in nunc. Sed accumsan, risus ut adipiscing eleifend, orci enim aliquet lorem, et scelerisque ipsum lacus in urna. Donec consequat lacus a purus ultrices semper.
+            </p>
+        </div>
+    </div>
+    <form action="/manage" method="POST">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="radio sharing-preference">
+                <label>
+                    <input type="radio" name="sharing-preference" value="dont-share" checked> Do Not Share Data
+                </label>
+            </div>
+            <div class="radio sharing-preference">
+                <label>
+                    <input type="radio" name="sharing-preference" value="research-partners"> Share With Research Partners
+                </label>
+            </div>
+            <div class="radio sharing-preference">
+                <label>
+                    <input type="radio" name="sharing-preference" value="researchers"> Share With Researchers
+                </label>
+            </div>
+            <div class="radio sharing-preference">
+                <label>
+                    <input type="radio" name="sharing-preference" value="fully-public"> Make Fully Public
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="explanation-blurb" data-preference="dont-share">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec adipiscing vitae justo in fermentum. Sed egestas venenatis nunc eu pretium. Curabitur ultricies fermentum nisi interdum scelerisque. Proin lacinia aliquet imperdiet. Ut ac odio iaculis, dictum nibh at, molestie tellus. Proin ut nunc egestas ligula tempus sagittis. Donec id lorem suscipit, eleifend nisi ut, commodo metus. Nam et lobortis lacus, ut feugiat nunc. Duis eleifend quam sapien, ac imperdiet ante hendrerit commodo. Nam vitae mi id odio vestibulum varius. Morbi et mattis felis, eu porta diam. Donec euismod orci ut lacus lacinia lacinia. Vivamus gravida iaculis felis, quis rhoncus lacus tempus quis. Aliquam gravida magna sed metus ultricies, ultricies gravida dolor fringilla. Ut ipsum nulla, mollis ac urna vitae, congue iaculis ante. Sed at lacus vitae nisl sagittis sollicitudin.
+                    </p>
+                    <p class="explanation-blurb" data-preference="research-partners">
+                        Suspendisse augue leo, tincidunt dictum pharetra eget, interdum non purus. Cras a semper lorem, eu dapibus lacus. Morbi aliquam dui mollis tortor interdum, accumsan rutrum eros euismod. Ut posuere pulvinar risus et sodales. Sed vulputate est tellus, ut aliquet tortor pretium eu. Duis luctus sapien in vestibulum eleifend. Ut lobortis, dui ac mollis pharetra, est metus mollis tortor, vitae varius libero orci quis leo. Morbi posuere consequat massa ut tristique. Proin in imperdiet magna. Vivamus nec malesuada justo, a volutpat quam. Nam nec semper lectus.
+                    </p>
+                    <p class="explanation-blurb" data-preference="researchers">
+                        Curabitur dui diam, dapibus non tortor ac, mattis iaculis purus. Duis sed sagittis enim. Cras lobortis eros eget placerat congue. Morbi sed pellentesque nisi. Duis vestibulum ligula auctor, euismod nibh et, tristique mauris. Suspendisse luctus sem nec felis malesuada pretium. Etiam est massa, tempus nec ante in, dictum lacinia diam. Curabitur auctor viverra iaculis. Vivamus venenatis tellus sit amet lectus placerat, sed vestibulum metus pharetra. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce eget ultricies augue, eget rhoncus urna. Curabitur consequat eget purus in ullamcorper.
+                    </p>
+                    <p class="explanation-blurb" data-preference="fully-public">
+                        Sed convallis aliquam tempor. Vivamus consequat nibh urna, eget sagittis lectus faucibus et. Sed vitae tortor tellus. Cras mollis rutrum ultrices. Duis lobortis tincidunt enim, id auctor erat vestibulum vitae. Duis at imperdiet sapien. Cras quis leo vitae quam vestibulum pellentesque. Sed ut sapien ut ante ultricies pretium. Nunc semper risus ut purus rutrum, in lobortis justo volutpat. Vivamus nec elementum velit. Proin in nunc sit amet purus cursus lobortis in sed metus. Donec tristique risus vitae ultricies consequat. Integer sit amet lacinia mauris. Nullam at sollicitudin quam. Integer porta, est eget ornare luctus, lectus dui porttitor purus, sit amet dictum magna ante a est.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-default">Save Preference</button>
+    </form>
+</div>
+{% endblock %}

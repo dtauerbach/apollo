@@ -3,6 +3,7 @@ import config
 from flask import Flask
 from flask import render_template as _render_template
 from flask import redirect, request, url_for
+from flaskext.csrf import csrf
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
@@ -21,6 +22,7 @@ def render_template(template_name, **kwargs):
 # Create app
 app = Flask(__name__)
 app.config.from_object(config)
+csrf(app)
 
 mail = Mail(app)
 app.extensions['mail'] = mail
@@ -72,6 +74,16 @@ def main_page():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+@app.route('/manage', methods=['GET'])
+@login_required
+def manage_data_page():
+    return render_template('manage_data.html')
+
+@app.route('/manage', methods=['POST'])
+@login_required
+def manage_data_page_post():
+    return "Your preference was %s" % (request.form['sharing-preference'])
 
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)
