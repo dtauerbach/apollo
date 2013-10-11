@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // Search field
     $('#search_field').on('keyup', function() {
-        var typedTokens = $(this).val().split(' ');
+        var typedTokens = $(this).val().toLowerCase().split(' ');
         var panel = $(this).closest('.panel');
 
         // Field is empty, so show everything
@@ -13,8 +13,9 @@ $(document).ready(function() {
         console.log($(panel).find('.data-source'))
         $(panel).find('.data-source').each(function(idx, el) {
             // Search the keywords and the data source name
-            var haystackTokens = $(el).attr('data-source-keywords').split(' ');
-            haystackTokens.push($(el).attr('data-source-name'));
+            var haystackTokens = $(el).attr('data-source-keywords');
+            haystackTokens = haystackTokens.toLowerCase().split(' ');
+            haystackTokens.push($(el).attr('data-source-name').toLowerCase());
 
             // For each space-separated token the user types...
             var tokenMatches = typedTokens.map(function(typedTok) {
