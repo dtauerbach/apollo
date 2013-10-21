@@ -6,9 +6,15 @@ from flask import redirect, request, url_for
 from flaskext.csrf import csrf
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
+from flask.ext.runner import Runner
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
     UserMixin, RoleMixin, login_required, current_user, forms
 
+
+# @app.context_processor
+# def template_extras():
+#     return dict(
+#         google_analytics_id=app.config.get('GOOGLE_ANALYTICS_ID', None))
 # Augment Flask's render_template with variables we want available everywhere
 def render_template(template_name, **kwargs):
     default_args = {
@@ -22,7 +28,7 @@ def render_template(template_name, **kwargs):
 # Create app
 app = Flask(__name__)
 app.config.from_object(config)
-csrf(app)
+# csrf(app)
 
 mail = Mail(app)
 app.extensions['mail'] = mail
@@ -88,5 +94,9 @@ def manage_data_page_post():
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)
     logging.basicConfig(level=logging.DEBUG)
+    from social_login import social_login
+    app.register_blueprint(social_login)
 
-    app.run()
+    # app.run()
+    runner = Runner(app)
+    runner.run()

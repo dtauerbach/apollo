@@ -6,8 +6,14 @@ Flask-CSRF
 Flask-SQLAlchemy
 Flask-WTF==0.8.4
 Flask-SuperAdmin
+Flask-Social
 Flask-security==1.6.9
 Flask-Mail
 psycopg2
 SQLAlchemy==0.8
 mysql-python
+flask-runner
+
+# Required by Flask-Social
+facebook-sdk
+python-twitter

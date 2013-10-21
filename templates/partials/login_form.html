@@ -30,25 +30,6 @@
     <p class="text-center">
       Or, log in with one of these services:
     </p>
-    <div class="row">
-      <div class="col-sm-2 col-sm-offset-4">
-        <img src="{{ url_for('static', filename='img/persona_sign_in_red.png') }}"/>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2 col-sm-offset-4">
-        <img src="{{ url_for('static', filename='img/google_sign_in.png') }}"/>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2 col-sm-offset-4">
-        (Twitter)
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2 col-sm-offset-4">
-        (Facebook)
-      </div>
-    </div>
+    {% include "partials/social_login.html" %}
   </div>
 </div>

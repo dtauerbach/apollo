@@ -80,11 +80,10 @@
       {% include "partials/login_modal.html" %}
     {% endif %}
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ url_for('static', filename='lib/jquery-1.10.2.min.js') }}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
-
+    <script src="https://login.persona.org/include.js"></script>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     {% block script_tags %}
     {% endblock %}
   </body>
