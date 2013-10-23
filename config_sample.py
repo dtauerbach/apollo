@@ -14,3 +14,7 @@ SOCIAL_FACEBOOK = {
     'consumer_key': '',
     'consumer_secret': ''
 }
+SOCIAL_GOOGLE = {
+    'consumer_key': '',
+    'consumer_secret': ''
+}

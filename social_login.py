@@ -50,11 +50,49 @@ def get_facebook_urlparams():
     redirect_uri=url_for('social_login.facebook_login_callback', _external=True),
     scope='email')
 
+def get_google_urlparams():
+    return dict(
+    client_id=current_app.config['SOCIAL_GOOGLE']['consumer_key'],
+    redirect_uri=url_for('social_login.google_login_callback', _external=True))
+
 @social_login.route('/facebook_login')
 def facebook_login():
     redirect_url = "https://www.facebook.com/dialog/oauth?"
     redirect_url += urlencode(get_facebook_urlparams())
     return redirect(redirect_url)
+
+# Google oAuth code is adopted from:
+# http://stackoverflow.com/questions/9499286/using-google-oauth2-with-flask
+@social_login.route('/google_login')
+def google_login():
+    extra_params = dict(response_type='code',
+        scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')
+    redirect_url = "https://accounts.google.com/o/oauth2/auth?"
+    redirect_url += urlencode(dict(get_google_urlparams().items() + \
+        extra_params.items()))
+    return redirect(redirect_url)
+
+@social_login.route('/google_login_callback')
+def google_login_callback():
+    if not request.args.get('code'): return 'Missing code'
+    params = {
+        'code': request.args.get('code'),
+        'client_secret': current_app.config['SOCIAL_GOOGLE']['consumer_secret'],
+        'grant_type': 'authorization_code',
+    }
+    req_url = "https://accounts.google.com/o/oauth2/token"
+    payload =  dict(get_google_urlparams().items() + params.items())
+    obj = json.loads(requests.post(req_url, data=payload).content)
+    if 'access_token' not in obj:
+        return "Could not get access token!"
+    access_token = obj['access_token']
+    email_req_url = 'https://www.googleapis.com/oauth2/v1/userinfo?'
+    email_req_url += urlencode(dict(access_token=access_token))
+    profile_obj = json.loads(requests.get(email_req_url).content)
+    if 'email' not in profile_obj:
+        return "Could not get user e-mail."
+    login_or_register_by_email(profile_obj['email'])
+    return redirect(url_for('dashboard'))
 
 @social_login.route('/facebook_login_callback')
 def facebook_login_callback():
