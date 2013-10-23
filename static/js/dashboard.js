@@ -1,4 +1,10 @@
+var servicesObj = {};
+
 $(document).ready(function() {
+
+    populateList();
+
+
     // Search field
     $('#search_field').on('keyup', function() {
         var typedTokens = $(this).val().toLowerCase().split(' ');
@@ -12,9 +18,11 @@ $(document).ready(function() {
 
         $(panel).find('.data-source').each(function(idx, el) {
             // Search the keywords and the data source name
-            var haystackTokens = $(el).attr('data-source-keywords');
-            haystackTokens = haystackTokens.toLowerCase().split(' ');
-            haystackTokens.push($(el).attr('data-source-name').toLowerCase());
+            var serviceName = $(el).attr('data-source-name');
+            // Copy array by value using slice(0), since we're going to push 
+            // something new onto it.
+            var haystackTokens = servicesObj[serviceName].keywords.slice(0);
+            haystackTokens.push(serviceName.toLowerCase());
 
             // For each space-separated token the user types...
             var tokenMatches = typedTokens.map(function(typedTok) {
@@ -56,3 +64,18 @@ $(document).ready(function() {
         $('#main_col').addClass('col-md-8');
     });
 });
+
+function populateList() {
+    $.getJSON('/services.json', function(data) {
+        servicesObj = data.services;
+        for (var serviceName in servicesObj) {
+            var $serviceDiv = $("<div>").attr('data-source-name', serviceName);
+            $serviceDiv.addClass('data-source');
+            var $serviceP = $("<p>" + servicesObj[serviceName].full_name + "</p>");
+            $serviceP.addClass('data-source-label');
+            $serviceP.addClass('text-center');
+            $serviceDiv.append($serviceP)
+            $('.services-container').append($serviceDiv);
+        }
+    });
+}

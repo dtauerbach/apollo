@@ -76,6 +76,14 @@ def main_page():
         return redirect(url_for('dashboard'))
     return render_template('main_page.html')
 
+@app.route('/services.json')
+def servicesjson():
+    if not current_user.is_authenticated():
+        return json.dumps(dict(
+            error="You aren't authorized to view this."
+        ))
+    return render_template('services.json')
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
