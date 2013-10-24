@@ -1,3 +1,4 @@
+SERVER_NAME="localhost:5000"
 DEBUG = True
 SECRET_KEY = 'super-secret'
 SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/testdb'
