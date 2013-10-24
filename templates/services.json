@@ -4,25 +4,29 @@
             "full_name": "23andme",
             "url": "http://23andme.com",
             "icon": "{{ url_for('static', filename='service_placeholder.png' )}}",
-            "keywords": ["genes", "genetics", "biology", "disease"]
+            "keywords": ["genes", "genetics", "biology", "disease"],
+            "connect_type": "oauth"
         },
         "jawbone up": {
             "full_name": "Jawbone UP",
             "url": "http://jawbone.com",
             "icon": "{{ url_for('static', filename='service_placeholder.png' )}}",
-            "keywords": ["jawbone", "exercise", "wellness", "quantified self"]  
+            "keywords": ["jawbone", "exercise", "wellness", "quantified self"],
+            "connect_type": "scraping"
         },
         "kaiser permenante": {
             "full_name": "Kaiser Permenante",
             "url": "http://kaiser.com",
             "icon": "{{ url_for('static', filename='service_placeholder.png' )}}",
-            "keywords": ["insurance", "care"]
+            "keywords": ["insurance", "care"],
+            "connect_type": "manual_upload"
         },
         "nike": {
-            "full_name": "Kaiser Permenante",
-            "url": "http://kaiser.com",
+            "full_name": "Nike",
+            "url": "http://nike.com",
             "icon": "{{ url_for('static', filename='service_placeholder.png' )}}",
-            "keywords": ["exercise", "wellness", "quantified self", "running"]
+            "keywords": ["exercise", "wellness", "quantified self", "running"],
+            "connect_type": "scraping"
         }
     }
 }

@@ -1,9 +1,19 @@
 var servicesObj = {};
 
 $(document).ready(function() {
-
+    // Download services JSON, render list
     populateList();
 
+    // Services modal
+    $('.services-container').on('click', '.data-source', function() {
+        var serviceName = $(this).attr('data-source-name');
+        $('#serviceModal .service-name').html(servicesObj[serviceName].full_name);
+        $('#serviceModal .service-connection').hide();
+        $('#serviceModal .service-' + servicesObj[serviceName].connect_type).show();
+        $('#serviceModal').modal({
+            show: true
+        });
+    });
 
     // Search field
     $('#search_field').on('keyup', function() {
