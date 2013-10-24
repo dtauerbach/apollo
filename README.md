@@ -11,12 +11,12 @@ In order for social login to work, consumer key and secret pairs must be provide
 
 To install and run locally, we recommend using virtualenv:
 
-   $ virtualenv env
-   $ . env/bin/activate
-   (env) $ pip install -r requirements.txt
-   (env) $ python main.py
-   # Now a local server should be running on localhost:5000
-   # when you're done
-   (env) $ deactivate
+    $ virtualenv env
+    $ . env/bin/activate
+    (env) $ pip install -r requirements.txt
+    (env) $ python main.py
+    # Now a local server should be running on localhost:5000
+    # when you're done
+    (env) $ deactivate
 
 
