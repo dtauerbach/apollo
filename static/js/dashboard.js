@@ -10,6 +10,7 @@ $(document).ready(function() {
         $('#serviceModal .service-name').html(servicesObj[serviceName].full_name);
         $('#serviceModal .service-connection').hide();
         $('#serviceModal .service-' + servicesObj[serviceName].connect_type).show();
+        $('#serviceModal .service-icon').attr('src', servicesObj[serviceName].icon);
         $('#serviceModal').modal({
             show: true
         });
