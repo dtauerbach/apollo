@@ -44,7 +44,20 @@ h2 .item-num {
   width:200px;
 }
 
+.logo-container {
+  text-align: center;
+}
+
 .sign-in-btns {
   position: relative;
   top:50px;
+  text-align: center;
+}
+
+.social-login-button {
+  margin-bottom:5px;
+}
+
+.social-login-buttons {
+  text-align: center;
 }
