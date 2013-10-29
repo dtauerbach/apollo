@@ -28,6 +28,9 @@ def render_template(template_name, **kwargs):
 # Create app
 app = Flask(__name__)
 app.config.from_object(config)
+
+from flask_wtf.csrf import CsrfProtect
+CsrfProtect(app)
 # csrf(app)
 
 mail = Mail(app)

@@ -4,7 +4,7 @@ gunicorn
 requests
 Flask-CSRF
 Flask-SQLAlchemy
-Flask-WTF==0.8.4
+Flask-WTF
 Flask-SuperAdmin
 Flask-Social
 Flask-security==1.6.9
