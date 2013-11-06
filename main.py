@@ -2,7 +2,7 @@ import logging, os, sys
 import config
 from flask import Flask
 from flask import render_template as _render_template
-from flask import redirect, request, url_for
+from flask import jsonify, redirect, request, url_for
 from flaskext.csrf import csrf
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
@@ -82,7 +82,7 @@ def main_page():
 @app.route('/services.json')
 def servicesjson():
     if not current_user.is_authenticated():
-        return json.dumps(dict(
+        return jsonify(dict(
             error="You aren't authorized to view this."
         ))
     return render_template('services.json')

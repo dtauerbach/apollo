@@ -2,8 +2,8 @@ from main import user_datastore, User
 
 from datetime import datetime
 
-from flask import Blueprint, current_app, redirect, render_template, \
-    request, url_for
+from flask import Blueprint, current_app, flash, jsonify, \
+    redirect, render_template, request, url_for
 from flask.ext.security import login_user
 
 import requests, json
@@ -37,11 +37,13 @@ def persona_login():
     auth = json.loads(res.content)
     if auth['status'] == 'okay':
         login_or_register_by_email(auth['email'])
-        return json.dumps({
+        return jsonify({
             'success': True
         })
     else:
-        return "Could not login with Persona"
+        return jsonify({
+            'error': 'Could not login with Persona'
+        })
 
 # These URL params are static between the first two oAuth requests to Facebook.
 def get_facebook_urlparams():
@@ -58,7 +60,9 @@ def facebook_login():
 
 @social_login.route('/facebook_login_callback')
 def facebook_login_callback():
-    if not request.args.get('code'): return 'Missing code'
+    if not request.args.get('code'):
+        flash('Please grant Facebook access to log in via Facebook.','danger')
+        return redirect('/')
     oauth_args = dict(client_secret=
             current_app.config['SOCIAL_FACEBOOK']['consumer_secret'],
         code=request.args.get('code'))
@@ -93,7 +97,9 @@ def google_login():
 
 @social_login.route('/google_login_callback')
 def google_login_callback():
-    if not request.args.get('code'): return 'Missing code'
+    if not request.args.get('code'):
+        flash('Please grant Google access to log in via Google.','danger')
+        return redirect('/')
     params = {
         'code': request.args.get('code'),
         'client_secret': current_app.config['SOCIAL_GOOGLE']['consumer_secret'],

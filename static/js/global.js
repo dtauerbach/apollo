@@ -14,11 +14,18 @@ $(document).ready(function() {
             $.ajax({
                 url: '/persona_login',
                 method: 'POST',
+                dataType: 'json',
                 data: {
                     assertion: assertion
                 },
-                success: function() {
-                    window.location='/';
+                success: function(data) {
+                    console.log(data);
+                    if (data.success) {
+                        window.location='/dashboard';
+                    }
+                    else {
+                        alert(data.error);
+                    }
                 }
             })
         }
