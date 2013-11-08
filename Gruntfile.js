@@ -144,7 +144,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-requirejs');
+//  grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-csso');
@@ -155,7 +155,7 @@ module.exports = function (grunt) {
     grunt.task.run(this.data);
   });
 
-  grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
+  grunt.registerTask('build-js', ['copy', 'uglify']);
   grunt.registerTask('build-css', ['css']);
   grunt.registerTask('build', ['build-js', 'build-css']);
 
