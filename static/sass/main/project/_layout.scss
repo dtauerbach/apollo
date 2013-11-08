@@ -1,0 +1,15 @@
+.layout {
+  @extend %g-clearfix;
+  display: table;
+  width: 100%;
+}
+
+.layout_left {
+  display: block;
+}
+
+.layout_right {
+  width: 100%;
+  display: table-cell;
+  vertical-align: top;
+}

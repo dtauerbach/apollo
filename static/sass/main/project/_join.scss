@@ -1,0 +1,47 @@
+.join {
+  width: 340px !important;
+
+  .title {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 50px;
+  }
+
+  .signin {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .field {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    margin: 0 0 12px 0;
+    background: #ccc;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    color: #666;
+
+    &::placeholder {
+      color: #666;
+    }
+  }
+
+  .terms {
+    font-size: 13px;
+    margin-bottom: 30px;
+    display: block;
+
+    input {
+      margin-right: 4px;
+    }
+  }
+
+  .button {
+    float: right;
+  }
+}

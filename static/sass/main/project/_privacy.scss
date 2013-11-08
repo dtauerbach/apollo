@@ -1,0 +1,28 @@
+.privacy {
+  @extend %g-clearfix;
+  display: table;
+  width: 100%;
+
+  .collapse {
+    .subtitle {
+      margin-bottom: 12px;
+    }
+
+    .privacy_faq-answer {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.privacy_l {
+  display: block;
+  width: 320px;
+  display: block;
+  margin-right: 20px;
+}
+
+.privacy_r {
+  width: 100%;
+  display: table-cell;
+  vertical-align: top;
+}

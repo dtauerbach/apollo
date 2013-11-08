@@ -1,0 +1,35 @@
+@import 'base/*';
+
+.title {
+  color: #4aafe8;
+  margin-top: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.subtitle {
+  color: #214f68;
+  margin-top: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.hide {
+  display: none;
+}
+
+p {
+  margin: 0 0 12px 0;
+}
+
+.more {
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:after {
+    content: '»';
+    margin-left: 4px;
+  }
+}

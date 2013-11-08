@@ -2,17 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    
-    <!-- Suppress IE compatibility mode - required for Persona -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Apollo: the Human Data Project</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <title>Apollo: {% block title %}{% endblock %}</title>
 
-    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="{{ url_for('static', filename='assets/js/html5shiv.js') }}"></script>
@@ -24,80 +19,77 @@
     {% endblock %}
   </head>
   <body>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          {{ message }}
-        </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    <div class="shortwidth">
-      <div class="container">
-        <div class="row">
-          <div class="logo-container col-md-5">
-            <a href="{{ url_for('main_page') }}">
-              <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
-            </a>
-          </div>
 
-        <div class="navbar">
-          {% if current_user.is_authenticated() %}
-            <!-- for debugging -->
-            <!-- <div class="sign-in-btns col-md-2">
-              <span>
-                Hello, <span>{{ current_user.email }}</span>
-              </span>
-            </div> -->
-            <div class="sign-in-btns col-md-5">
-              <a data-toggle="modal" href="{{ url_for('dashboard') }}" class="btn btn-info">
-                Manage data settings
-              </a>
-              <a data-toggle="modal" href="{{ url_for('security.logout') }}" class="btn btn-info">
-                Log out
-              </a>
-            </div>
-          {% else %}
-            <div class="sign-in-btns col-md-5">
-              <a data-toggle="modal" href="#signupModal" class="btn btn-primary">
-                Sign up
-              </a>
-              <a data-toggle="modal" href="#loginModal" class="btn btn-info">
-                Log in
-              </a>
-            </div>
-          {% endif %}
+    <div class="header">
+      <div class="container">
+        <div class="header_l">
+          <a href="/"><img width="200" src="{{ url_for('static', filename='img/logo.png') }}" alt="Apollo" /></a>
         </div>
-      </div>
+        <div class="header_r">
+          <ul class="header_topnav" data-ng-show="!authenticated">
+            <li><a class="button" data-ng-click="login()">Sign in</a></li>
+            <li><a href="/join" class="button">Join</a></li>
+          </ul>
+          <ul class="header_topnav" data-ng-show="authenticated">
+            <li><a href="#" class="user">Hello, User</a></li>
+            <li><a href="/account/dashboard" class="button">View Data</a></li>
+            <li><a href="/account/settings" class="button">Settings</a></li>
+            <li><a class="button" data-ng-click="logout()">Logout</a></li>
+          </ul>
+          <ul class="menu">
+            <li><a href="/researchers">Researchers</a></li>
+            <li><a href="/providers">Health care providers</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/privacy">Privacy</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-
-
-    {% block body %}
-    {% endblock %}
-    <footer>
+    
+    {% if title %}
+      <div class="page-title">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="text-center">
-                        Apollo: The Human Data Project © 2013 All Rights Reserved.
-                    </p>
-                </div>
-            </div>
+          <h1>{{ title }}</h1>
         </div>
-    </footer>
-
-    {% if login_user_form %}
-      {% include "partials/login_modal.html" %}
+      </div>
     {% endif %}
-
-    <script src="{{ url_for('static', filename='lib/jquery-1.10.2.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="https://login.persona.org/include.js"></script>
-    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
-    {% block script_tags %}
-    {% endblock %}
+    
+    {% if crumb %}
+      <div class="container">
+        <ul class="breadcrumbs">
+          <li><a href="/">Home</a></li>
+          <li><a href="#">{{ crumb }}</a></li>
+        </ul>
+      </div>
+    {% endif %}
+    
+    <!-- Content -->
+    <div class="main container">
+      {% block body %}{% endblock %}
+    </div>
+    
+    <div class="footer">
+      <div class="container">
+        <div class="footer_logo">
+          <a href="#" title="Go to top">
+            <img src="{{ url_for('static', filename='img/logo_small.png') }}" width="40" />
+          </a>
+        </div>
+        <ul class="footer_social">
+          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+        </ul>
+        <ul class="menu">
+          <li><a href="/researchers">Researchers</a></li>
+          <li><a href="/providers">Health care providers</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="#">Sitemap</a></li>
+        </ul>
+        <p class="footer_text">Apollo the human data project &copy; 2013 All rights reserved.</p>
+      </div>
+    </div>
+    
   </body>
 </html>

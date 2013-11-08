@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="join container-small">
+  <h1 class="title">Create an account by entering your information below.</h1>
+  <a class="signin" href="#/signin">Already a member?</a>
+  <input class="field" placeholder="Username" />
+  <input class="field" placeholder="Email" />
+  <input class="field" placeholder="Password" />
+  <label class="terms">
+    <input type="checkbox">
+    I have read and agree to the terms and conditions.
+  </label>
+  <button type="submit" class="button">Submit</button>
+</div>
+  
+{% endblock %}

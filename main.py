@@ -74,33 +74,36 @@ def create_user():
     db.session.commit()
 
 @app.route('/')
-def main_page():
-    if current_user.is_authenticated():
-        return redirect(url_for('dashboard'))
-    return render_template('main_page.html')
+def home():
+    return render_template('pages/home.html')
 
-@app.route('/services.json')
-def servicesjson():
-    if not current_user.is_authenticated():
-        return jsonify(dict(
-            error="You aren't authorized to view this."
-        ))
-    return render_template('services.json')
+@app.route('/join')
+def join():
+    return render_template('pages/join.html', title = 'Join Today', crumb = 'Join')
 
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    return render_template('dashboard.html')
+@app.route('/privacy')
+def privacy():
+    return render_template('pages/privacy.html', title = 'Privacy Policy', crumb = 'Privacy')
 
-@app.route('/manage', methods=['GET'])
-@login_required
-def manage_data_page():
-    return render_template('manage_data.html')
+@app.route('/about')
+def about():
+    return render_template('pages/about.html', title = 'About', crumb = 'About')
 
-@app.route('/manage', methods=['POST'])
-@login_required
-def manage_data_page_post():
-    return "Your preference was %s" % (request.form['sharing-preference'])
+@app.route('/researchers')
+def researchers():
+    return render_template('pages/researchers.html', title = 'Researchers', crumb = 'Researchers')
+
+@app.route('/providers')
+def providers():
+    return render_template('pages/providers.html', title = 'Health Care Providers', crumb = 'Health Care Providers')
+
+@app.route('/account/dashboard')
+def accountDashboard():
+    return render_template('pages/account/dashboard.html', title = 'Your Data', crumb = 'View Data')
+
+@app.route('/account/settings')
+def accountSettings():
+    return render_template('pages/account/settings.html', title = 'Manage Data Settings', crumb = 'Manage Data Settings')
 
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)

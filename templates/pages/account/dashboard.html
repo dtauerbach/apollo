@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+<div class="dashboard">
+  <div class="dashboard_l nav">
+    <h2 class="nav_title">Connect a Data Stream</h2>
+    <input type="search" class="nav_search" placeholder="Search Data Streams" />
+    <ul class="nav_list">
+      <li><a href="#">Lorem Ipsum</a></li>
+      <li><a href="#">Dolor Sit</a></li>
+      <li class="active"><a href="#">Sit Amet</a></li>
+      <li><a href="#">Amet Consectetur</a></li>
+      <li><a href="#">Consectetur Adipisicing</a></li>
+      <li><a href="#">Adipisicing Elit</a></li>
+      <li><a href="#">Elit Sed</a></li>
+    </ul>
+  </div>
+  <div class="dashboard_r">
+    <h1 class="title">Jawbone Up</h1>
+    <ul class="tabs">
+      <li><a href="#" class="active">Insights</a></li>
+      <li><a href="#">Visualizations</a></li>
+      <li><a href="#">Research</a></li>
+    </ul>
+
+    <img class="dashboard_screenshot" src="{{ url_for('static', filename='img/dashboard.png') }}" />
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <a href="#" class="button">Join</a>
+
+  </div>
+</div>
+  
+{% endblock %}
