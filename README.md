@@ -19,4 +19,19 @@ To install and run locally, we recommend using virtualenv:
     # when you're done
     (env) $ deactivate
 
+For the front-end we're using sass, angular and requirejs. To install the needed dependencies for front-end development,
+follow these steps:
 
+    npm install
+
+Install global npm dependencies
+
+    npm -g install grunt-cli
+
+Get ruby dependencies required to compile styles from sass
+
+    bundle install
+
+Then you're good to go:
+
+    grunt build-css
