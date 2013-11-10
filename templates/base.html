@@ -2,9 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <!-- Suppress IE compatibility mode - required for Persona -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apollo: {% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet" media="screen">
 
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen">
 
@@ -31,7 +37,8 @@
             <li><a href="#" class="user">Hello, User</a></li>
             <li><a href="/dashboard" class="button">View Data</a></li>
             <li><a href="/manage" class="button">Settings</a></li>
-            <li><a class="button" data-ng-click="logout()">Logout</a></li>
+            <li><a href="/logout" class="button">Logout</a></li>
+            <!-- <li><a class="button" data-ng-click="logout()">Logout</a></li> -->
           </ul>
           {% else %}
           <ul class="header_topnav" data-ng-show="!authenticated">
