@@ -87,6 +87,22 @@ def servicesjson():
         ))
     return render_template('services.json')
 
+@app.route('/privacy')
+def privacy():
+    return render_template('pages/privacy.html', title = 'Privacy Policy', crumb = 'Privacy')
+
+@app.route('/about')
+def about():
+    return render_template('pages/about.html', title = 'About', crumb = 'About')
+
+@app.route('/researchers')
+def researchers():
+    return render_template('pages/researchers.html', title = 'Researchers', crumb = 'Researchers')
+
+@app.route('/providers')
+def providers():
+    return render_template('pages/providers.html', title = 'Health Care Providers', crumb = 'Health Care Providers')
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
