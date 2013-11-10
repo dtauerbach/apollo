@@ -29,14 +29,14 @@
           {% if current_user.is_authenticated() %}
           <ul class="header_topnav" data-ng-show="authenticated">
             <li><a href="#" class="user">Hello, User</a></li>
-            <li><a href="/account/dashboard" class="button">View Data</a></li>
-            <li><a href="/account/settings" class="button">Settings</a></li>
+            <li><a href="/dashboard" class="button">View Data</a></li>
+            <li><a href="/manage" class="button">Settings</a></li>
             <li><a class="button" data-ng-click="logout()">Logout</a></li>
           </ul>
           {% else %}
           <ul class="header_topnav" data-ng-show="!authenticated">
-            <li><a class="button" data-ng-click="login()">Sign in</a></li>
-            <li><a href="/join" class="button">Join</a></li>
+            <li><a href="/login" class="button">Sign in</a></li>
+            <li><a href="/register" class="button">Join</a></li>
           </ul>
           {% endif %}
           <ul class="menu">
