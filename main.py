@@ -89,10 +89,6 @@ def home():
         return redirect(url_for('accountDashboard'))
     return render_template('pages/home.html')
 
-@app.route('/join')
-def join():
-    return render_template('pages/join.html', title = 'Join Today', crumb = 'Join')
-
 @app.route('/privacy')
 def privacy():
     return render_template('pages/privacy.html', title = 'Privacy Policy', crumb = 'Privacy')
