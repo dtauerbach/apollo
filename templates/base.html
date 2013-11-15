@@ -2,15 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <!-- Suppress IE compatibility mode - required for Persona -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apollo: {% block title %}{% endblock %}</title>
 
     <!-- Bootstrap -->
-    <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
 
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen">
 
@@ -33,15 +30,14 @@
         </div>
         <div class="header_r">
           {% if current_user.is_authenticated() %}
-          <ul class="header_topnav" data-ng-show="authenticated">
-            <li><a href="#" class="user">Hello, User</a></li>
-            <li><a href="/dashboard" class="button">View Data</a></li>
-            <li><a href="/manage" class="button">Settings</a></li>
+          <ul class="header_topnav">
+            <li><a href="#" class="user">Hello, {{ current_user.email }}</a></li>
+            <li><a href="/account/dashboard" class="button">View Data</a></li>
+            <li><a href="/account/settings" class="button">Settings</a></li>
             <li><a href="/logout" class="button">Logout</a></li>
-            <!-- <li><a class="button" data-ng-click="logout()">Logout</a></li> -->
           </ul>
           {% else %}
-          <ul class="header_topnav" data-ng-show="!authenticated">
+          <ul class="header_topnav">
             <li><a href="/login" class="button">Sign in</a></li>
             <li><a href="/register" class="button">Join</a></li>
           </ul>
@@ -100,6 +96,9 @@
         <p class="footer_text">Apollo the human data project &copy; 2013 All rights reserved.</p>
       </div>
     </div>
-    
+
+    {% block script_tags %}
+
+    {% endblock %}
   </body>
 </html>

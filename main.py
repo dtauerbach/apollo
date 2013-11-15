@@ -2,7 +2,7 @@ import logging, os, sys
 import config
 from flask import Flask
 from flask import render_template as _render_template
-from flask import redirect, request, url_for
+from flask import jsonify, redirect, request, url_for
 from flaskext.csrf import csrf
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
@@ -18,9 +18,9 @@ from flask.ext.security import Security, SQLAlchemyUserDatastore, \
 # Augment Flask's render_template with variables we want available everywhere
 def render_template(template_name, **kwargs):
     default_args = {
-       "user":current_user,
-       "login_user_form": security.login_form(),
-       "register_user_form": security.register_form()
+        "user":current_user,
+        "login_user_form": security.login_form(),
+        "register_user_form": security.register_form()
     }
     template_args = dict(kwargs.items() + default_args.items())
     return _render_template(template_name,**template_args)
@@ -73,19 +73,21 @@ def create_user():
     user_datastore.create_user(email='me@paulsawaya.com', password='batman',confirmed_at=datetime.now())
     db.session.commit()
 
-@app.route('/')
-def main_page():
-    if current_user.is_authenticated():
-        return redirect(url_for('dashboard'))
-    return render_template('pages/home.html')
 
 @app.route('/services.json')
 def servicesjson():
     if not current_user.is_authenticated():
-        return json.dumps(dict(
+        return jsonify(dict(
             error="You aren't authorized to view this."
         ))
     return render_template('services.json')
+
+
+@app.route('/')
+def home():
+    if current_user.is_authenticated():
+        return redirect(url_for('accountDashboard'))
+    return render_template('pages/home.html')
 
 @app.route('/privacy')
 def privacy():
@@ -103,17 +105,17 @@ def researchers():
 def providers():
     return render_template('pages/providers.html', title = 'Health Care Providers', crumb = 'Health Care Providers')
 
-@app.route('/dashboard')
+@app.route('/account/dashboard')
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
+def accountDashboard():
+    return render_template('pages/account/dashboard.html', title = 'Your Data', crumb = 'View Data')
 
-@app.route('/manage', methods=['GET'])
+@app.route('/account/settings')
 @login_required
-def manage_data_page():
-    return render_template('manage_data.html')
+def accountSettings():
+    return render_template('pages/account/settings.html', title = 'Manage Data Settings', crumb = 'Manage Data Settings')
 
-@app.route('/manage', methods=['POST'])
+@app.route('/account/settings', methods=['POST'])
 @login_required
 def manage_data_page_post():
     return "Your preference was %s" % (request.form['sharing-preference'])
