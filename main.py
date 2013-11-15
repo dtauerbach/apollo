@@ -73,12 +73,6 @@ def create_user():
     user_datastore.create_user(email='me@paulsawaya.com', password='batman',confirmed_at=datetime.now())
     db.session.commit()
 
-# @app.route('/')
-# def main_page():
-#     if current_user.is_authenticated():
-#         return redirect(url_for('dashboard'))
-#     return render_template('main_page.html')
-#
 
 @app.route('/services.json')
 def servicesjson():
