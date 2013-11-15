@@ -86,7 +86,7 @@ def servicesjson():
 @app.route('/')
 def home():
     if current_user.is_authenticated():
-        return redirect(url_for('accountDashboard'))
+        return redirect(url_for('dashboard'))
     return render_template('pages/home.html')
 
 @app.route('/privacy')
@@ -107,7 +107,7 @@ def providers():
 
 @app.route('/account/dashboard')
 @login_required
-def accountDashboard():
+def dashboard():
     return render_template('pages/account/dashboard.html', title = 'Your Data', crumb = 'View Data')
 
 @app.route('/account/settings')
