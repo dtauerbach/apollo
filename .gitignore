@@ -4,6 +4,7 @@ work log.txt
 
 #virtualenv
 venv
+env
 
 *.py[cod]
 
@@ -41,3 +42,14 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Intellij Idea
+.idea
+*.iml
+
+# Frontend generated stuff
+.sass-cache
+node_modules
+Gemfile.lock
+static/lib
+static/css
