@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apollo: {% block title %}{% endblock %}</title>
 
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -93,6 +96,9 @@
         <p class="footer_text">Apollo the human data project &copy; 2013 All rights reserved.</p>
       </div>
     </div>
-    
+
+    {% block script_tags %}
+
+    {% endblock %}
   </body>
 </html>
