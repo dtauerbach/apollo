@@ -1,15 +1,7 @@
 <div class="row">
-    <div class="social-login-buttons">
-        <div class="social-login-button">
-            <a href="{{ url_for('social_login.facebook_login') }}" class="btn btn-info btn-large">Log in with Facebook</a>
-        </div>
-
-        <div class="social-login-button">
-            <button class="persona-login-btn btn btn-info btn-large">Log in with Persona</button>
-        </div>
-
-        <div class="social-login-button">
-            <a href="{{ url_for('social_login.google_login') }}" class="btn btn-info btn-large">Log in with Google</a>
-        </div>
-    </div>
+  <div class="social-login-buttons text-center">
+    <a href="{{ url_for('social_login.facebook_login') }}" class="button">Log in with Facebook</a>
+    <button class="persona-login-btn button">Log in with Persona</button>
+    <a href="{{ url_for('social_login.google_login') }}" class="button">Log in with Google</a>
+  </div>
 </div>

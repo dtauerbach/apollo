@@ -1,37 +1,30 @@
 {% from "_macros.html" import render_field_with_errors, render_field %}
 {% include "security/_messages.html" %}
-<form action="{{ url_for('security.login') }}" role="form" class="form-horizontal" method="post" name="login_user_form">
-  {{ login_user_form.hidden_tag() }}
-  <div class="form-group">
-    <label for="loginModalEmail" class="col-md-4">Email address</label>
-    <div class="col-md-8">
-      {{ render_field_with_errors(login_user_form.email, id="loginModalEmail", 
-        with_labels=False, placeholder="Email", class="form-control") }}
-      <!-- <input type="email" class="form-control" id="email" placeholder="Enter email"> -->
-    </div>
-  </div>
 
-  <div class="form-group">
-    <label for="loginModalPassword" class="col-md-4">Password</label>
-    <div class="col-md-8">
-      {{ render_field_with_errors(login_user_form.password, id="loginModalPassword", 
-      with_labels=False, placeholder="Password", class="form-control") }}
-      <!-- <input type="password" class="form-control" id="password" placeholder="Password"> -->
-    </div>
-  </div>
-  {{ render_field_with_errors(login_user_form.remember) }}
+<form action="{{ url_for('security.login') }}" role="form" class="login form container-small" method="post" name="login_user_form">
+
+  {{ login_user_form.hidden_tag() }}
+  {{ render_field_with_errors(login_user_form.email, id="loginModalEmail", with_labels=False, placeholder="Email", class="field", placeholder="Email address") }}
+  {{ render_field_with_errors(login_user_form.password, id="loginModalPassword", with_labels=False, placeholder="Password", class="field", placeholder="Password") }}
+
+  <label class="checkbox">
+    {{ render_field_with_errors(login_user_form.remember, class="checkbox", with_labels=False) }}
+    Remember Me
+  </label>
+
   {{ render_field(login_user_form.next) }}
-  {{ render_field(login_user_form.submit, class="btn btn-primary btn-lg") }}
+  {{ render_field(login_user_form.submit, class="button") }}
   <!-- <button type="submit" class="btn btn-primary">Log in</button> -->
 </form>
+
+<br>
 <hr>
+
 <div class="row">
   <div class="container">
-    <div class="col-md-4 col-md-offset-4">
-      <p class="text-center">
-        Or, log in with one of these services:
-      </p>
-    </div>
+    <p class="text-center">
+    Or, log in with one of these services:
+    </p>
     {% include "partials/social_login.html" %}
   </div>
 </div>
