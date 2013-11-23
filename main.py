@@ -123,8 +123,7 @@ def manage_data_page_post():
 @login_required
 @app.route('/connect', methods=['POST'])
 def connect():
-    print str(request)
-    return str(request.data)
+    return request.json['scrapeEmail']
 
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)

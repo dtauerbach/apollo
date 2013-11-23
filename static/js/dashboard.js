@@ -92,11 +92,12 @@ function populateList() {
 }
 
 function connectStream() {
+  var formData = {scrapeEmail: $("#scrapeEmail").val(),
+                 scrapePassword: $("#scrapePassword").val()};
   $.ajax({url: "/connect",
           type: "POST",
-          data: {scrapeEmail: $("#scrapeEmail").val(),
-                 scrapePassword: $("#scrapePassword").val()
-                }
+          data: JSON.stringify(formData),
+          contentType: 'application/json;charset=UTF-8',
          })
     .done(function(data) {
             alert(data);
