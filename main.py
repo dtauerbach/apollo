@@ -120,6 +120,12 @@ def accountSettings():
 def manage_data_page_post():
     return "Your preference was %s" % (request.form['sharing-preference'])
 
+@login_required
+@app.route('/connect', methods=['POST'])
+def connect():
+    print str(request)
+    return str(request.data)
+
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)
     logging.basicConfig(level=logging.DEBUG)

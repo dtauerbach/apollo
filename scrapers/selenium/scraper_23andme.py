@@ -53,8 +53,12 @@ def runSelenium(user_email, user_password):
     browser.quit()
     return link_text, cookies
 
-email = raw_input("Email: ")
-passwd = raw_input("Password: ") 
+if len(sys.argv) == 3:
+    email = sys.argv[1]
+    passwd = sys.argv[2]
+else:
+    email = raw_input("Email: ")
+    passwd = raw_input("Password: ") 
 
 link, cookies = runSelenium(email, passwd)
 makeRequest(link, cookies)

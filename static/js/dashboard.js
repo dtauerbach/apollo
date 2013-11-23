@@ -90,3 +90,16 @@ function populateList() {
         }
     });
 }
+
+function connectStream() {
+  $.ajax({url: "/connect",
+          type: "POST",
+          data: {scrapeEmail: $("#scrapeEmail").val(),
+                 scrapePassword: $("#scrapePassword").val()
+                }
+         })
+    .done(function(data) {
+            alert(data);
+  });
+  alert("test");
+}
