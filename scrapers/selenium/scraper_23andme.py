@@ -10,11 +10,12 @@ def makeRequest(url, cookies):
     cookie_string = '; '.join(['%s=%s' % (item['name'], item['value']) for item in cookies])
     opener.addheaders.append(('Cookie', cookie_string))
     f = opener.open(url)
-    print "Finished opening URL. Writing file..."
-    with open('testfile_1.zip', 'wb') as local_file:
+    filename = 'testfile_%s.zip' % ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(20))
+    print "Finished opening URL. Writing file %s..." % filename
+    with open(filename, 'wb') as local_file:
        local_file.write(f.read())
     print "Extracting file..."
-    with zipfile.ZipFile('testfile_1.zip', 'r') as z:
+    with zipfile.ZipFile(filename, 'r') as z:
         z.extractall()
 
 def runSelenium(user_email, user_password):
