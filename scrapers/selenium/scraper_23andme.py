@@ -1,4 +1,4 @@
-import sys, urllib2, zipfile
+import sys, urllib2, zipfile, random, string
 from selenium import webdriver
 
 # todo: fast proxy
@@ -18,12 +18,7 @@ def makeRequest(url, cookies):
     with zipfile.ZipFile(filename, 'r') as z:
         z.extractall()
 
-def runSelenium(user_email, user_password):
-    profile = webdriver.FirefoxProfile()
-    #profile.set_preference('network.proxy.type', 1)
-    #profile.set_preference('network.proxy.socks', '127.0.0.1')
-    #profile.set_preference('network.proxy.socks_port', 9050)
-    browser = webdriver.Firefox(profile)
+def getSecretQuestion(browser, user_email, user_password):
     browser.get("https://www.23andme.com/user/signin")
     email_elt = browser.find_element_by_id("id_username")
     email_elt.send_keys(user_email)
@@ -35,14 +30,12 @@ def runSelenium(user_email, user_password):
     second_pass_elt = browser.find_element_by_name("password")
     second_pass_elt.send_keys(user_password)
     question_elts = browser.find_elements_by_class_name("form_region_exp")
-    secret = None
     for elt in question_elts:
         if elt.text.startswith("Secret question:"):
-            secret = raw_input(elt.text)
-            break
-    if not secret:
-        print "No secret provided, exiting"
-        sys.exit(1)
+            return elt.text
+    return False
+
+def finishVerification(browser, secret):
     secret_elt = browser.find_element_by_name("secret_answer")
     secret_elt.send_keys(secret)
     submit = browser.find_element_by_id("invite_submit")
@@ -53,12 +46,24 @@ def runSelenium(user_email, user_password):
     browser.quit()
     return link_text, cookies
 
-if len(sys.argv) == 3:
-    email = sys.argv[1]
-    passwd = sys.argv[2]
-else:
-    email = raw_input("Email: ")
-    passwd = raw_input("Password: ") 
 
-link, cookies = runSelenium(email, passwd)
-makeRequest(link, cookies)
+if __name__ == '__main__':
+    if len(sys.argv) == 3:
+        email = sys.argv[1]
+        passwd = sys.argv[2]
+    else:
+        email = raw_input("Email: ")
+        passwd = raw_input("Password: ")
+
+    #profile = webdriver.FirefoxProfile()
+    #profile.set_preference('network.proxy.type', 1)
+    #profile.set_preference('network.proxy.socks', '127.0.0.1')
+    #profile.set_preference('network.proxy.socks_port', 9050)
+    #browser = webdriver.Firefox(profile)
+
+    browser = webdriver.PhantomJS('phantomjs')
+
+    question = getSecretQuestion(browser, email, passwd)
+    answer = raw_input(question)
+    link, cookies = finishVerification(browser, answer)
+    makeRequest(link, cookies)

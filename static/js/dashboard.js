@@ -100,7 +100,6 @@ function connectStream() {
           contentType: 'application/json;charset=UTF-8',
          })
     .done(function(data) {
-            alert(data);
+      $('div.service-scraping').text(data);
   });
-  alert("test");
 }

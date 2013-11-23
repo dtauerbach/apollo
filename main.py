@@ -1,5 +1,7 @@
 import logging, os, sys
+sys.path.insert(0, "scrapers/selenium")
 import config
+import scraper_23andme
 from flask import Flask
 from flask import render_template as _render_template
 from flask import jsonify, redirect, request, url_for
@@ -9,7 +11,7 @@ from flask.ext.mail import Mail
 from flask.ext.runner import Runner
 from flask.ext.security import Security, SQLAlchemyUserDatastore, \
     UserMixin, RoleMixin, login_required, current_user, forms
-
+from selenium import webdriver
 
 # @app.context_processor
 # def template_extras():
@@ -82,7 +84,6 @@ def servicesjson():
         ))
     return render_template('services.json')
 
-
 @app.route('/')
 def home():
     if current_user.is_authenticated():
@@ -123,7 +124,15 @@ def manage_data_page_post():
 @login_required
 @app.route('/connect', methods=['POST'])
 def connect():
-    return request.json['scrapeEmail']
+    # todo: link this browser instance with the one that finishes the request
+    browser = webdriver.PhantomJS('phantomjs')
+    question = scraper_23andme.getSecretQuestion(browser, request.json['scrapeEmail'], request.json['scrapePassword'])
+    return question
+
+#    link, cookies = scraper_23andme.runSelenium(
+#    print "Successfully ran selenium"
+#    scraper_23andme.makeRequest(link, cookies)
+#    return "Success!"
 
 if __name__ == '__main__':
     app.config.update(DEBUG=True,PROPAGATE_EXCEPTIONS=True,TESTING=True)
