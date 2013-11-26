@@ -3,16 +3,23 @@
         "23andme": {
             "full_name": "23andme",
             "url": "http://23andme.com",
-            "icon": "{{ url_for('static', filename='img/service_placeholder.png' )}}",
+            "icon": "{{ url_for('static', filename='img/23andMe_Logo_blog.jpg' )}}",
             "keywords": ["genes", "genetics", "biology", "disease"],
-            "connect_type": "oauth"
+            "connect_type": "scraping"
         },
         "jawbone up": {
             "full_name": "Jawbone UP",
             "url": "http://jawbone.com",
-            "icon": "{{ url_for('static', filename='img/service_placeholder.png' )}}",
+            "icon": "{{ url_for('static', filename='img/jawbone_up.jpg' )}}",
             "keywords": ["jawbone", "exercise", "wellness", "quantified self"],
-            "connect_type": "scraping"
+            "connect_type": "oauth"
+        },
+        "electronic health record": {
+            "full_name": "Electronic Health Record",
+            "url": "",
+            "icon": "{{ url_for('static', filename='img/service_placeholder.png' )}}",
+            "keywords": ["upload", "manual"],
+            "connect_type": "manual_upload"
         },
         "kaiser permenante": {
             "full_name": "Kaiser Permenante",
@@ -22,11 +29,11 @@
             "connect_type": "manual_upload"
         },
         "nike": {
-            "full_name": "Nike",
+            "full_name": "Nike+",
             "url": "http://nike.com",
-            "icon": "{{ url_for('static', filename='img/service_placeholder.png' )}}",
+            "icon": "{{ url_for('static', filename='img/nikeplus.png' )}}",
             "keywords": ["exercise", "wellness", "quantified self", "running"],
-            "connect_type": "scraping"
+            "connect_type": "oauth"
         }
     }
 }
