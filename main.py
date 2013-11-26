@@ -122,8 +122,8 @@ def manage_data_page_post():
     return "Your preference was %s" % (request.form['sharing-preference'])
 
 @login_required
-@app.route('/connect', methods=['POST'])
-def connect():
+@app.route('/connect/23andme/1', methods=['POST'])
+def connect_23andme():
     # todo: link this browser instance with the one that finishes the request
     browser = webdriver.PhantomJS('phantomjs')
     question = scraper_23andme.getSecretQuestion(browser, request.json['scrapeEmail'], request.json['scrapePassword'])

@@ -91,16 +91,31 @@ function populateList() {
     });
 }
 
+// note this is only a demo for 23andme, but linked to ALL scraping forms right now
 function connectStream() {
   var formData = {scrapeEmail: $("#scrapeEmail").val(),
                  scrapePassword: $("#scrapePassword").val()};
-  $.ajax({url: "/connect",
+  $.ajax({url: "/connect/23andme/1",
           type: "POST",
           data: JSON.stringify(formData),
           contentType: 'application/json;charset=UTF-8',
          })
     .done(function(data) {
-      $('div.service-scraping').text(data);
+      var template = '<form role="form"> \
+        <div class="form-group"> \
+        <label for="secretAnswer">' + data + '</label> \
+        <input type="password" class="form-control" id="secretAnswer" placeholder="answer"> \
+        </div> \
+        <button type="submit" class="btn btn-primary" onclick="finishConnecting();"> \
+          Connect \
+        </button> \
+        </form>';
+      $('div.service-scraping').html(template);
   });
-  $('div.service-scraping-loading').text("Connecting...");
+  $('div.service-scraping').html("<center><h2>Connecting...</h2><br>(there should be a graphic here)</center>");
+}
+
+// note this is only a demo for 23andme, but linked to ALL scraping forms right now
+function finishConnecting() {
+  $('div.service-scraping').html("<center><h2>You have finished connecting 23andme. Please note that the data may take a few minutes to load </h2></center>");
 }
