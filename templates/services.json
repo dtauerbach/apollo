@@ -31,7 +31,7 @@
         "nike": {
             "full_name": "Nike+",
             "url": "http://nike.com",
-            "icon": "{{ url_for('static', filename='img/nikeplus.png' )}}",
+            "icon": "{{ url_for('static', filename='img/nikeplus.jpg' )}}",
             "keywords": ["exercise", "wellness", "quantified self", "running"],
             "connect_type": "oauth"
         }
