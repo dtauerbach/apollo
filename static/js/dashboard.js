@@ -102,4 +102,5 @@ function connectStream() {
     .done(function(data) {
       $('div.service-scraping').text(data);
   });
+  $('div.service-scraping-loading').text("Connecting...");
 }
