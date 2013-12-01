@@ -1,0 +1,22 @@
+.dashboard {
+  @extend %g-clearfix;
+  display: table;
+  width: 100%;
+}
+
+.dashboard_l {
+  display: block;
+  width: 280px;
+  display: block;
+  margin-right: 20px;
+}
+
+.dashboard_r {
+  width: 100%;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.dashboard_screenshot {
+  margin-bottom: 30px;
+}

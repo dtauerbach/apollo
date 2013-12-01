@@ -1,0 +1,73 @@
+
+<div class="dashboard">
+  <div class="dashboard_l nav">
+    <h2 class="nav_title">Connect a Data Stream</h2>
+    <input type="search" id="search_field" class="nav_search" placeholder="Search Data Streams" />
+    <ul class="nav_list">
+      <li><a href="#" class="services-container">Lorem Ipsum</a></li>
+    </ul>
+  </div>
+  <div class="dashboard_r">
+    <h1 class="title">Jawbone Up</h1>
+    <ul class="tabs">
+      <li><a href="#" class="active">Insights</a></li>
+      <li><a href="#">Visualizations</a></li>
+      <li><a href="#">Research</a></li>
+    </ul>
+
+    <img class="dashboard_screenshot" src="/assets/images/dashboard.png" />
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <a href="#" class="button">Join</a>
+  </div>
+</div>
+
+<div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="serviceModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" class="service-name" id="serviceModalLabel">
+          Connect to <span class="service-name">Service name</span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img class="service-icon" src=""/>
+        </div>
+        <div class="service-connection service-oauth">
+          <form role="form">
+            <button type="submit" class="btn btn-primary">Connect with oAuth</button>
+          </form>
+        </div>
+        <div class="service-connection service-manual_upload">
+          <form role="form">
+            <div class="form-group">
+              <label for="manualUploadFile">Upload your data</label>
+              <input type="file" id="manualUploadFile">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </form>
+        </div>
+        <div class="service-connection service-scraping">
+          <form role="form">
+            <div class="form-group">
+              <label for="scrapeEmail">Email address</label>
+              <input type="email" class="form-control" id="scrapeEmail" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="scrapePassword">Password</label>
+              <input type="password" class="form-control" id="scrapePassword" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="connectStream()">Connect</button>
+          </form>
+          <div class="service-scraping-loading"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+

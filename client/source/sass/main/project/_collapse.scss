@@ -1,0 +1,17 @@
+.collapse {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+
+  li {
+    margin: 0;
+    padding: 0;
+    padding-top: 12px;
+    border-bottom: 2px solid #f5f5f5;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

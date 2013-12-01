@@ -1,0 +1,41 @@
+.header {
+  @extend %g-clearfix;
+  display: table;
+  padding: 30px 0;
+  width: 100%;
+}
+
+.header_l {
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+.header_r {
+  width: 100%;
+  display: table-cell;
+  padding-bottom: 20px;
+  text-align: right;
+  vertical-align: bottom;
+}
+
+.header_logo {}
+
+.header_topnav {
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+  display: block;
+  list-style-type: none;
+
+  li {
+    display: inline-block;
+    margin-left: 8px;
+
+    .user {
+      color: #4aafe8;
+      text-decoration: none;
+      text-transform: uppercase;
+      margin-right: 12px;
+    }
+  }
+}
