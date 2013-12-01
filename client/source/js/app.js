@@ -4,6 +4,7 @@
  */
 define([
   'angular',
+  'jquery',
   './config',
   './modules/public/index',
   './modules/dashboard/index'

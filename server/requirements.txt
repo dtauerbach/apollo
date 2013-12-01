@@ -2,6 +2,7 @@ flask
 werkzeug
 gunicorn
 requests
+selenium
 Flask-CSRF
 Flask-SQLAlchemy
 Flask-WTF

@@ -2,6 +2,16 @@ module.exports = function (grunt) {
 
   var assetsDir = 'source/assets/';
 
+  function readBuildConfig () {
+    var configBuild = grunt.file.readJSON('source/js/config-build.json');
+    var configRequire = grunt.file.readJSON('source/js/config-require.json');
+
+    configBuild.shim = configRequire.shim;
+    configBuild.paths = configRequire.paths;
+
+    return configBuild;
+  }
+
   // Project configuration.
   grunt.initConfig({
     pkg      : grunt.file.readJSON('package.json'),
@@ -92,7 +102,7 @@ module.exports = function (grunt) {
     },
     requirejs: {
       compile: {
-        options: grunt.file.readJSON('source/js/build-config.json')
+        options: readBuildConfig()
       }
     },
     uglify   : {

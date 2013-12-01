@@ -1,7 +1,7 @@
 SERVER_NAME="localhost:5000"
 DEBUG = True
 SECRET_KEY = 'super-secret'
-SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/testdb'
+SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/apollo'
 SECURITY_CONFIRMABLE = True
 SECURITY_REGISTERABLE = True
 SECURITY_RECOVERABLE = True

@@ -11,17 +11,20 @@ import requests, json
 from cgi import parse_qs
 from urllib import urlencode
 
-social_login = Blueprint('social_login', __name__,
+social_login = Blueprint('api', __name__,
                 template_folder='templates')
 
-# Create (or find) an account for a given e-mail, and then log that 
-# user in.
-def login_or_register_by_email(email):
+# TODO authenticate with (email + PASSWORD)
+@social_login.route('/server/auth/login', methods=['POST'])
+def login_by_email(email):
     user_obj = User.query.filter(User.email==email).first()
-    if not user_obj:
-        user_obj = user_datastore.create_user(email=email,
-            confirmed_at=datetime.now())
-        user_datastore.commit()
+    if user_obj:
+        login_user(user_obj)
+
+@social_login.route('/server/auth/register', methods=['POST'])
+def register_by_email(email):
+    user_obj = user_datastore.create_user(email=email,confirmed_at=datetime.now())
+    user_datastore.commit()
     login_user(user_obj)
 
 @social_login.route('/persona_login', methods=['POST'])

@@ -1,8 +1,8 @@
 define([
   'angular-mocks',
-  'Source/modules/public/header-ctrl'
+  'Source/modules/public/register-ctrl'
 ], function () {
-  describe('HeaderController in app.public', function () {
+  describe('LoginController in app.public', function () {
 
     var scope, subject;
 
@@ -12,7 +12,7 @@ define([
 
       inject(function ($rootScope, $controller) {
         scope = $rootScope.$new();
-        subject = $controller('HeaderController', { $scope: scope });
+        subject = $controller('LoginController', { $scope: scope });
       });
     });
 

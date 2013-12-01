@@ -32,7 +32,7 @@ app = Flask(__name__)
 app.config.from_object(config)
 
 from flask_wtf.csrf import CsrfProtect
-CsrfProtect(app)
+# CsrfProtect(app)
 # csrf(app)
 
 mail = Mail(app)

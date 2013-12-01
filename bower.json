@@ -17,6 +17,7 @@
     "requirejs-domready": "latest",
     "requirejs-text": "latest",
     "requirejs-plugins": "latest",
-    "font-awesome": "~4.0.1"
+    "font-awesome": "~4.0.1",
+    "jquery": "~2.0.3"
   }
 }

@@ -12,10 +12,10 @@
   <![endif]-->
 
 </head>
-<body>
+<body data-ng-controller="LayoutController">
 
   <!-- Content -->
-  <div class="header" data-ng-controller="HeaderController">
+  <div class="header">
     <div class="container">
       <div class="header_l">
         <a href="/#/"><img width="200" src="/assets/images/logo.png" alt="Apollo" /></a>
@@ -94,35 +94,23 @@
    * prefer named modules to long paths, especially for version mgt
    * or 3rd party libraries
    */
-  require.config({
+  loadRequireConfig(function(config) {
+    require.config(JSON.parse(config));
+  });
 
-    paths: {
-      'angular'         : '../vendor/angular/angular',
-      'angular-bootstrap' : '../vendor/angular-bootstrap/ui-bootstrap-tpls',
-      'angular-resource': '../vendor/angular-resource/angular-resource',
-      'async'           : '../vendor/requirejs-plugins/src/async',
-      'domReady'        : '../vendor/requirejs-domready/domReady'
-    },
+  function loadRequireConfig(callback) {
+    var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
-    /**
-     * for libs that either do not support AMD out of the box, or
-     * require some fine tuning to dependency mgt'
-     */
-    shim: {
-      'angular': {
-        exports: 'angular'
-      },
-      'angular-bootstrap': {
-        deps: ['angular']
-      },
-      'angular-mocks': {
-        deps: ['angular']
-      },
-      'angular-resource': {
-        deps: ['angular']
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        callback(xmlhttp.responseText);
       }
     }
-  });
+
+    xmlhttp.open('GET', '/js/config-require.json', true);
+    xmlhttp.send();
+  }
+
 </script>
 
 </body>

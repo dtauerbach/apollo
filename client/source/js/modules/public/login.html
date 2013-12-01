@@ -1,11 +1,11 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
       <h4 class="modal-title" id="loginModalLabel">Log in</h4>
     </div>
     <div class="modal-body">
-      <form action="{{ url_for('security.login') }}" role="form" class="login form container-small" method="post" name="login_user_form">
+      <form class="form login" data-ng-submit="submit()">
         <div class="form-group">
           <label for="inputEmail">Email</label>
           <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
@@ -21,18 +21,8 @@
       </form>
     </div>
     <div class="modal-footer">
-      <div class="row">
-        <p class="text-center">
-        Or, log in with one of these services:
-        </p>
-        <div class="row">
-          <div class="social-login-buttons text-center">
-            <a href="{{ url_for('social_login.facebook_login') }}" class="button">Log in with Facebook</a>
-            <button class="persona-login-btn button">Log in with Persona</button>
-            <a href="{{ url_for('social_login.google_login') }}" class="button">Log in with Google</a>
-          </div>
-        </div>
-      </div>
+      <p class="text-center">Or, log in with one of these services:</p>
+      <div data-ng-include="'/js/partials/social_authentication.html'"></di^v>
     </div>
   </div>
 </div>

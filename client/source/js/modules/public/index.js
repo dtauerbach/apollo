@@ -2,11 +2,14 @@
  * Loader, contains list of Controllers module components
  */
 define([
-  './header-ctrl',
+  './_layout-ctrl',
   './home-ctrl',
+  './login-ctrl',
   './about-ctrl',
   './privacy-ctrl',
-  './providers-ctrl'
+  './providers-ctrl',
+  './register-ctrl',
+  './researchers-ctrl'
 ], function () {
 
 });
