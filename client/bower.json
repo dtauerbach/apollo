@@ -19,6 +19,7 @@
     "requirejs-plugins": "latest",
     "font-awesome": "~4.0.3",
     "bootstrap": "~3.0.2",
-    "angular-bootstrap": "latest"
+    "angular-bootstrap": "latest",
+    "underscore": "latest"
   }
 }

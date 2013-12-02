@@ -1,6 +1,7 @@
 {
   "paths": {
     "jquery"          : "../vendor/jquery/jquery",
+    "underscore"      : "../vendor/underscore/underscore",
     "angular"         : "../vendor/angular/angular",
     "angular-bootstrap" : "../vendor/angular-bootstrap/ui-bootstrap-tpls",
     "angular-resource": "../vendor/angular-resource/angular-resource",

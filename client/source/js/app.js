@@ -5,7 +5,9 @@
 define([
   'angular',
   'jquery',
+  'underscore',
   './config',
+  './services/index',
   './modules/public/index',
   './modules/dashboard/index'
 ], function (ng) {

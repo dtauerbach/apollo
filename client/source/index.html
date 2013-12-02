@@ -18,24 +18,24 @@
   <div class="header">
     <div class="container">
       <div class="header_l">
-        <a href="/#/"><img width="200" src="/assets/images/logo.png" alt="Apollo" /></a>
+        <a href="/"><img width="200" src="/assets/images/logo.png" alt="Apollo" /></a>
       </div>
       <div class="header_r">
-        <ul class="header_topnav" data-ng-show="currentUser.isAuthenticated()">
+        <ul class="header_topnav" data-ng-show="currentUser.authenticated" style="display: none">
           <li><a href="#" class="user">Hello, {{ currentUser.email }}</a></li>
-          <li><a href="/#/account/dashboard" class="button">View Data</a></li>
-          <li><a href="/#/account/settings" class="button">Settings</a></li>
-          <li><a href="/#/logout" class="button">Logout</a></li>
+          <li><a href="/account/dashboard" class="button">View Data</a></li>
+          <li><a href="/account/settings" class="button">Settings</a></li>
+          <li><a href="/logout" class="button">Logout</a></li>
         </ul>
-        <ul class="header_topnav" data-ng-hide="currentUser.isAuthenticated()">
+        <ul class="header_topnav" data-ng-hide="currentUser.authenticated">
           <li><a class="button" data-ng-click="login()">Sign in</a></li>
           <li><a class="button" data-ng-click="register()">Join</a></li>
         </ul>
         <ul class="menu">
-          <li><a href="/#/researchers">Researchers</a></li>
-          <li><a href="/#/providers">Health care providers</a></li>
-          <li><a href="/#/about">About</a></li>
-          <li><a href="/#/privacy">Privacy</a></li>
+          <li><a href="/researchers">Researchers</a></li>
+          <li><a href="/providers">Health care providers</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/privacy">Privacy</a></li>
         </ul>
       </div>
     </div>
@@ -49,8 +49,8 @@
   
   <div class="container" data-ng-show="crumb">
     <ul class="breadcrumbs">
-      <li><a href="/#/">Home</a></li>
-      <li><a href="/#/">{{ crumb }}</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/">{{ crumb }}</a></li>
     </ul>
   </div>
   

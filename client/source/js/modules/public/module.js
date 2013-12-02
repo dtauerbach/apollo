@@ -8,9 +8,9 @@
 define(['angular', '../../config'], function (ng) {
   'use strict';
 
-  return ng.module('app.public', ['app.constants'])
+  return ng.module('app.public', ['app.constants', 'app.services'])
 
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
       $routeProvider.when('/', {
         templateUrl: '/js/modules/public/home.html',
@@ -40,6 +40,8 @@ define(['angular', '../../config'], function (ng) {
       $routeProvider.otherwise({
         redirectTo: '/'
       });
+
+      $locationProvider.html5Mode(true);
 
     }]);
 
