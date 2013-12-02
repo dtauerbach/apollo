@@ -13,10 +13,26 @@ define([
 ], function (ng) {
   'use strict';
 
-  return ng.module('app', [
-    'app.constants',
-    'app.public',
-    'app.dashboard',
-    'ui.bootstrap'
-  ]);
+  return ng
+    .module('app', [
+      'app.constants',
+      'app.public',
+      'app.dashboard',
+      'ui.bootstrap'
+    ])
+    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+
+      $routeProvider.when('/404', {
+        templateUrl: '/js/partials/404.html',
+        controller : function () {
+          console.error('page not found');
+        }
+      });
+
+      $routeProvider.otherwise({
+        redirectTo: '/404'
+      });
+
+      $locationProvider.html5Mode(true);
+    }]);
 });

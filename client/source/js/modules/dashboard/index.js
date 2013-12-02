@@ -2,6 +2,7 @@
  * Loader, contains list of Controllers module components
  */
 define([
-  './dashboard-ctrl'
+  './dashboard-ctrl',
+  './settings-ctrl'
 ], function () {
 });

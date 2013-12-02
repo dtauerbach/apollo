@@ -8,6 +8,20 @@
 define(['angular', '../../config'], function (ng) {
   'use strict';
 
-  return ng.module('app.dashboard', ['app.constants']);
+  return ng.module('app.dashboard', ['app.constants'])
+
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+
+      $routeProvider.when('/account/dashboard', {
+        templateUrl: '/js/modules/dashboard/dashboard.html',
+        controller : 'DashboardController'
+      });
+
+      $routeProvider.when('/account/settings', {
+        templateUrl: '/js/modules/dashboard/settings.html',
+        controller : 'SettingsController'
+      });
+
+    }]);
 
 });

@@ -37,12 +37,6 @@ define(['angular', '../../config'], function (ng) {
         controller : 'ResearchersController'
       });
 
-      $routeProvider.otherwise({
-        redirectTo: '/'
-      });
-
-      $locationProvider.html5Mode(true);
-
     }]);
 
 });

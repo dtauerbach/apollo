@@ -76,7 +76,7 @@ def create_user():
     db.session.commit()
 
 
-@app.route('/services.json')
+@app.route('/server/services.json')
 def servicesjson():
     if not current_user.is_authenticated():
         return jsonify(dict(
