@@ -10,13 +10,6 @@ define(['./module', 'angular-bootstrap'], function (controllers) {
     $scope.currentUser = User;
 
     $scope.login = function() {
-      // waiting for login to work
-      return angular.extend(User, {
-        authenticated: true,
-        username: 'Dan',
-        email: 'dan@auerbach.com'
-      });
-
       $modal.open({
         templateUrl: '/js/modules/public/login.html',
         controller: 'LoginController'

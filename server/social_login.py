@@ -22,10 +22,16 @@ def login_by_email(email):
         login_user(user_obj)
 
 @social_login.route('/server/auth/register', methods=['POST'])
-def register_by_email(email):
-    user_obj = user_datastore.create_user(email=email,confirmed_at=datetime.now())
+def register_by_email():
+    user_obj = user_datastore.create_user(
+        email=request.form['email'],
+        username=request.form['username'],
+        password=request.form['password'],
+        confirmed_at=datetime.now()
+    )
     user_datastore.commit()
     login_user(user_obj)
+    return jsonify({'success': True})
 
 @social_login.route('/persona_login', methods=['POST'])
 def persona_login():

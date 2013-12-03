@@ -16,7 +16,7 @@ define(['./module'], function (controllers) {
     };
 
     $scope.submit = function () {
-      $.post(SERVER_URL + '/auth/register', {
+      $.post(SERVER_URL + '/auth/login', {
         email: $scope.email,
         password: $scope.password
       }, console.dir);

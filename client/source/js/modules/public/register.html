@@ -8,19 +8,19 @@
       <form class="form register" data-ng-submit="submit()">
         <div class="form-group">
           <label for="inputUsername">Username</label>
-          <input type="text" class="form-control" id="inputUsername" placeholder="Your Username">
+          <input type="text" class="form-control" id="inputUsername" placeholder="Your Username" data-ng-model="user.username">
         </div>
         <div class="form-group">
           <label for="inputEmail">Email</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" data-ng-model="user.email">
         </div>
         <div class="form-group">
           <label for="inputPassword">Password</label>
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password" data-ng-model="user.password">
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox">
+            <input type="checkbox" data-ng-model="terms">
             I have read and agree to the <a href="/#/terms" target="_blank">terms and conditions.</a>
           </label>
         </div>

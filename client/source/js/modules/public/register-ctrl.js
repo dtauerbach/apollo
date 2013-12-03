@@ -7,6 +7,8 @@ define(['./module'], function (controllers) {
 
   controllers.controller('RegisterController', function ($scope, SERVER_URL) {
 
+    $scope.user = {};
+
     $scope.ok = function () {
       $modalInstance.close(true);
     };
@@ -16,10 +18,7 @@ define(['./module'], function (controllers) {
     };
 
     $scope.submit = function () {
-      $.post(SERVER_URL + '/auth/register', {
-        email: $scope.email,
-        password: $scope.password
-      }, console.dir);
+      $.post(SERVER_URL + '/auth/register', $scope.user, console.dir);
     };
 
   });

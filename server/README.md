@@ -43,3 +43,7 @@ Now that front-end dependencies have been installed, we recommend using virtuale
     # when you're done
     (env) $ deactivate
 
+Or in one line:
+
+    $ virtualenv env; . env/bin/activate; pip install -r requirements.txt; python main.py
+
