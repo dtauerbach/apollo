@@ -3,6 +3,7 @@
  */
 define([
   './dashboard-ctrl',
-  './settings-ctrl'
+  './settings-ctrl',
+  './service-modal-ctrl'
 ], function () {
 });

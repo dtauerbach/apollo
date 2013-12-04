@@ -1,0 +1,57 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title" class="service-name" id="serviceModalLabel">
+        Connect to <span class="service-name">{{service.full_name}}</span>
+      </h4>
+    </div>
+    <div class="modal-body">
+      <div>
+        <img class="service-icon" src="/assets/images/services/{{service.icon}}" width="80" />
+      </div>
+      <div class="service-connection service-oauth" data-ng-show="service.connect_type=='oauth'">
+        <form role="form">
+          <button type="submit" class="btn btn-primary">Connect with oAuth</button>
+        </form>
+      </div>
+      <div class="service-connection service-manual_upload" data-ng-show="service.connect_type=='manual_upload'">
+        <form role="form">
+          <div class="form-group">
+            <label for="manualUploadFile">Upload your data</label>
+            <input type="file" id="manualUploadFile">
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+      <div class="service-connection service-scraping" data-ng-show="service.connect_type=='scraping'" data-ng-switch="scrapeState">
+
+        <form data-ng-switch-when="start">
+          <div class="form-group">
+            <label for="scrapeEmail">Email address</label>
+            <input type="email" class="form-control" data-ng-model="scrapeEmail" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="scrapePassword">Password</label>
+            <input type="password" class="form-control" data-ng-model="scrapePassword" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary" data-ng-click="connectStream()">Connect</button>
+        </form>
+
+        <form data-ng-switch-when="done">
+          <div class="form-group">
+            <label for="secretAnswer">{{response}}</label>
+            <input type="password" class="form-control" id="secretAnswer" placeholder="answer">
+          </div>
+          <button type="submit" class="btn btn-primary" data-ng-click="scrapeState='finished'">Connect</button>
+        </form>
+
+        <center data-ng-switch-when="finished">
+          <h2>Connecting...</h2><br>(there should be a graphic here)
+        </center>
+
+        <div class="service-scraping-loading"></div>
+      </div>
+    </div>
+  </div>
+</div>

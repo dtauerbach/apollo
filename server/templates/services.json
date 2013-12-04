@@ -1,0 +1,39 @@
+{
+    "services": {
+        "23andme": {
+            "full_name": "23andme",
+            "url": "http://23andme.com",
+            "icon": "23andMe_Logo_blog.jpg",
+            "keywords": ["genes", "genetics", "biology", "disease"],
+            "connect_type": "scraping"
+        },
+        "jawbone up": {
+            "full_name": "Jawbone UP",
+            "url": "http://jawbone.com",
+            "icon": "jawbone_up.jpg",
+            "keywords": ["jawbone", "exercise", "wellness", "quantified self"],
+            "connect_type": "oauth"
+        },
+        "electronic health record": {
+            "full_name": "Electronic Health Record",
+            "url": "",
+            "icon": "service_placeholder.png",
+            "keywords": ["upload", "manual"],
+            "connect_type": "manual_upload"
+        },
+        "kaiser permenante": {
+            "full_name": "Kaiser Permenante",
+            "url": "http://kaiser.com",
+            "icon": "service_placeholder.png",
+            "keywords": ["insurance", "care"],
+            "connect_type": "manual_upload"
+        },
+        "nike": {
+            "full_name": "Nike+",
+            "url": "http://nike.com",
+            "icon": "nikeplus.jpg",
+            "keywords": ["exercise", "wellness", "quantified self", "running"],
+            "connect_type": "oauth"
+        }
+    }
+}
