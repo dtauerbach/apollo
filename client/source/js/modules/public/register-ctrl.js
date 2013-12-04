@@ -5,9 +5,15 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('RegisterController', function ($scope, SERVER_URL) {
+  controllers.controller('RegisterController', function ($scope, $modalInstance, User, SERVER_URL) {
 
-    $scope.user = {};
+    $scope.user = {
+      username: 'foo',
+      email: 'foo@foo.com',
+      password: 'pass'
+    };
+
+    $scope.errors = {};
 
     $scope.ok = function () {
       $modalInstance.close(true);
@@ -18,7 +24,24 @@ define(['./module'], function (controllers) {
     };
 
     $scope.submit = function () {
-      $.post(SERVER_URL + '/auth/register', $scope.user, console.dir);
+      if (!$scope.user.terms) {
+        return $scope.errors.terms = true;
+      }
+
+      $scope.errors.terms = false;
+
+      $.post(SERVER_URL + '/auth/register', $scope.user, function(resp) {
+        if (resp.success) {
+          $scope.errors = {};
+          $modalInstance.close(true);
+          angular.extend(User, $scope.user, { authenticated: true });
+        } else {
+          $scope.errors.registration = true;
+          console.error(resp);
+        }
+
+        $scope.$apply();
+      });
     };
 
   });

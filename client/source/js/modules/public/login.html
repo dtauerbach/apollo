@@ -5,17 +5,18 @@
       <h4 class="modal-title" id="loginModalLabel">Log in</h4>
     </div>
     <div class="modal-body">
+      <div class="alert alert-danger" data-ng-show="error">Wrong email or password.</div>
       <form class="form login" data-ng-submit="submit()">
         <div class="form-group">
           <label for="inputEmail">Email</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" data-ng-model="email">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" data-ng-model="user.email">
         </div>
         <div class="form-group">
           <label for="inputPassword">Password</label>
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password" data-ng-model="password">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password" data-ng-model="user.password">
         </div>
         <div class="checkbox">
-          <label><input type="checkbox" data-ng-model="remember"> Remeber me</label>
+          <label><input type="checkbox" disabled data-ng-model="user.remember"> Remember me</label>
         </div>
         <button type="submit" class="btn btn-primary">Log in</button>
       </form>

@@ -11,15 +11,17 @@ import requests, json
 from cgi import parse_qs
 from urllib import urlencode
 
-social_login = Blueprint('api', __name__,
+social_login = Blueprint('social_login', __name__,
                 template_folder='templates')
 
 # TODO authenticate with (email + PASSWORD)
 @social_login.route('/server/auth/login', methods=['POST'])
-def login_by_email(email):
-    user_obj = User.query.filter(User.email==email).first()
+def login_by_email():
+    user_obj = User.query.filter(User.email==request.form['email']).first()
     if user_obj:
         login_user(user_obj)
+        return jsonify({'success': True})
+    return jsonify({'success': False})
 
 @social_login.route('/server/auth/register', methods=['POST'])
 def register_by_email():
@@ -33,7 +35,7 @@ def register_by_email():
     login_user(user_obj)
     return jsonify({'success': True})
 
-@social_login.route('/persona_login', methods=['POST'])
+@social_login.route('/server/persona_login', methods=['POST'])
 def persona_login():
     assertion = request.form['assertion']
     assertion_obj = {
@@ -61,7 +63,7 @@ def get_facebook_urlparams():
     redirect_uri=url_for('social_login.facebook_login_callback', _external=True),
     scope='email')
 
-@social_login.route('/facebook_login')
+@social_login.route('/server/facebook_login')
 def facebook_login():
     redirect_url = "https://www.facebook.com/dialog/oauth?"
     redirect_url += urlencode(get_facebook_urlparams())
@@ -95,7 +97,7 @@ def get_google_urlparams():
 
 # Google oAuth code is adopted from:
 # http://stackoverflow.com/questions/9499286/using-google-oauth2-with-flask
-@social_login.route('/google_login')
+@social_login.route('/server/google_login')
 def google_login():
     extra_params = dict(response_type='code',
         scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')
@@ -104,7 +106,7 @@ def google_login():
         extra_params.items()))
     return redirect(redirect_url)
 
-@social_login.route('/google_login_callback')
+@social_login.route('/server/google_login_callback')
 def google_login_callback():
     if not request.args.get('code'):
         flash('Please grant Google access to log in via Google.','danger')

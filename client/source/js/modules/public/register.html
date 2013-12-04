@@ -5,24 +5,28 @@
       <h4 class="modal-title">Create an account by entering your information below.</h4>
     </div>
     <div class="modal-body">
+      <div class="alert alert-danger" data-ng-show="errors.registration">
+        Error creating your account.
+      </div>
       <form class="form register" data-ng-submit="submit()">
         <div class="form-group">
           <label for="inputUsername">Username</label>
-          <input type="text" class="form-control" id="inputUsername" placeholder="Your Username" data-ng-model="user.username">
+          <input type="text" class="form-control" id="inputUsername" placeholder="Your Username" data-ng-model="user.username" required>
         </div>
         <div class="form-group">
           <label for="inputEmail">Email</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" data-ng-model="user.email">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" data-ng-model="user.email" required>
         </div>
         <div class="form-group">
           <label for="inputPassword">Password</label>
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password" data-ng-model="user.password">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password" data-ng-model="user.password" required>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" data-ng-model="terms">
+            <input type="checkbox" data-ng-model="user.terms">
             I have read and agree to the <a href="/#/terms" target="_blank">terms and conditions.</a>
           </label>
+          <div class="help-block" data-ng-show="errors.terms">You must agree terms and conditions</div>
         </div>
         <div>
           <button type="submit" class="btn btn-primary">Register</button>

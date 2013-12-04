@@ -5,7 +5,12 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('LoginController', function ($scope, SERVER_URL) {
+  controllers.controller('LoginController', function ($scope, $modalInstance, User, SERVER_URL) {
+
+    $scope.user = {
+      email: '',
+      password: ''
+    };
 
     $scope.ok = function () {
       $modalInstance.close(true);
@@ -16,10 +21,17 @@ define(['./module'], function (controllers) {
     };
 
     $scope.submit = function () {
-      $.post(SERVER_URL + '/auth/login', {
-        email: $scope.email,
-        password: $scope.password
-      }, console.dir);
+      $.post(SERVER_URL + '/auth/login', $scope.user, function(resp) {
+        if (resp.success) {
+          $scope.error = false;
+          $modalInstance.close(true);
+          angular.extend(User, $scope.user, { authenticated: true });
+        } else {
+          $scope.error = true;
+        }
+
+        $scope.$apply();
+      });
     };
 
   });

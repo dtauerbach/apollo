@@ -85,45 +85,8 @@ def servicesjson():
         ))
     return render_template('services.json')
 
-@app.route('/')
-def home():
-    if current_user.is_authenticated():
-        return redirect(url_for('dashboard'))
-    return render_template('pages/home.html')
-
-@app.route('/privacy')
-def privacy():
-    return render_template('pages/privacy.html', title = 'Privacy Policy', crumb = 'Privacy')
-
-@app.route('/about')
-def about():
-    return render_template('pages/about.html', title = 'About', crumb = 'About')
-
-@app.route('/researchers')
-def researchers():
-    return render_template('pages/researchers.html', title = 'Researchers', crumb = 'Researchers')
-
-@app.route('/providers')
-def providers():
-    return render_template('pages/providers.html', title = 'Health Care Providers', crumb = 'Health Care Providers')
-
-@app.route('/account/dashboard')
 @login_required
-def dashboard():
-    return render_template('pages/account/dashboard.html', title = 'Your Data', crumb = 'View Data')
-
-@app.route('/account/settings')
-@login_required
-def accountSettings():
-    return render_template('pages/account/settings.html', title = 'Manage Data Settings', crumb = 'Manage Data Settings')
-
-@app.route('/account/settings', methods=['POST'])
-@login_required
-def manage_data_page_post():
-    return "Your preference was %s" % (request.form['sharing-preference'])
-
-@login_required
-@app.route('/connect/23andme/1', methods=['POST'])
+@app.route('/server/connect/23andme/1', methods=['POST'])
 def connect_23andme():
     # todo: link this browser instance with the one that finishes the request
     browser = webdriver.PhantomJS('phantomjs')
