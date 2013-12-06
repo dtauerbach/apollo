@@ -12,7 +12,7 @@
       >
         <p class="data-source-label text-center">{{service.full_name}}</p>
       </li>
-      <li data-ng-hide="_.size(services)">
+      <li data-ng-show="_.size(services)">
         <p class="text-center">No service found</p>
       </li>
     </ul>
