@@ -34,5 +34,10 @@ define([
       });
 
       $locationProvider.html5Mode(true);
-    }]);
+    }]).run(function($rootScope) {
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+          $rootScope.title = current.$$route.title;
+          $rootScope.crumb = current.$$route.crumb;
+        });
+      });
 });

@@ -18,21 +18,29 @@ define(['angular', '../../config'], function (ng) {
       });
 
       $routeProvider.when('/about', {
+        title: 'About',
+        crumb: 'About',
         templateUrl: '/js/modules/public/about.html',
         controller : 'AboutController'
       });
 
       $routeProvider.when('/privacy', {
+        title: 'Privacy Policy',
+        crumb: 'Privacy',
         templateUrl: '/js/modules/public/privacy.html',
         controller : 'PrivacyController'
       });
 
       $routeProvider.when('/providers', {
+        title: 'Health Care Providers',
+        crumb: 'Health Care Providers',
         templateUrl: '/js/modules/public/providers.html',
         controller : 'ProvidersController'
       });
 
       $routeProvider.when('/researchers', {
+        title: 'Researchers',
+        crumb: 'Researchers',
         templateUrl: '/js/modules/public/researchers.html',
         controller : 'ResearchersController'
       });

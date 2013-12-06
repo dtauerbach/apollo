@@ -13,11 +13,15 @@ define(['angular', '../../config'], function (ng) {
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
       $routeProvider.when('/account/dashboard', {
+        title: 'Your Data',
+        crumb: 'View Data',
         templateUrl: '/js/modules/dashboard/dashboard.html',
         controller : 'DashboardController'
       });
 
       $routeProvider.when('/account/settings', {
+        title: 'Manage Data Settings',
+        crumb: 'Manage Data Settings',
         templateUrl: '/js/modules/dashboard/settings.html',
         controller : 'SettingsController'
       });
