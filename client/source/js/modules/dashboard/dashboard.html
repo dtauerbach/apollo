@@ -1,0 +1,34 @@
+
+<div class="dashboard">
+  <div class="dashboard_l nav">
+    <h2 class="nav_title">Connect a Data Stream</h2>
+    <input type="search" id="search_field" class="nav_search" placeholder="Search Data Streams" data-ng-change="searchService()" data-ng-model="searchTerm" />
+    <ul class="nav_list" class="services-container">
+      <li class="data-source"
+        data-soure-name="{{service.name}}"
+        data-ng-click="loadService(service)"
+        data-ng-hide="service.hide"
+        data-ng-repeat="service in services"
+      >
+        <p class="data-source-label text-center">{{service.full_name}}</p>
+      </li>
+      <li data-ng-show="_.size(services)">
+        <p class="text-center">No service found</p>
+      </li>
+    </ul>
+  </div>
+  <div class="dashboard_r">
+    <h1 class="title">Jawbone Up</h1>
+    <ul class="tabs">
+      <li><a href="#" class="active">Insights</a></li>
+      <li><a href="#">Visualizations</a></li>
+      <li><a href="#">Research</a></li>
+    </ul>
+
+    <img class="dashboard_screenshot" src="/assets/images/dashboard.png" />
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <a href="#" class="button">Join</a>
+  </div>
+</div>
