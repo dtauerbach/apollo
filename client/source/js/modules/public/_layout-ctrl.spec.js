@@ -12,7 +12,9 @@ define([
 
       module(function($provide){
         $provide.value('$modal', {
-        })
+        });
+        $provide.value('User', {
+        });
       });
 
       inject(function ($rootScope, $controller) {

@@ -1,6 +1,6 @@
 define([
   'angular-mocks',
-  'Source/modules/public/register-ctrl'
+  'Source/modules/public/login-ctrl'
 ], function () {
   describe('LoginController in app.public', function () {
 
@@ -11,7 +11,9 @@ define([
       module('app.public');
 
       module(function($provide){
-        $provide.value('$modal', {
+        $provide.value('$modalInstance', {
+        });
+        $provide.value('User', {
         })
       });
 
