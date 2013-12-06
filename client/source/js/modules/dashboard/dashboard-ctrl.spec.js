@@ -13,7 +13,6 @@ define([
 
       module(function($provide){
         $provide.value('$modal', {
-
         })
       });
 

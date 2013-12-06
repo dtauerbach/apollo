@@ -18,6 +18,7 @@ define([
       'app.constants',
       'app.public',
       'app.dashboard',
+      'app.services',
       'ui.bootstrap'
     ])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

@@ -5,10 +5,10 @@
  * below, you can see we bring in our services and constants modules
  * which avails each controller of, for example, the `config` constants object.
  **/
-define(['angular', '../../config'], function (ng) {
+define(['angular', '../../config', '../../services/module'], function (ng) {
   'use strict';
 
-  return ng.module('app.dashboard', ['app.constants'])
+  return ng.module('app.dashboard', ['app.constants', 'app.services'])
 
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
