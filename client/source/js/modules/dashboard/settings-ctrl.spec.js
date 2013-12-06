@@ -1,6 +1,6 @@
 define([
   'angular-mocks',
-  'Source/modules/dashbord/settings-ctrl'
+  'Source/modules/dashboard/settings-ctrl'
 ], function () {
 
   describe('SettingsController in app.dashboard', function () {

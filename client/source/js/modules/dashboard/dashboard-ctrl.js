@@ -33,6 +33,7 @@ define(['./module'], function (controllers) {
       _.each($scope.services, function(service) {
         var keywordFound = _.any(keywords, function(keyword) {
           return service.keywords.join(' ').indexOf(keyword) !== -1;
+//          return (service.keywords.join(' ').indexOf(keyword) !== -1) || (service.full_name.indexOf(keyword));
         });
 
         service.hide = keywords.length && !keywordFound;
