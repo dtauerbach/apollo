@@ -10,6 +10,11 @@ define([
 
       module('app.public');
 
+      module(function($provide){
+        $provide.value('$modal', {
+        })
+      });
+
       inject(function ($rootScope, $controller) {
         scope = $rootScope.$new();
         subject = $controller('LoginController', { $scope: scope });

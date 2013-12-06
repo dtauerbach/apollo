@@ -8,7 +8,7 @@
 define(['angular', '../../config'], function (ng) {
   'use strict';
 
-  return ng.module('app.public', ['app.constants', 'app.services'])
+  return ng.module('app.public', ['app.constants'])
 
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 

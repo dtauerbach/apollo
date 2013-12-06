@@ -10,6 +10,11 @@ define([
 
       module('app.public');
 
+      module(function($provide){
+        $provide.value('$modalInstance', {
+        })
+      });
+
       inject(function ($rootScope, $controller) {
         scope = $rootScope.$new();
         subject = $controller('RegisterController', { $scope: scope });
