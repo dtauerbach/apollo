@@ -4,7 +4,7 @@ from datetime import datetime
 
 from flask import Blueprint, current_app, flash, jsonify, \
     redirect, render_template, request, url_for
-from flask.ext.security import login_user
+from flask.ext.security import login_user, utils
 
 import requests, json
 
@@ -129,3 +129,8 @@ def google_login_callback():
         return "Could not get user e-mail."
     login_or_register_by_email(profile_obj['email'])
     return redirect(url_for('dashboard'))
+
+@social_login.route('/server/logout')
+def logout():
+    utils.logout_user()
+    return "ok"

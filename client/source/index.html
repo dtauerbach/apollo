@@ -25,7 +25,7 @@
           <li><a href="#" class="user">Hello, {{ currentUser.email }}</a></li>
           <li><a href="/account/dashboard" class="button">View Data</a></li>
           <li><a href="/account/settings" class="button">Settings</a></li>
-          <li><a href="/logout" class="button">Logout</a></li>
+          <li><a ng-click="logout()" class="button">Logout</a></li>
         </ul>
         <ul class="header_topnav" data-ng-hide="currentUser.authenticated">
           <li><a class="button" data-ng-click="login()">Sign in</a></li>
