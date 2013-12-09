@@ -1,0 +1,48 @@
+---
+  - include: $prudentia_dir/tasks/mysql_5.5.yml
+
+  # TODO check how to pass var as stdin
+  #- name: Apollo DB | Setup
+  #  shell: $install_dir/server/db/setup.sh << $mysql_root_password
+  #  tags: server
+
+  - name: Apollo Server | Install MySQL dev
+    action: apt update-cache=yes force=yes state=present pkg=libmysqlclient-dev
+    tags: server
+    sudo: yes
+
+  - include: $prudentia_dir/tasks/python.yml
+
+  - name: Apollo Server | Install python dependencies
+    pip: requirements=$install_dir/server/requirements.txt state=present
+    sudo: yes
+    tags: server
+
+  - name: Apollo Server | Install gunicorn
+    pip: name=gunicorn state=present
+    sudo: yes
+    tags: server
+
+  - name: Apollo Server | Copy configuration
+    action: template src=$root_dir/components/templates/config.py.j2 dest=$install_dir/server/config.py
+    register: configuration
+    sudo: yes
+    tags:
+      - server
+      - update
+
+  - name: Apollo Server | Copy upstart script
+    action: template src=$root_dir/components/templates/upstart.conf.j2 dest=/etc/init/apollo-api.conf
+    register: upstart
+    sudo: yes
+    tags:
+      - server
+      - update
+
+  - name: Apollo Server | Restart
+    action: service name=apollo-api state=restarted
+    #when: checkout.changed or configuration.changed or upstart.changed
+    sudo: yes
+    tags:
+      - server
+      - update

@@ -1,0 +1,74 @@
+---
+  - include: $prudentia_dir/tasks/nodejs.yml
+
+  - name: Apollo Client | Check if grunt is installed
+    command: test -x /usr/bin/grunt
+    ignore_errors: yes
+    register: grunt_present
+    tags: client
+
+  - name: Apollo Client | Install grunt-cli
+    command: npm -g install grunt-cli
+    when: grunt_present|failed
+    sudo: yes
+    tags: client
+
+  - name: Apollo Client | Install karma
+    command: npm -g install karma
+    when: grunt_present|failed
+    sudo: yes
+    tags: client
+
+  - name: Apollo Client | Install node modules
+    command: chdir=$install_dir/client npm install
+    tags:
+      - client
+      - update
+
+  - name: Apollo Client | Install fontforge
+    apt: pkg=fontforge state=present
+    sudo: yes
+    tags: client
+
+  - include: $prudentia_dir/tasks/ruby.yml
+
+  # we use bash -l because we need to get ruby and gems in PATH
+  - name: Apollo Client | Install bundler
+    shell: /bin/bash -lc 'gem install bundler'
+    tags: client
+
+  - name: Apollo Client | Install ruby modules
+    shell: chdir=$install_dir/client /bin/bash -lc 'bundle install'
+    tags: client
+
+  - name: Apollo Client | Compile styles
+    shell: chdir=$install_dir/client /bin/bash -lc 'grunt build-css build-js'
+    tags:
+      - client
+      - update
+
+  - include: $prudentia_dir/tasks/nginx.yml
+
+  - name: Apollo Client | Removing Nginx default site configuration
+    command: rm -f /etc/nginx/sites-enabled/default
+    sudo: yes
+    tags: client
+
+  - name: Apollo Client | Copy Nginx configuration
+    template: src=$root_dir/components/templates/nginx.conf.j2 dest=/etc/nginx/sites-available/apollo.com
+    sudo: yes
+    tags:
+      - client
+      - update
+
+  - name: Apollo Client | Enable website
+    command: ln -fs /etc/nginx/sites-available/apollo.com /etc/nginx/sites-enabled/apollo.com
+    sudo: yes
+    tags: client
+
+  - name: Apollo Client | Restart Nginx
+    command: /etc/init.d/nginx restart
+    sudo: yes
+    tags:
+      - client
+      - update
