@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CURRENT_DIR="$( cd -P "$( dirname "${BASH_SOURCE}" )" && pwd )"
+
 DB_USER="apollo"
 DB_PWD="apollo"
 DB_HOST="127.0.0.1"
@@ -24,4 +26,4 @@ SCRIPT
 echo ""
 
 echo "Creating the schema ..."
-mysql -u ${DB_USER} -p${DB_PWD} -h ${DB_HOST} ${DB_NAME} < ./schema.sql
+mysql -u ${DB_USER} -p${DB_PWD} -h ${DB_HOST} ${DB_NAME} < ${CURRENT_DIR}/schema.sql
