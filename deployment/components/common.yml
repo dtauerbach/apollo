@@ -5,13 +5,13 @@
   - include: $prudentia_dir/tasks/github.yml ssh_dir=/home/$ansible_user_id
 
   - name: Apollo Common | Create directory
-    action: file dest=$install_dir owner=$ansible_user_id group=$ansible_user_id mode=755 state=directory
+    file: dest=$install_dir owner=$ansible_user_id group=$ansible_user_id mode=755 state=directory
     sudo: yes
 
-#  - name: Apollo Common | Checkout git repository
-#    action: git repo=$git_repository dest=$install_dir version=$version
-#    register: checkout
-#    tags:
-#      - update
-#      - client
-#      - server
+  - name: Apollo Common | Checkout git repository
+    git: repo=$git_repository dest=$install_dir version=$version
+    register: checkout
+    tags:
+      - update
+      - client
+      - server

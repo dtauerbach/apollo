@@ -7,7 +7,7 @@
   #  tags: server
 
   - name: Apollo Server | Install MySQL dev
-    action: apt update-cache=yes force=yes state=present pkg=libmysqlclient-dev
+    apt: update-cache=yes force=yes state=present pkg=libmysqlclient-dev
     tags: server
     sudo: yes
 
@@ -24,15 +24,18 @@
     tags: server
 
   - name: Apollo Server | Copy configuration
-    action: template src=$root_dir/components/templates/config.py.j2 dest=$install_dir/server/config.py
+    template: src=$root_dir/components/templates/config.py.j2 dest=$install_dir/server/config.py
     register: configuration
     sudo: yes
     tags:
       - server
       - update
 
+  - name: Apollo Server | Create log dir
+    file: dest=$log_file_path owner=$ansible_user_id group=$ansible_user_id mode=755 state=directory
+
   - name: Apollo Server | Copy upstart script
-    action: template src=$root_dir/components/templates/upstart.conf.j2 dest=/etc/init/apollo-api.conf
+    template: src=$root_dir/components/templates/upstart.conf.j2 dest=/etc/init/apollo-api.conf
     register: upstart
     sudo: yes
     tags:
@@ -40,8 +43,8 @@
       - update
 
   - name: Apollo Server | Restart
-    action: service name=apollo-api state=restarted
-    #when: checkout.changed or configuration.changed or upstart.changed
+    service: name=apollo-api state=restarted
+    when: checkout.changed or configuration.changed or upstart.changed
     sudo: yes
     tags:
       - server
