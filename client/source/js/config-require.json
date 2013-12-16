@@ -12,6 +12,9 @@
     "angular"         : {
       "exports": "angular"
     },
+    "angular-bootstrap"   : {
+      "deps": ["angular"]
+    },
     "angular-mocks"   : {
       "deps": ["angular"]
     },
