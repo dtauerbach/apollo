@@ -24,7 +24,7 @@ define(['./module', 'angular-bootstrap'], function (controllers) {
     };
 
     $scope.logout = function() {
-      $http.get('/server/logout').success(function(data) {
+      $http.get('/server/auth/logout').success(function(data) {
         console.log(data);
 
         _.each(User, function(value, key) {

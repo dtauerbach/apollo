@@ -1,23 +1,25 @@
 import logging
 import sys
 import os
-import config
-from flask import Flask
-from flask import render_template as _render_template
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.mail import Mail
-from flask.ext.security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required, current_user
-from selenium import webdriver
-from datetime import datetime
 import json
 from cgi import parse_qs
 from urllib import urlencode
+
+import config
+from db import UserRepository
+from flask import Flask
+from flask import render_template as _render_template
+from flask.ext.mail import Mail
+from flask.ext.security import Security, login_required, current_user
+from selenium import webdriver
 from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
-from flask.ext.security import login_user, utils
+from flask.ext.security import utils
 import requests
+
 
 sys.path.insert(0, "scrapers/selenium")
 import scraper_23andme
+
 
 # Create app
 app = Flask(__name__)
@@ -31,41 +33,17 @@ else:
     logging.basicConfig(level=logging.DEBUG)
 logging.info('Starting server ...')
 
+
 # from flask.ext.wtf import CsrfProtect
 # CsrfProtect(app)
 # csrf(app)
 
+
 mail = Mail(app)
 app.extensions['mail'] = mail
 
-#Create database connection object
-db = SQLAlchemy(app)
-
-# Define models
-roles_users = db.Table('roles_users',
-                       db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
-
-
-class Role(db.Model, RoleMixin):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(80), unique=True)
-    description = db.Column(db.String(255))
-
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), unique=True)
-    username = db.Column(db.String(255), unique=True)
-    password = db.Column(db.String(255))
-    active = db.Column(db.Boolean())
-    confirmed_at = db.Column(db.DateTime())
-    roles = db.relationship('Role', secondary=roles_users,
-                            backref=db.backref('users', lazy='dynamic'))
-
-# Setup Flask-Security
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
+user_repository = UserRepository(app)
+security = Security(app, user_repository.user_datastore)
 
 
 @app.route('/')
@@ -76,19 +54,14 @@ def index():
 # Create a user to test with
 @app.before_first_request
 def create_user():
-    logging.info('Creating user ...')
-    try:
-        user = User.query.filter(User.email == 'me@paulsawaya.com').first()
-        # Don't create a new user obj if one already exists.
-        if not user:
-            db.create_all()
-            user_datastore.create_user(email='me@paulsawaya.com', password='batman', confirmed_at=datetime.now())
-            db.session.commit()
-            logging.info('User created')
-        else:
-            logging.info('User already exists')
-    except RuntimeError, e:
-        logging.error('Error creating user', e)
+    username = 'Paul'
+    email = 'me@paulsawaya.com'
+    password = 'batman'
+    logging.info('Creating default user ...')
+    if not user_repository.login(email, password):
+        user_repository.register(username, email, password)
+        logging.info('User created')
+    logging.info('User already exists')
 
 
 @app.route('/server/services.json')
@@ -119,36 +92,35 @@ def render_template(template_name, **kwargs):
     return _render_template(template_name, **template_args)
 
 
+social_login = Blueprint('social_login', __name__)
 
-social_login = Blueprint('social_login', __name__, template_folder='templates')
 
-
-# TODO authenticate with (email + PASSWORD)
 @social_login.route('/server/auth/login', methods=['POST'])
-def login_by_email():
-    user_obj = User.query.filter(User.email == request.form['email']).first()
-    if user_obj:
-        login_user(user_obj)
-        return jsonify({'success': True})
-    return jsonify({'success': False})
+def login():
+    result = user_repository.login(request.form['email'], request.form['password'])
+    return jsonify({'success': result})
 
 
 @social_login.route('/server/auth/register', methods=['POST'])
-def register_by_email():
-    user_obj = user_datastore.create_user(
-        email=request.form['email'],
-        username=request.form['username'],
-        password=request.form['password'],
-        confirmed_at=datetime.now()
-    )
-    user_datastore.commit()
-    login_user(user_obj)
+def register():
+    result = user_repository.register(request.form['username'], request.form['email'], request.form['password'])
+    return jsonify({'success': result})
+
+
+@social_login.route('/server/auth/logout')
+def logout():
+    utils.logout_user()
     return jsonify({'success': True})
+
+
+def login_or_register_by_email(email):
+    if not user_repository.login(email, ''):
+        return user_repository.register(email, email, '')
+    return False
 
 
 @social_login.route('/server/persona_login', methods=['POST'])
 def persona_login():
-    assertion = request.form['assertion']
     assertion_obj = {
         'assertion': request.form['assertion'],
         'audience': current_app.config['SERVER_NAME']
@@ -182,7 +154,7 @@ def facebook_login():
     return redirect(redirect_url)
 
 
-@social_login.route('/facebook_login_callback')
+@social_login.route('/server/facebook_login_callback')
 def facebook_login_callback():
     if not request.args.get('code'):
         flash('Please grant Facebook access to log in via Facebook.', 'danger')
@@ -243,12 +215,6 @@ def google_login_callback():
         return "Could not get user e-mail."
     login_or_register_by_email(profile_obj['email'])
     return redirect(url_for('dashboard'))
-
-
-@social_login.route('/server/logout')
-def logout():
-    utils.logout_user()
-    return "ok"
 
 
 app.register_blueprint(social_login)
