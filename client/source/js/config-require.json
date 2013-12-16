@@ -9,16 +9,17 @@
     "domReady"        : "../vendor/requirejs-domready/domReady"
   },
   "shim": {
-    "angular"         : {
-      "exports": "angular"
+    "angular" : {
+      "exports": "angular",
+      "deps": ["jquery"]
     },
-    "angular-bootstrap"   : {
+    "angular-bootstrap" : {
       "deps": ["angular"]
     },
-    "angular-mocks"   : {
+    "angular-mocks" : {
       "deps": ["angular"]
     },
-    "angular-resource": {
+    "angular-resource" : {
       "deps": ["angular"]
     }
   }
