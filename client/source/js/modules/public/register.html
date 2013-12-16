@@ -2,41 +2,37 @@
   <div class="modal-content">
     <div class="modal-header">
       <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-      <h4 class="modal-title">Create an account by entering your information below.</h4>
+      <h4 class="modal-title">Sign Up</h4>
     </div>
     <div class="modal-body">
-      <div class="alert alert-danger" data-ng-show="errors.registration">
-        Error creating your account.
-      </div>
+      <div class="text-center" data-ng-include="'/js/partials/social_authentication.html'"></div>
+      <p class="modal-separator"><span  class="line-center">or sign up with email</span></p>
+      <div class="alert alert-danger" data-ng-show="errors.registration">Error creating your account.</div>
       <form class="form register" data-ng-submit="submit()">
         <div class="form-group">
           <label for="inputUsername">Username</label>
-          <input type="text" class="form-control" id="inputUsername" placeholder="Your Username" data-ng-model="user.username" required>
+          <input type="text" class="form-control" id="inputUsername" placeholder="Username" data-ng-model="user.username" required>
         </div>
         <div class="form-group">
           <label for="inputEmail">Email</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" data-ng-model="user.email" required>
+          <input type="email" class="form-control" id="inputEmail" placeholder="mail@example.com" data-ng-model="user.email" required>
         </div>
         <div class="form-group">
           <label for="inputPassword">Password</label>
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password" data-ng-model="user.password" required>
+          <input type="password" class="form-control" id="inputPassword" placeholder="************" data-ng-model="user.password" required>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox" data-ng-model="user.terms">
-            I have read and agree to the <a href="/#/terms" target="_blank">terms and conditions.</a>
+            I agree with <a href="/#/terms" target="_blank">terms and conditions</a>
           </label>
           <div class="help-block" data-ng-show="errors.terms">You must agree terms and conditions</div>
         </div>
         <div>
-          <button type="submit" class="btn btn-primary">Register</button>
-          <a class="toplink pull-right" href="/login">Already a member?</a>
+          <button type="submit" class="button">Join</button>
+          <p class="form-button-right">Already a member? <a href="/login">Log in</a></p>
         </div>
       </form>
-    </div>
-    <div class="modal-footer">
-      <p class="text-center">Or, register with one of these services:</p>
-      <div data-ng-include="'/js/partials/social_authentication.html'"></div>
     </div>
   </div>
 </div>

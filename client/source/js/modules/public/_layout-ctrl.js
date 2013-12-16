@@ -12,14 +12,16 @@ define(['./module', 'angular-bootstrap'], function (controllers) {
     $scope.login = function() {
       $modal.open({
         templateUrl: '/js/modules/public/login.html',
-        controller: 'LoginController'
+        controller: 'LoginController',
+        windowClass: 'modal-login'
       });
     };
 
     $scope.register = function() {
       $modal.open({
         templateUrl: '/js/modules/public/register.html',
-        controller: 'RegisterController'
+        controller: 'RegisterController',
+        windowClass: 'modal-register'
       });
     };
 

@@ -8,9 +8,11 @@ define(['./module'], function (controllers) {
   controllers.controller('RegisterController', function ($scope, $modalInstance, User, SERVER_URL) {
 
     $scope.user = {
+      /*
       username: 'foo',
       email: 'foo@foo.com',
       password: 'pass'
+      */
     };
 
     $scope.errors = {};
