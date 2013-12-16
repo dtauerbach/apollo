@@ -4,7 +4,7 @@
   <ul class="collapse">
     <li>
       <label>
-        <input type="radio" name="setting" checked="checked" />
+        <input type="radio" name="privacySettings" data-ng-model="privacySettings" checked="checked" value="none" />
         <h2 class="subtitle">Do not share data</h2>
       </label>
       <div>
@@ -14,7 +14,7 @@
     </li>
     <li>
       <label>
-        <input type="radio" name="setting" />
+        <input type="radio" name="privacySettings" data-ng-model="privacySettings" value="researchers_partners" />
         <h2 class="subtitle">Share with researchers partners</h2>
       </label>
       <div class="hide">
@@ -24,7 +24,7 @@
     </li>
     <li>
       <label>
-        <input type="radio" name="setting" />
+        <input type="radio" name="privacySettings" data-ng-model="privacySettings" value="researchers" />
         <h2 class="subtitle">Share with researchers</h2>
       </label>
       <div class="hide">
@@ -34,7 +34,7 @@
     </li>
     <li>
       <label>
-        <input type="radio" name="setting" />
+        <input type="radio" name="privacySettings" data-ng-model="privacySettings" value="all" />
         <h2 class="subtitle">Make fully public</h2>
       </label>
       <div class="hide">
