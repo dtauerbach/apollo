@@ -5,6 +5,8 @@
       <h4 class="modal-title" id="loginModalLabel">Log in</h4>
     </div>
     <div class="modal-body">
+      <div class="text-center" data-ng-include="'/js/partials/social_authentication.html'"></div>
+      <p class="modal-separator"><span  class="line-center">or login with email</span></p>
       <div class="alert alert-danger" data-ng-show="error">Wrong email or password.</div>
       <form class="form login" data-ng-submit="submit()">
         <div class="form-group">
@@ -18,12 +20,8 @@
         <div class="checkbox">
           <label><input type="checkbox" disabled data-ng-model="user.remember"> Remember me</label>
         </div>
-        <button type="submit" class="btn btn-primary">Log in</button>
+        <button type="submit" class="button">Log in</button>
       </form>
-    </div>
-    <div class="modal-footer">
-      <p class="text-center">Or, log in with one of these services:</p>
-      <div data-ng-include="'/js/partials/social_authentication.html'"></di^v>
     </div>
   </div>
 </div>

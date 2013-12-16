@@ -31,7 +31,7 @@
 
   .checkbox {
     font-size: 13px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     display: block;
 
     input {
@@ -39,7 +39,15 @@
     }
   }
 
-  .button {
-    float: right;
+  .form-group {
+    label {
+      font-weight: 600;
+    }
+
+    .form-control {
+      border: 1px solid #aaa;
+      border-radius: 1px;
+      color: #686868;
+    }
   }
 }
