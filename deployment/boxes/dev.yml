@@ -1,6 +1,6 @@
 ---
 - hosts: apollo_dev
-  user: vagrant
+  user: ssq
 
   vars:
     # prudentia_dir -> is passed in the cmd line

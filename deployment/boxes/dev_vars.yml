@@ -2,5 +2,8 @@
   version: develop
   git_repository: git@github.com:dtauerbach/apollo.git
   install_dir: /opt/apollo
-  log_file_path: /opt/apollo/server/log/api.log
+
+  log_file_path: /opt/apollo/server/log
+  log_file_name: api.log
+
   mysql_root_password: root

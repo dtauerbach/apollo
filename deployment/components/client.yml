@@ -42,7 +42,7 @@
     tags: client
 
   - name: Apollo Client | Compile styles
-    shell: chdir=$install_dir/client /bin/bash -lc 'grunt build-css build-js'
+    shell: LANG=en_US.UTF-8 chdir=$install_dir/client /bin/bash -lc 'grunt build-css build-js'
     tags:
       - client
       - update
