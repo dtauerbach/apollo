@@ -77,6 +77,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
+  `privacySetting` varchar(100) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL,
   `active` int(1) DEFAULT NULL,
   `confirmed_at` int(10) DEFAULT NULL,
@@ -91,7 +92,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,NULL,'batman','username',1,2013,'me@paulsawaya.com');
+INSERT INTO `user` VALUES (1,NULL,'batman','none','username',1,2013,'me@paulsawaya.com');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

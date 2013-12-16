@@ -28,6 +28,10 @@ The backend stores data in MySQL. To setup DB and schema run:
 
     $ ./db/setup.sh
 
+In one line:
+
+    $ virtualenv env; . env/bin/activate; pip install -r requirements.txt; python main.py
+
 ### Run
 
     $ . env/bin/activate
