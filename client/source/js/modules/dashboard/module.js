@@ -13,8 +13,8 @@ define(['angular', '../../config', '../../services/module'], function (ng) {
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
       $routeProvider.when('/account/dashboard', {
-        title: 'Your Data',
-        crumb: 'View Data',
+        title: 'Dashboard',
+        crumb: 'Dashboard',
         templateUrl: '/js/modules/dashboard/dashboard.html',
         controller : 'DashboardController'
       });
