@@ -5,11 +5,11 @@
 define(['./module', 'angular-bootstrap'], function (controllers) {
   'use strict';
 
-  controllers.controller('LayoutController', function ($scope, $modal, $http, $location, User) {
+  controllers.controller('LayoutController', function ($scope, $rootScope, $modal, $http, $location, User) {
 
     $scope.currentUser = User;
 
-    $scope.login = function() {
+    $rootScope.login = function() {
       $modal.open({
         templateUrl: '/js/modules/public/login.html',
         controller: 'LoginController',
@@ -17,7 +17,7 @@ define(['./module', 'angular-bootstrap'], function (controllers) {
       });
     };
 
-    $scope.register = function() {
+    $rootScope.register = function() {
       $modal.open({
         templateUrl: '/js/modules/public/register.html',
         controller: 'RegisterController',
@@ -25,7 +25,7 @@ define(['./module', 'angular-bootstrap'], function (controllers) {
       });
     };
 
-    $scope.logout = function() {
+    $rootScope.logout = function() {
       $http.get('/server/auth/logout').success(function(data) {
         console.log(data);
 
