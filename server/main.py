@@ -51,19 +51,6 @@ app.register_blueprint(auth.social_login)
 def index():
     return 'API: is running.'
 
-# Create a user to test with
-@app.before_first_request
-def create_user():
-    username = 'Paul'
-    email = 'me@paulsawaya.com'
-    password = 'batman'
-    logging.info('Creating default user ...')
-    if not user_repository.login(email, password):
-        user_repository.register(username, email, password)
-        logging.info('User created')
-    logging.info('User already exists')
-
-
 @app.route('/server/services.json')
 def servicesjson():
     if not current_user.is_authenticated():

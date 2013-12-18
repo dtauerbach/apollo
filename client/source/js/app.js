@@ -21,8 +21,8 @@ define([
       'app.services',
       'ui.bootstrap'
     ])
-    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
+    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
       $routeProvider.when('/404', {
         templateUrl: '/js/partials/404.html',
         controller : function () {
@@ -30,22 +30,35 @@ define([
         }
       });
 
-      $routeProvider.otherwise({
-        redirectTo: '/404'
-      });
-
+      $routeProvider.otherwise({redirectTo: '/404'});
       $locationProvider.html5Mode(true);
-    }]).run(function($rootScope, $http, User) {
-        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-          $rootScope.title = current.$$route.title;
-          $rootScope.crumb = current.$$route.crumb;
-        });
+    }])
 
-        $http.get('/server/auth/check_authentication')
-          .success(function (resp) {
-            if (resp) {
-              angular.extend(User, resp, { authenticated: true });
-            }
-          });
+    // Intercept POST requests, convert to standard form encoding
+    .config(['$httpProvider', function ($httpProvider) {
+      $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+      $httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
+        var key, result = [];
+        for (key in data) {
+          if (data.hasOwnProperty(key)) {
+            result.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
+          }
+        }
+        return result.join("&");
       });
+    }])
+
+    .run(function($rootScope, $http, User) {
+      $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+        $rootScope.title = current.$$route.title;
+        $rootScope.crumb = current.$$route.crumb;
+      });
+
+      $http.get('/server/auth/check_authentication')
+        .success(function (resp) {
+          if (resp.username) {
+            angular.extend(User, resp, { authenticated: true });
+          }
+        });
+    });
 });
