@@ -1,5 +1,5 @@
 from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
-from flask.ext.security import utils
+from flask.ext.security import utils, current_user
 import requests
 import json
 from cgi import parse_qs
@@ -9,6 +9,13 @@ from urllib import urlencode
 user_repository = None
 
 social_login = Blueprint('social_login', __name__)
+
+
+@social_login.route('/server/auth/check_authentication')
+def check_authentication():
+    if current_user.is_authenticated():
+        return jsonify({'email': current_user.email, 'username': current_user.username})
+    return False
 
 
 @social_login.route('/server/auth/login', methods=['POST'])
