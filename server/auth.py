@@ -14,8 +14,12 @@ social_login = Blueprint('social_login', __name__)
 @social_login.route('/server/auth/check_authentication')
 def check_authentication():
     if current_user.is_authenticated():
-        return jsonify({'email': current_user.email, 'username': current_user.username})
-    return False
+        return jsonify({
+            'email': current_user.email,
+            'username': current_user.username,
+            'privacy_setting': current_user.privacy_setting
+        })
+    return jsonify({})
 
 
 @social_login.route('/server/auth/login', methods=['POST'])

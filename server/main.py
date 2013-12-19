@@ -9,6 +9,7 @@ from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required, current_user
 from selenium import webdriver
 from flask import jsonify, request
+from flask.ext.sqlalchemy import SQLAlchemy
 import config
 import auth
 
@@ -16,6 +17,7 @@ import auth
 sys.path.insert(0, "scrapers/selenium")
 import scraper_23andme
 
+db = SQLAlchemy()
 
 # Create app
 app = Flask(__name__)
@@ -49,20 +51,6 @@ app.register_blueprint(auth.social_login)
 def index():
     return 'API: is running.'
 
-
-# Create a user to test with
-@app.before_first_request
-def create_user():
-    username = 'Paul'
-    email = 'me@paulsawaya.com'
-    password = 'batman'
-    logging.info('Creating default user ...')
-    if not user_repository.login(email, password):
-        user_repository.register(username, email, password)
-        logging.info('User created')
-    logging.info('User already exists')
-
-
 @app.route('/server/services.json')
 def servicesjson():
     if not current_user.is_authenticated():
@@ -80,6 +68,18 @@ def connect_23andme():
     question = scraper_23andme.getSecretQuestion(browser, request.json['scrapeEmail'], request.json['scrapePassword'])
     return question
 
+@login_required
+@app.route('/server/privacySetting', methods=['POST'])
+def privacy_setting():
+    current_user.privacy_setting = request.form['privacySetting'];
+    db.session.commit()
+    return 'ok'
+
+
+#    link, cookies = scraper_23andme.runSelenium(
+#    print "Successfully ran selenium"
+#    scraper_23andme.makeRequest(link, cookies)
+#    return "Success!"
 
 def render_template(template_name, **kwargs):
     default_args = {
