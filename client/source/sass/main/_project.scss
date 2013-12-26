@@ -1,6 +1,7 @@
 @import 'project/*';
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+//@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,500,700);
 
 @import '../vendor/font-awesome/scss/font-awesome.scss';
 @import '/vendor/bootstrap/dist/css/bootstrap.css';
@@ -11,6 +12,10 @@ html, body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   color: #00004f;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+  }
 }
 
 .container {
@@ -59,8 +64,4 @@ html, body {
       margin-left: 4px;
     }
   }
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Open Sans', sans-serif;
 }

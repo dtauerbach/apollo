@@ -7,14 +7,16 @@
     margin: 50px 0;
 
     &:after {
-      content: '˄';
-      margin-top: -32px;
+      content: '';
+      background-image: url('/assets/images/home-arrow.png');
+      background-repeat: no-repeat;
+      margin-top: -8px;
       position: absolute;
       left: 50%;
       top: 0;
       display: block;
       background-color: #fff;
-      padding: 8px;
+      padding: 11px;
       font-size: 42px;
       color: #cfcfcf;
     }
