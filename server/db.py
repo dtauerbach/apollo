@@ -36,10 +36,10 @@ class UserRepository(object):
         self.user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 
     def login(self, email, pwd):
-        user_obj = User.query.filter(User.email == email).first()
-        if user_obj:
-            if user_obj.password == pwd:
-                return login_user(user_obj)
+        user = self.user_datastore.get_user(email)
+        if user:
+            if user.password == pwd:
+                return login_user(user)
         return False
 
     def register(self, username, email, pwd):

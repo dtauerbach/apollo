@@ -3,8 +3,7 @@ import sys
 import os
 
 from db import UserRepository
-from flask import Flask
-from flask import render_template as _render_template
+from flask import Flask, make_response, render_template
 from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required, current_user
 from selenium import webdriver
@@ -31,18 +30,12 @@ else:
     logging.basicConfig(level=logging.DEBUG)
 logging.info('Starting server ...')
 
-
-# from flask.ext.wtf import CsrfProtect
-# CsrfProtect(app)
-# csrf(app)
-
-
 mail = Mail(app)
 app.extensions['mail'] = mail
 
 user_repository = UserRepository(app)
-security = Security(app, user_repository.user_datastore)
-
+#the security state is returned from init_app
+security = Security().init_app(app, user_repository.user_datastore)
 auth.user_repository = user_repository
 app.register_blueprint(auth.social_login)
 
@@ -51,51 +44,38 @@ app.register_blueprint(auth.social_login)
 def index():
     return 'API: is running.'
 
+
 @app.route('/server/services.json')
+@login_required
 def servicesjson():
-    if not current_user.is_authenticated():
-        return jsonify(dict(
-            error="You aren't authorized to view this."
-        ))
     return render_template('services.json')
 
 
-@login_required
 @app.route('/server/connect/23andme/1', methods=['POST'])
+@login_required
 def connect_23andme():
     # todo: link this browser instance with the one that finishes the request
     browser = webdriver.PhantomJS('phantomjs')
     question = scraper_23andme.getSecretQuestion(browser, request.json['scrapeEmail'], request.json['scrapePassword'])
     return question
 
-@login_required
+
 @app.route('/server/privacySetting', methods=['POST'])
+@login_required
 def privacy_setting():
-    current_user.privacy_setting = request.form['privacySetting'];
+    current_user.privacy_setting = request.form['privacySetting']
     db.session.commit()
     return 'ok'
 
 
-#    link, cookies = scraper_23andme.runSelenium(
-#    print "Successfully ran selenium"
-#    scraper_23andme.makeRequest(link, cookies)
-#    return "Success!"
-
-def render_template(template_name, **kwargs):
-    default_args = {
-        "user": current_user,
-        "login_user_form": security.login_form(),
-        "register_user_form": security.register_form()
-    }
-    template_args = dict(kwargs.items() + default_args.items())
-    return _render_template(template_name, **template_args)
+@security.login_manager.unauthorized_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Forbidden.'}), 403)
 
 
-# Augment Flask's render_template with variables we want available everywhere
-# @app.context_processor
-# def template_extras():
-#     return dict(
-#         google_analytics_id=app.config.get('GOOGLE_ANALYTICS_ID', None))
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not Found.'}), 404)
 
 
 if __name__ == '__main__':
