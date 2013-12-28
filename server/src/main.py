@@ -45,13 +45,13 @@ def index():
     return 'API: is running.'
 
 
-@app.route('/server/services.json')
+@app.route('/api/services.json')
 @login_required
 def servicesjson():
     return render_template('services.json')
 
 
-@app.route('/server/connect/23andme/1', methods=['POST'])
+@app.route('/api/connect/23andme/1', methods=['POST'])
 @login_required
 def connect_23andme():
     # todo: link this browser instance with the one that finishes the request
@@ -60,7 +60,7 @@ def connect_23andme():
     return question
 
 
-@app.route('/server/privacySetting', methods=['POST'])
+@app.route('/api/privacySetting', methods=['POST'])
 @login_required
 def privacy_setting():
     current_user.privacy_setting = request.form['privacySetting']

@@ -11,7 +11,7 @@ user_repository = None
 social_login = Blueprint('social_login', __name__)
 
 
-@social_login.route('/server/auth/check_authentication')
+@social_login.route('/api/auth/check_authentication')
 def check_authentication():
     if current_user.is_authenticated():
         return jsonify({
@@ -22,19 +22,19 @@ def check_authentication():
     return jsonify({})
 
 
-@social_login.route('/server/auth/login', methods=['POST'])
+@social_login.route('/api/auth/login', methods=['POST'])
 def login():
     result = user_repository.login(request.form['email'], request.form['password'])
     return jsonify({'success': result})
 
 
-@social_login.route('/server/auth/register', methods=['POST'])
+@social_login.route('/api/auth/register', methods=['POST'])
 def register():
     result = user_repository.register(request.form['username'], request.form['email'], request.form['password'])
     return jsonify({'success': result})
 
 
-@social_login.route('/server/auth/logout')
+@social_login.route('/api/auth/logout')
 def logout():
     utils.logout_user()
     return jsonify({'success': True})
@@ -46,7 +46,7 @@ def login_or_register_by_email(email):
     return False
 
 
-@social_login.route('/server/persona_login', methods=['POST'])
+@social_login.route('/api/persona_login', methods=['POST'])
 def persona_login():
     assertion_obj = {
         'assertion': request.form['assertion'],
@@ -74,14 +74,14 @@ def get_facebook_urlparams():
         scope='email')
 
 
-@social_login.route('/server/facebook_login')
+@social_login.route('/api/facebook_login')
 def facebook_login():
     redirect_url = "https://www.facebook.com/dialog/oauth?"
     redirect_url += urlencode(get_facebook_urlparams())
     return redirect(redirect_url)
 
 
-@social_login.route('/server/facebook_login_callback')
+@social_login.route('/api/facebook_login_callback')
 def facebook_login_callback():
     if not request.args.get('code'):
         flash('Please grant Facebook access to log in via Facebook.', 'danger')
@@ -108,7 +108,7 @@ def get_google_urlparams():
 
 # Google oAuth code is adopted from:
 # http://stackoverflow.com/questions/9499286/using-google-oauth2-with-flask
-@social_login.route('/server/google_login')
+@social_login.route('/api/google_login')
 def google_login():
     extra_params = dict(response_type='code',
                         scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')
@@ -117,7 +117,7 @@ def google_login():
     return redirect(redirect_url)
 
 
-@social_login.route('/server/google_login_callback')
+@social_login.route('/api/google_login_callback')
 def google_login_callback():
     if not request.args.get('code'):
         flash('Please grant Google access to log in via Google.', 'danger')

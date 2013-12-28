@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('SettingsController', function ($scope, $http, $location, User) {
+  controllers.controller('SettingsController', function ($scope, $http, $location, User, SERVER_URL) {
 
     $scope.privacySetting = User.privacy_setting || 'none';
 
@@ -50,7 +50,7 @@ define(['./module'], function (controllers) {
     };
 
     $scope.updatePrivacySetting = function () {
-      $http.post('/server/privacySetting', { privacySetting: $scope.privacySetting })
+      $http.post(SERVER_URL + '/privacySetting', { privacySetting: $scope.privacySetting })
         .success(function () {
           $location.path('/account/dashboard');
         });

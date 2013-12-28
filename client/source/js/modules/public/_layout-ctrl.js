@@ -5,7 +5,7 @@
 define(['./module', 'angular-bootstrap'], function (controllers) {
   'use strict';
 
-  controllers.controller('LayoutController', function ($scope, $rootScope, $modal, $http, $location, User) {
+  controllers.controller('LayoutController', function ($scope, $rootScope, $modal, $http, $location, User, SERVER_URL) {
 
     $scope.currentUser = User;
 
@@ -26,7 +26,7 @@ define(['./module', 'angular-bootstrap'], function (controllers) {
     };
 
     $rootScope.logout = function() {
-      $http.get('/server/auth/logout').success(function(data) {
+      $http.get(SERVER_URL + '/auth/logout').success(function(data) {
         console.log(data);
 
         _.each(User, function(value, key) {

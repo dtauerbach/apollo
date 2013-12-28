@@ -18,7 +18,7 @@ define([
 
       inject(function ($rootScope, $controller, $httpBackend) {
         httpBackend = $httpBackend;
-        httpBackend.expectGET('/server/services.json').respond(200, '');
+        httpBackend.expectGET('/api/services.json').respond(200, '');
 
         scope = $rootScope.$new();
         subject = $controller('DashboardController', { $scope: scope });
