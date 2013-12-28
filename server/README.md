@@ -14,25 +14,12 @@ Make sure that Google's redirect_uri is set to http://(domain)/google_login_call
 
 ### Setup
 
-The backend is built in Flask and to set it up run the following commands:
-
-    $ virtualenv env
-    $ . env/bin/activate
-    (env) $ pip install -r requirements.txt
-
-    ... and when you're done
-
-    (env) $ deactivate
-
 The backend stores data in MySQL. To setup DB and schema run:
 
     $ ./db/setup.sh
 
-In one line:
-
-    $ virtualenv env; . env/bin/activate; pip install -r requirements.txt; python main.py
-
 ### Run
 
-    $ . env/bin/activate
-    (env) $ python main.py
+The backend is built in Flask. To run it:
+
+    $ ./start.sh
