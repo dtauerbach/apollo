@@ -14,4 +14,8 @@ then
   pip install -r ./requirements.txt
 fi
 
-./env/bin/python ./src/main.py
+cd ./src
+
+../env/bin/python main.py
+
+deactivate

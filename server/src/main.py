@@ -1,5 +1,4 @@
 import logging
-import sys
 import os
 
 from db import UserRepository
@@ -8,24 +7,18 @@ from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required, current_user
 from selenium import webdriver
 from flask import jsonify, request
-from flask.ext.sqlalchemy import SQLAlchemy
 import config
 import auth
+from scrapers import scraper_23andme
 
 
-sys.path.insert(0, "scrapers/selenium")
-import scraper_23andme
-
-db = SQLAlchemy()
-
-# Create app
 app = Flask(__name__)
 app.config.from_object(config)
-app.config.update(DEBUG=True, PROPAGATE_EXCEPTIONS=True, TESTING=True)
 
-LOG_FILE = '/opt/apollo/server/log/api.log'
-if os.path.exists(LOG_FILE):
-    logging.basicConfig(level=logging.DEBUG, filename=LOG_FILE)
+LOG_PATH = '/opt/apollo/server/log'
+LOG_FILE = 'api.log'
+if os.path.exists(LOG_PATH):
+    logging.basicConfig(level=logging.DEBUG, filename=LOG_PATH + '/' + LOG_FILE)
 else:
     logging.basicConfig(level=logging.DEBUG)
 logging.info('Starting server ...')
@@ -40,7 +33,7 @@ auth.user_repository = user_repository
 app.register_blueprint(auth.social_login)
 
 
-@app.route('/')
+@app.route('/api')
 def index():
     return 'API: is running.'
 
@@ -64,7 +57,7 @@ def connect_23andme():
 @login_required
 def privacy_setting():
     current_user.privacy_setting = request.form['privacySetting']
-    db.session.commit()
+    user_repository.user_datastore.session.commit()
     return 'ok'
 
 
