@@ -1,40 +1,14 @@
-config.py
 .DS_Store
-work log.txt
+*.py[cod]
+config.py
 
-#virtualenv
+# virtualenv
 venv
 env
 
-*.py[cod]
-
-# C extensions
-*.so
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-lib64
-
-# Installer logs
+# logs
 pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-
-# Translations
-*.mo
+log
 
 # Mr Developer
 .mr.developer.cfg
@@ -44,8 +18,3 @@ nosetests.xml
 # Intellij Idea
 .idea
 *.iml
-
-# Frontend generated stuff
-.sass-cache
-node_modules
-Gemfile.lock
