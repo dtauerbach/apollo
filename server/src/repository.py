@@ -38,10 +38,14 @@ class UserRepository(object):
         return False
 
     def register(self, username, email, pwd):
-        user_obj = self.user_datastore.create_user(
-            email=email,
-            username=username,
-            password=pwd
-        )
-        self.user_datastore.commit()
-        return login_user(user_obj)
+        user = self.user_datastore.get_user(email)
+        if not user:
+            user_obj = self.user_datastore.create_user(
+                email=email,
+                username=username,
+                password=pwd
+            )
+            self.user_datastore.commit()
+            return login_user(user_obj)
+        else:
+            return False
