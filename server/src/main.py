@@ -61,7 +61,7 @@ def connect_23andme():
 @login_required
 def privacy_setting():
     current_user.privacy_setting = request.form['privacySetting']
-    user_repository.user_datastore.session.commit()
+    db.session.commit()
     return 'ok'
 
 
