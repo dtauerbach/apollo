@@ -24,7 +24,8 @@
     tags: server
 
   - name: Apollo Server | Copy configuration
-    template: src=$root_dir/components/templates/config.py.j2 dest=$install_dir/server/config.py
+    template: src=$root_dir/components/templates/config.py.j2 dest=$install_dir/server/src/config.py
+    when: not share
     register: configuration
     sudo: yes
     tags:
