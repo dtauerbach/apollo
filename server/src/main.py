@@ -1,19 +1,23 @@
 import logging
 import os
 
-from db import UserRepository
 from flask import Flask, make_response, render_template
 from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required, current_user
 from selenium import webdriver
 from flask import jsonify, request
 import config
+from db import db
+from user import UserRepository
 import auth
 from scrapers import scraper_23andme
 
 
 app = Flask(__name__)
 app.config.from_object(config)
+
+db.app = app
+db.init_app(app)
 
 LOG_PATH = '/opt/apollo/server/log'
 LOG_FILE = 'api.log'
@@ -26,8 +30,8 @@ logging.info('Starting server ...')
 mail = Mail(app)
 app.extensions['mail'] = mail
 
-user_repository = UserRepository(app)
-#the security state is returned from init_app
+user_repository = UserRepository()
+# security state is returned from init_app and is used to get the login_manager
 security = Security().init_app(app, user_repository.user_datastore)
 auth.user_repository = user_repository
 app.register_blueprint(auth.social_login)

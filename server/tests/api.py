@@ -6,7 +6,7 @@ import main
 
 
 class TestStream(unittest.TestCase):
-    main.user_repository.create()
+    main.db.create_all()
 
     def setUp(self):
         self.client = main.app.test_client()
