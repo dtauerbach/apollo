@@ -42,10 +42,10 @@ def index():
     return 'API: is running.'
 
 
-@app.route('/api/services.json')
+@app.route('/api/streams.json')
 @login_required
 def servicesjson():
-    return render_template('services.json')
+    return render_template('streams.json')
 
 
 @app.route('/api/connect/23andme/1', methods=['POST'])

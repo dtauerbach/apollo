@@ -17,7 +17,7 @@ class TestStream(unittest.TestCase):
         assert 'API: is running.' in response.data
 
     def test_services(self):
-        response = self.client.get('/api/services.json')
+        response = self.client.get('/api/streams.json')
         assert response.status_code == 200
 
     def test_registration(self):
