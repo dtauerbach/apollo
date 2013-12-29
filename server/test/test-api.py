@@ -2,14 +2,14 @@ import unittest
 import sys
 
 sys.path.append('../src')
-import main
+import api
 
 
-class TestStream(unittest.TestCase):
-    main.db.create_all()
+class TestApi(unittest.TestCase):
+    api.db.create_all()
 
     def setUp(self):
-        self.client = main.app.test_client()
+        self.client = api.app.test_client()
 
     def test_index(self):
         response = self.client.get('/api')

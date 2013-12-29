@@ -23,3 +23,9 @@ The backend stores data in MySQL. To setup DB and schema run:
 The backend is built in Flask. To run it:
 
     $ ./start.sh
+
+### Test
+
+To check that everything is under control:
+
+    $ ./test.sh

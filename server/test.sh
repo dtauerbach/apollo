@@ -14,8 +14,8 @@ then
   pip install -r ./requirements.txt
 fi
 
-cd ./src
+cd ./test
 
-../env/bin/python api.py
+../env/bin/python test-api.py
 
 deactivate
