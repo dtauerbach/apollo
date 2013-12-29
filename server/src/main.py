@@ -8,7 +8,7 @@ from selenium import webdriver
 from flask import jsonify, request
 import config
 from db import db
-from user import UserRepository
+from repository import UserRepository
 import auth
 from scrapers import scraper_23andme
 
