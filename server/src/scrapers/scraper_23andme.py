@@ -1,5 +1,11 @@
-import sys, urllib2, zipfile, random, string
+import sys
+import urllib2
+import zipfile
+import random
+import string
+
 from selenium import webdriver
+
 
 # todo: fast proxy
 # todo: mask request to make it look more like browser
@@ -13,10 +19,11 @@ def makeRequest(url, cookies):
     filename = 'testfile_%s.zip' % ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(20))
     print "Finished opening URL. Writing file %s..." % filename
     with open(filename, 'wb') as local_file:
-       local_file.write(f.read())
+        local_file.write(f.read())
     print "Extracting file..."
     with zipfile.ZipFile(filename, 'r') as z:
         z.extractall()
+
 
 def getSecretQuestion(browser, user_email, user_password):
     browser.get("https://www.23andme.com/user/signin")
@@ -34,6 +41,7 @@ def getSecretQuestion(browser, user_email, user_password):
         if elt.text.startswith("Secret question:"):
             return elt.text
     return False
+
 
 def finishVerification(browser, secret):
     secret_elt = browser.find_element_by_name("secret_answer")

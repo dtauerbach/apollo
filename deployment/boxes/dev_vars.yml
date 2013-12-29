@@ -1,4 +1,6 @@
 ---
+  share: false
+  host_name: apollo.startersquad.com
   version: develop
   git_repository: git@github.com:dtauerbach/apollo.git
   install_dir: /opt/apollo

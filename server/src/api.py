@@ -1,31 +1,28 @@
 import logging
-import sys
 import os
 
-from db import UserRepository
 from flask import Flask, make_response, render_template
 from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required, current_user
 from selenium import webdriver
 from flask import jsonify, request
-from flask.ext.sqlalchemy import SQLAlchemy
 import config
+from db import db
+from repository import UserRepository
 import auth
+from scrapers import scraper_23andme
 
 
-sys.path.insert(0, "scrapers/selenium")
-import scraper_23andme
-
-db = SQLAlchemy()
-
-# Create app
 app = Flask(__name__)
 app.config.from_object(config)
-app.config.update(DEBUG=True, PROPAGATE_EXCEPTIONS=True, TESTING=True)
 
-LOG_FILE = '/opt/apollo/server/log/api.log'
-if os.path.exists(LOG_FILE):
-    logging.basicConfig(level=logging.DEBUG, filename=LOG_FILE)
+db.app = app
+db.init_app(app)
+
+LOG_PATH = '/opt/apollo/server/log'
+LOG_FILE = 'api.log'
+if os.path.exists(LOG_PATH):
+    logging.basicConfig(level=logging.DEBUG, filename=LOG_PATH + '/' + LOG_FILE)
 else:
     logging.basicConfig(level=logging.DEBUG)
 logging.info('Starting server ...')
@@ -33,25 +30,25 @@ logging.info('Starting server ...')
 mail = Mail(app)
 app.extensions['mail'] = mail
 
-user_repository = UserRepository(app)
-#the security state is returned from init_app
+user_repository = UserRepository()
+# security state is returned from init_app and is used to get the login_manager
 security = Security().init_app(app, user_repository.user_datastore)
 auth.user_repository = user_repository
 app.register_blueprint(auth.social_login)
 
 
-@app.route('/')
+@app.route('/api')
 def index():
     return 'API: is running.'
 
 
-@app.route('/server/services.json')
+@app.route('/api/streams.json')
 @login_required
 def servicesjson():
-    return render_template('services.json')
+    return render_template('streams.json')
 
 
-@app.route('/server/connect/23andme/1', methods=['POST'])
+@app.route('/api/connect/23andme/1', methods=['POST'])
 @login_required
 def connect_23andme():
     # todo: link this browser instance with the one that finishes the request
@@ -60,7 +57,7 @@ def connect_23andme():
     return question
 
 
-@app.route('/server/privacySetting', methods=['POST'])
+@app.route('/api/privacySetting', methods=['POST'])
 @login_required
 def privacy_setting():
     current_user.privacy_setting = request.form['privacySetting']

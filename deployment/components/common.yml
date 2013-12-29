@@ -10,6 +10,16 @@
 
   - name: Apollo Common | Checkout git repository
     git: repo=$git_repository dest=$install_dir version=$version
+    when: not share
+    register: checkout
+    tags:
+      - update
+      - client
+      - server
+
+  - name: Apollo Common | Fake checkout (sharing mode)
+    command: /bin/true
+    when: share
     register: checkout
     tags:
       - update

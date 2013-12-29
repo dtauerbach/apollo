@@ -1,0 +1,5 @@
+DEBUG = True
+TESTING = True
+LOGIN_DISABLED = True
+SQLALCHEMY_DATABASE_URI = 'sqlite://'
+SECRET_KEY = 'test-secret'

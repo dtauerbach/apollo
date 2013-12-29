@@ -1,6 +1,6 @@
 .DS_Store
 *.py[cod]
-config.py
+src/config.py
 
 # virtualenv
 venv

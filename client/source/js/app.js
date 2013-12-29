@@ -48,13 +48,13 @@ define([
       });
     }])
 
-    .run(function($rootScope, $http, User) {
+    .run(function($rootScope, $http, User, SERVER_URL) {
       $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.$$route.title;
         $rootScope.crumb = current.$$route.crumb;
       });
 
-      $http.get('/server/auth/check_authentication')
+      $http.get(SERVER_URL + '/auth/check_authentication')
         .success(function (resp) {
           if (resp.username) {
             angular.extend(User, resp, { authenticated: true });
