@@ -1,8 +1,6 @@
-import calendar
 from flask.ext.login import UserMixin
 from flask.ext.security import RoleMixin, SQLAlchemyUserDatastore, login_user
 from flask.ext.sqlalchemy import SQLAlchemy
-from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -32,8 +30,12 @@ class User(db.Model, UserMixin):
 
 class UserRepository(object):
     def __init__(self, app):
+        db.app = app
         db.init_app(app)
         self.user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+
+    def create(self):
+        db.create_all()
 
     def login(self, email, pwd):
         user = self.user_datastore.get_user(email)
@@ -43,12 +45,10 @@ class UserRepository(object):
         return False
 
     def register(self, username, email, pwd):
-        now = calendar.timegm(datetime.now().utctimetuple())
         user_obj = self.user_datastore.create_user(
             email=email,
             username=username,
-            password=pwd,
-            confirmed_at=now
+            password=pwd
         )
         self.user_datastore.commit()
         return login_user(user_obj)

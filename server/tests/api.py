@@ -6,6 +6,8 @@ import main
 
 
 class TestStream(unittest.TestCase):
+    main.user_repository.create()
+
     def setUp(self):
         self.client = main.app.test_client()
 
@@ -16,6 +18,12 @@ class TestStream(unittest.TestCase):
 
     def test_services(self):
         response = self.client.get('/api/services.json')
+        assert response.status_code == 200
+
+    def test_registration(self):
+        response = self.client.post('/api/auth/register', data=dict(username='me', email='foo', password='bar'))
+        assert response.status_code == 200
+        response = self.client.post('/api/auth/login', data=dict(email='foo', password='bar'))
         assert response.status_code == 200
 
 
