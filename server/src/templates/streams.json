@@ -10,7 +10,7 @@
         "jawbone up": {
             "full_name": "Jawbone UP",
             "url": "http://jawbone.com",
-            "icon": "jawbone_up.jpg",
+            "icon": "jawbone_up.png",
             "keywords": ["jawbone", "exercise", "wellness", "quantified self", "jawbone up"],
             "connect_type": "oauth"
         },
@@ -24,7 +24,7 @@
         "kaiser permenante": {
             "full_name": "Kaiser Permenante",
             "url": "http://kaiser.com",
-            "icon": "service_placeholder.png",
+            "icon": "kaiser-permanente.jpg",
             "keywords": ["insurance", "care", "kaiser permenante"],
             "connect_type": "manual_upload"
         },

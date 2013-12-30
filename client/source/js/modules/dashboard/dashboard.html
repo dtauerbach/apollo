@@ -3,14 +3,14 @@
   <div class="dashboard_l nav">
     <h2 class="nav_title">Connect a Data Stream</h2>
     <input type="search" id="search_field" class="nav_search" placeholder="Search Data Streams" data-ng-change="searchService()" data-ng-model="searchTerm" />
-    <ul class="nav_list" class="services-container">
+    <ul class="nav_list dashboard_stream-list" class="services-container">
       <li class="data-source"
         data-soure-name="{{service.name}}"
         data-ng-click="loadService(service)"
         data-ng-hide="service.hide"
         data-ng-repeat="service in services"
       >
-        <p class="data-source-label text-center">{{service.full_name}}</p>
+        <p class="data-source-label">{{service.full_name}}</p>
       </li>
       <li data-ng-show="_.size(services)">
         <p class="text-center">No service found</p>
