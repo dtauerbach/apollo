@@ -13,7 +13,8 @@ server {
     add_header "X-UA-Compatible" "IE=Edge,chrome=1";
 
     location / {
-        index index.html;
+        index  index.html index.htm;
+        try_files $uri /index.html;
     }
 
     location /api {
