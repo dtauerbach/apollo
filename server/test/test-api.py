@@ -17,7 +17,7 @@ class TestApi(unittest.TestCase):
         assert res.status_code == 200
         assert 'API: is running.' in res.data
 
-    def test_services(self):
+    def test_streams(self):
         res = self.client.get('/api/streams.json')
         assert res.status_code == 200
 
