@@ -8,8 +8,12 @@ define([
     var scope, subject;
 
     beforeEach(function () {
-
       module('app.dashboard');
+
+      module(function($provide){
+        $provide.value('User', {
+        })
+      });
 
       inject(function ($rootScope, $controller) {
         scope = $rootScope.$new();
