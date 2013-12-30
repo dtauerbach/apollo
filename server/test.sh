@@ -16,6 +16,6 @@ fi
 
 cd ./test
 
-../env/bin/python test-api.py
+../env/bin/python tests.py
 
 deactivate
