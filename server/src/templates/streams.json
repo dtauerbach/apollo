@@ -1,39 +1,39 @@
-{
-    "services": {
-        "23andme": {
-            "full_name": "23andme",
-            "url": "http://23andme.com",
-            "icon": "23andMe_Logo_blog.jpg",
-            "keywords": ["genes", "genetics", "biology", "disease", "23andme"],
-            "connect_type": "scraping"
-        },
-        "jawbone up": {
-            "full_name": "Jawbone UP",
-            "url": "http://jawbone.com",
-            "icon": "jawbone_up.png",
-            "keywords": ["jawbone", "exercise", "wellness", "quantified self", "jawbone up"],
-            "connect_type": "oauth"
-        },
-        "electronic health record": {
-            "full_name": "Electronic Health Record",
-            "url": "",
-            "icon": "service_placeholder.png",
-            "keywords": ["upload", "manual", "electronic health record"],
-            "connect_type": "manual_upload"
-        },
-        "kaiser permenante": {
-            "full_name": "Kaiser Permenante",
-            "url": "http://kaiser.com",
-            "icon": "kaiser-permanente.jpg",
-            "keywords": ["insurance", "care", "kaiser permenante"],
-            "connect_type": "manual_upload"
-        },
-        "nike": {
-            "full_name": "Nike+",
-            "url": "http://nike.com",
-            "icon": "nikeplus.jpg",
-            "keywords": ["exercise", "wellness", "quantified self", "running", "nike"],
-            "connect_type": "oauth"
-        }
-    }
-}
+[
+  {
+    "key": "23andme",
+    "full_name": "23andme",
+    "url": "http://23andme.com",
+    "icon": "23andMe_Logo_blog.jpg",
+    "keywords": ["genes", "genetics", "biology", "disease", "23andme"],
+    "connect_type": "scraping"
+  }, {
+    "key": "jawbone_up",
+    "full_name": "Jawbone UP",
+    "url": "http://jawbone.com",
+    "icon": "jawbone_up.jpg",
+    "keywords": ["jawbone", "exercise", "wellness", "quantified self", "jawbone up"],
+    "connect_type": "oauth"
+  }, {
+    "key": "electronic_health_record",
+    "full_name": "Electronic Health Record",
+    "url": "",
+    "icon": "service_placeholder.png",
+    "keywords": ["upload", "manual", "electronic health record"],
+    "connect_type": "manual_upload"
+  }, {
+    "key": "kaiser_permenante",
+    "full_name": "Kaiser Permenante",
+    "url": "http://kaiser.com",
+    "icon": "service_placeholder.png",
+    "keywords": ["insurance", "care", "kaiser permenante"],
+    "connect_type": "manual_upload"
+  }, {
+    "key": "nike",
+    "full_name": "Nike+",
+    "url": "http://nike.com",
+    "icon": "nikeplus.jpg",
+    "keywords": ["exercise", "wellness", "quantified self", "running", "nike"],
+    "connect_type": "oauth"
+  }
+]
+>>>>>>> privacy settings styling

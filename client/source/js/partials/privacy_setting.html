@@ -1,0 +1,14 @@
+<ul class="list-unstyled">
+  <li class="setting" data-ng-repeat="setting in privacySettings">
+    <label>
+      <input type="radio"
+        name="privacySetting"
+        data-ng-model="privacySetting"
+        data-ng-click="setPrivacySetting(setting.key)"
+        value="{{ setting.key }}"
+      />
+      {{ setting.label }}
+    </label>
+  </li>
+</ul>
+

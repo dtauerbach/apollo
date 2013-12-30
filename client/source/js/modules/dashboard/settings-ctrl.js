@@ -9,39 +9,15 @@ define(['./module'], function (controllers) {
 
     $scope.privacySetting = User.privacy_setting || 'none';
 
+    $scope.streams = [];
+
+    $scope.projects = ['Sleep study',  'Fitness study', 'Food study'];
+
     $scope.privacySettings = [
-      {
-        key: 'none',
-        label: 'Do not share data',
-        description: (
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        )
-      },
-      {
-        key: 'researchers_partners',
-        label: 'Share with researchers partners',
-        description: (
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        )
-      },
-      {
-        key: 'researchers',
-        label: 'Share with researchers',
-        description: (
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        )
-      },
-      {
-        key: 'all',
-        label: 'Make fully public',
-        description: (
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        )
-      }
+      { key: 'none', label: 'Don\'t share data' },
+      { key: 'researchers_partners', label: 'Share only with researchers' },
+      { key: 'researchers', label: 'Share only with approved researchers' },
+      { key: 'all', label: 'Make fully public' }
     ];
 
     // fix bug ng-model not working
@@ -55,6 +31,10 @@ define(['./module'], function (controllers) {
           $location.path('/account/dashboard');
         });
     };
+
+    $http.get('/api/streams.json').success(function (response) {
+      $scope.streams = response;
+    });
 
   });
 
