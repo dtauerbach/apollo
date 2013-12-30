@@ -5,7 +5,7 @@ server {
     charset utf-8;
 
     # @FIXME update this path with yours
-    set $host_path "/Users/gordonslondon/Sites/apollo/client";
+    set $host_path "{{PATH TO APOLLO}}/client";
 
     # Path for static files
     root $host_path/source;
