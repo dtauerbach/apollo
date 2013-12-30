@@ -53,6 +53,10 @@
       <li><a href="/">{{ crumb }}</a></li>
     </ul>
   </div>
+
+  <div class="container" data-ng-show="notification" style="display: none">
+    <div class="alert alert-{{ notification.type }}">{{ notification.message }}</div>
+  </div>
   
   <!-- Content -->
   <div class="main container" data-ng-view></div>

@@ -48,10 +48,21 @@ define([
       });
     }])
 
-    .run(function($rootScope, $http, User, SERVER_URL) {
+    .run(function($rootScope, $http, $location, User, SERVER_URL) {
       $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.$$route.title;
         $rootScope.crumb = current.$$route.crumb;
+      });
+
+      $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        if (next.$$route.requireLogin && !User.authenticated) {
+          $rootScope.notification = {
+            type: 'warning',
+            message: 'You must be authenticated to access this page, please login.'
+          };
+
+          $location.path('/');
+        }
       });
 
       $http.get(SERVER_URL + '/auth/check_authentication')
