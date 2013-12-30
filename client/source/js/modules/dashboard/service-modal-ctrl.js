@@ -11,6 +11,8 @@ define(['./module'], function (controllers) {
 
     // note this is only a demo for 23andme, but linked to ALL scraping forms right now
     $scope.connectStream = function() {
+      $scope.scrapeState = 'pending';
+
       $.ajax({
         url: SERVER_URL + '/connect/23andme/1',
         type: 'POST',
