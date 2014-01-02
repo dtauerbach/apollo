@@ -3,8 +3,18 @@ module.exports = function (grunt) {
   var assetsDir = 'source/assets/';
 
   function readBuildConfig () {
-    var configBuild = grunt.file.readJSON('source/js/config-build.json');
-    var configRequire = grunt.file.readJSON('source/js/config-require.json');
+    var configBuild = {
+      "wrap"                  : true,
+      "name"                  : "main",
+      "optimize"              : "none",
+      "baseUrl"               : "source/js",
+      "mainConfigFile"        : "source/js/main.js",
+      "out"                   : "build/js/main-src.js",
+      "disabled/exclude"      : ["main.js"],
+      "disabled/insertRequire": ["./main"]
+    };
+
+    var configRequire = require('./source/js/config-require.js');
 
     configBuild.shim = configRequire.shim;
     configBuild.paths = configRequire.paths;

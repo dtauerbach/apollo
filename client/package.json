@@ -2,6 +2,7 @@
   "name"           : "StarterSquad_AngularJS_RequireJS_Seed",
   "version"        : "0.3.0",
   "devDependencies": {
+    "amdefine"                  : "latest",
     "grunt"                     : "~0.4.1",
     "grunt-autoprefixer"        : "latest",
     "grunt-contrib-sass"        : "latest",
