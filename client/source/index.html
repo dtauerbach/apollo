@@ -90,16 +90,17 @@
 <script src="/vendor/requirejs/require.js"></script>
 <script>
   // obtain requirejs config
-  require(['require', './js/config-require'], function (require, config) {
+  require(['require', '/js/config-require.js'], function (require, config) {
 
     // set cache beater
     config.urlArgs = 'bust=v0.4.0';
+    config.baseUrl = '/';
 
     // update global require config
     window.require.config(config);
 
     // load app
-    require(['./js/main.js']);
+    require(['./js/main']);
   });
 </script>
 

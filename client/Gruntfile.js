@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
 
-  var assetsDir = 'source/assets/';
+  var assetsDir = 'source/assets/',
+    shell = require('shelljs');;
 
   function readBuildConfig () {
     var configBuild = {
@@ -159,6 +160,16 @@ module.exports = function (grunt) {
       compile: ['sass', 'autoprefixer'],
       compress: ['csso']
     }
+  });
+
+  // Adds additional require(['main']) call to start built app
+  grunt.registerTask('modifyBuildIndex', 'Adds js code required to start built app.', function () {
+    shell.sed(
+      '-i',
+      "require(['./js/main'])",
+      "require(['./js/main'], function () { require(['main']); })",
+      'build/index.html'
+    );
   });
 
   grunt.loadNpmTasks('grunt-autoprefixer');
