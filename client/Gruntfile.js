@@ -1,10 +1,21 @@
 module.exports = function (grunt) {
 
-  var assetsDir = 'source/assets/';
+  var assetsDir = 'source/assets/',
+    shell = require('shelljs');;
 
   function readBuildConfig () {
-    var configBuild = grunt.file.readJSON('source/js/config-build.json');
-    var configRequire = grunt.file.readJSON('source/js/config-require.json');
+    var configBuild = {
+      "wrap"                  : true,
+      "name"                  : "main",
+      "optimize"              : "none",
+      "baseUrl"               : "source/js",
+      "mainConfigFile"        : "source/js/main.js",
+      "out"                   : "build/js/main-src.js",
+      "disabled/exclude"      : ["main.js"],
+      "disabled/insertRequire": ["./main"]
+    };
+
+    var configRequire = require('./source/js/config-require.js');
 
     configBuild.shim = configRequire.shim;
     configBuild.paths = configRequire.paths;
@@ -149,6 +160,16 @@ module.exports = function (grunt) {
       compile: ['sass', 'autoprefixer'],
       compress: ['csso']
     }
+  });
+
+  // Adds additional require(['main']) call to start built app
+  grunt.registerTask('modifyBuildIndex', 'Adds js code required to start built app.', function () {
+    shell.sed(
+      '-i',
+      "require(['./js/main'])",
+      "require(['./js/main'], function () { require(['main']); })",
+      'build/index.html'
+    );
   });
 
   grunt.loadNpmTasks('grunt-autoprefixer');

@@ -2,7 +2,7 @@
  * Dashboard controller definition
  * @scope Controllers
  */
-define(['./module'], function (controllers) {
+define(['./module', 'underscore'], function (controllers) {
   'use strict';
 
   controllers.controller('DashboardController', function ($scope, $http, $modal, SERVER_URL) {

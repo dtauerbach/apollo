@@ -1,4 +1,9 @@
-{
+if (typeof define !== 'function') {
+  // to be able to require file from node
+  var define = require('amdefine')(module);
+}
+
+define({
   "paths": {
     "jquery"          : "../vendor/jquery/jquery",
     "underscore"      : "../vendor/underscore/underscore",
@@ -23,4 +28,4 @@
       "deps": ["angular"]
     }
   }
-}
+});
