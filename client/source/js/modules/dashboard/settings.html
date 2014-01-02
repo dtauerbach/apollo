@@ -9,17 +9,22 @@
   <div class="settings-title" data-ng-click="stream.toggled=!stream.toggled">
     <h1 class="subtitle">
       {{ stream.full_name }}
-      <button class="btn btn-toggle btn-primary btn-xs">Reset to default</button>
+      <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="stream.toggled">Reset to default sharing policy</button>
+      <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="!stream.toggled">Set custom sharing policy only for this stream</button>
     </h1>
   </div>
   <div data-ng-show="stream.toggled">
-    <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'"></div>
-    <div class="settings-body" data-ng-repeat="project in projects">
-      <h2 class="subtitle">
-        {{ project }}
-        <button class="btn btn-toggle btn-primary btn-xs">Reset to default</button>
-      </h2>
+    <div class="settings-body">
       <div data-ng-include="'/js/partials/privacy_setting.html'"></div>
+      <div class="settings" data-ng-repeat="project in projects">
+        <div class="settings-title">
+          <h2 class="subtitle">
+              {{ project }}
+              <button class="btn btn-toggle btn-primary btn-xs">Reset to default</button>
+          </h2>
+        </div>
+        <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'"></div>
+      </div>
     </div>
   </div>
 </div>

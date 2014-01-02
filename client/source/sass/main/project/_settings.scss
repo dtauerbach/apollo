@@ -1,6 +1,12 @@
 .settings {
   margin-bottom: 18px;
 
+  // settings box in another settings box
+  .settings {
+    margin-bottom: 0;
+    margin-top: 18px;
+  }
+
   .list-unstyled {
     margin: 0;
   }
@@ -34,10 +40,5 @@
     border: 1px solid #aaa;
     border-top: none;
     padding: 12px;
-
-    .subtitle {
-      margin: 4px 0 12px 0;
-      text-transform: none;
-    }
   }
 }
