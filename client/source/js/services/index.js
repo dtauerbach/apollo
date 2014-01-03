@@ -1,3 +1,4 @@
 define([
-  './user'
+  './user',
+  './check-authentication'
 ], function () {});
