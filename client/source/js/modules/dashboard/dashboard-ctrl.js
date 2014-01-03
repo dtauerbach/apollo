@@ -22,6 +22,7 @@ define(['./module', 'underscore'], function (controllers) {
       $modal.open({
         templateUrl: '/js/modules/dashboard/service-modal.html',
         controller: 'ServiceModalController',
+        windowClass: 'modal-service',
         scope: angular.extend($scope.$new(), { service: service })
       });
     };
