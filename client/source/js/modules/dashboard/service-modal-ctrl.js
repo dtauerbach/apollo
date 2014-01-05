@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('ServiceModalController', function ($scope, SERVER_URL) {
+  controllers.controller('DashboardServiceModalController', function ($scope, SERVER_URL) {
 
     $scope.scrapeState = 'start';
 

@@ -1,9 +1,9 @@
 define([
   'angular-mocks',
-  'Source/modules/dashboard/dashboard-ctrl'
+  'Source/modules/dashboard/home-ctrl'
 ], function () {
 
-  describe('DashboardController in app.dashboard', function () {
+  describe('DashboardHomeController in app.dashboard', function () {
 
     var scope, subject, httpBackend;
 
@@ -21,7 +21,7 @@ define([
         httpBackend.expectGET(SERVER_URL + '/streams.json').respond(200, '');
 
         scope = $rootScope.$new();
-        subject = $controller('DashboardController', { $scope: scope });
+        subject = $controller('DashboardHomeController', { $scope: scope });
 
         httpBackend.flush();
       });

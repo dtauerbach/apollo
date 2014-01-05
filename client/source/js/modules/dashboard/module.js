@@ -16,8 +16,8 @@ define(['angular', '../../config', '../../services/index'], function (ng) {
         title: 'Dashboard',
         crumb: 'Dashboard',
         requireLogin: true,
-        templateUrl: '/js/modules/dashboard/dashboard.html',
-        controller : 'DashboardController'
+        templateUrl: '/js/modules/dashboard/home.html',
+        controller : 'DashboardHomeController'
       });
 
       $routeProvider.when('/account/settings', {
@@ -25,7 +25,7 @@ define(['angular', '../../config', '../../services/index'], function (ng) {
         crumb: 'Manage Data Settings',
         requireLogin: true,
         templateUrl: '/js/modules/dashboard/settings.html',
-        controller : 'SettingsController'
+        controller : 'DashboardSettingsController'
       });
 
     }]);

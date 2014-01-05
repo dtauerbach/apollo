@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('SettingsController', function ($scope, $http, $location, User, SERVER_URL) {
+  controllers.controller('DashboardSettingsController', function ($scope, $http, $location, User, SERVER_URL) {
 
     $scope.privacySetting = User.privacy_setting || 'none';
 

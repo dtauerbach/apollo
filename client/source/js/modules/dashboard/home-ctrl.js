@@ -1,11 +1,11 @@
 /**
- * Dashboard controller definition
+ * Home controller definition
  * @scope Controllers
  */
 define(['./module', 'underscore'], function (controllers) {
   'use strict';
 
-  controllers.controller('DashboardController', function ($scope, $http, $modal, SERVER_URL) {
+  controllers.controller('DashboardHomeController', function ($scope, $http, $modal, SERVER_URL) {
 
     var servicesObj = {};
 
@@ -21,7 +21,7 @@ define(['./module', 'underscore'], function (controllers) {
     $scope.loadService = function(service) {
       $modal.open({
         templateUrl: '/js/modules/dashboard/service-modal.html',
-        controller: 'ServiceModalController',
+        controller: 'DashboardServiceModalController',
         windowClass: 'modal-service',
         scope: angular.extend($scope.$new(), { service: service })
       });
