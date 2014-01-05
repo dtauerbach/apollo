@@ -7,7 +7,7 @@ describe('E2E: Testing App', function () {
   });
 
   describe('Home page', function () {
-    it('should set test binding', function () {
+    it('should render page', function () {
       expect(element(by.css('.main')).getText()).toContain('APOLLO');
     });
   });

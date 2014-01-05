@@ -10,8 +10,8 @@ define(['./module', 'underscore'], function (controllers) {
     var servicesObj = {};
 
     // Download services JSON, render list
-    $http.get('/api/streams.json').success(function(data) {
-      $scope.services = _(data.services).map(function(service, serviceName) {
+    $http.get('/api/streams.json').success(function(services) {
+      $scope.services = _(services).map(function(service, serviceName) {
         service.name = serviceName;
         return service;
       });
