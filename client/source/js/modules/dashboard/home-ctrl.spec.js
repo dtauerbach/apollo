@@ -16,9 +16,9 @@ define([
         })
       });
 
-      inject(function ($rootScope, $controller, $httpBackend, SERVER_URL) {
+      inject(function ($rootScope, $controller, $httpBackend) {
         httpBackend = $httpBackend;
-        httpBackend.expectGET(SERVER_URL + '/streams.json').respond(200, '');
+        httpBackend.expectGET('/api/streams.json').respond(200, '');
 
         scope = $rootScope.$new();
         subject = $controller('DashboardHomeController', { $scope: scope });

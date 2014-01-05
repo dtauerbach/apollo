@@ -5,12 +5,12 @@
 define(['./module', 'underscore'], function (controllers) {
   'use strict';
 
-  controllers.controller('DashboardHomeController', function ($scope, $http, $modal, SERVER_URL) {
+  controllers.controller('DashboardHomeController', function ($scope, $http, $modal) {
 
     var servicesObj = {};
 
     // Download services JSON, render list
-    $http.get(SERVER_URL + '/streams.json').success(function(data) {
+    $http.get('/api/streams.json').success(function(data) {
       $scope.services = _(data.services).map(function(service, serviceName) {
         service.name = serviceName;
         return service;
