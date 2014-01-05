@@ -94,21 +94,43 @@ module.exports = function (grunt) {
     },
     karma    : {
       ci  : { // runs tests one time in PhantomJS, good for continuous integration
-        autoWatch: false,
+        autoWatch : false,
         configFile: 'karma-compiled.conf.js',
         browsers  : ['PhantomJS']
       },
       unit: { // start testing server that listens for code updates
-        autoWatch: false,
+        autoWatch : true,
+        configFile: 'karma.conf.js',
+        singleRun : false,
+        browsers  : ['PhantomJS']
+      },
+      unitSingleRun: {
+        autoWatch : false,
         configFile: 'karma.conf.js',
         singleRun : true,
-        browsers  : ['Chrome']
+        browsers  : ['PhantomJS']
       },
       watch: { // used in grunt watch context
         background: true,
         configFile: 'karma.conf.js',
-        singleRun: false,
-        browsers  : ['Chrome']
+        singleRun : false,
+        browsers  : ['PhantomJS']
+      }
+    },
+    protractor: {
+      options: {
+        configFile: 'p.conf.js',
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        args: {
+          baseUrl: 'http://apollo.dev', // Arguments passed to the command
+          specs: ['source/js/**/*.e2e.js']
+        }
+      },
+      source: {},
+      build: {
+        args: {
+          baseUrl: 'http://apollo.dev/build'
+        }
       }
     },
     requirejs: {
@@ -167,7 +189,7 @@ module.exports = function (grunt) {
     shell.sed(
       '-i',
       "require(['./js/main'])",
-      "require(['./js/main'], function () { require(['main']); })",
+      "require(['/build/js/main.js'], function () { require(['main']); })",
       'build/index.html'
     );
   });
@@ -178,6 +200,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-protractor-runner');
   grunt.loadNpmTasks('grunt-csso');
   grunt.loadNpmTasks('grunt-karma');
 
@@ -189,6 +212,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
   grunt.registerTask('build-css', ['css']);
   grunt.registerTask('build', ['build-js', 'build-css']);
+  grunt.registerTask('test', ['karma:unitSingleRun', 'protractor:source', 'karma:ci', 'protractor:build']);
 
   grunt.registerTask('default', ['build']);
 
