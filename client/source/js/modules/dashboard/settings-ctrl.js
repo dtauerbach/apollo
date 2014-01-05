@@ -28,7 +28,7 @@ define(['./module'], function (controllers) {
     $scope.updatePrivacySetting = function () {
       $http.post('/api/privacySetting', { privacySetting: $scope.privacySetting })
         .success(function () {
-          $location.path('/account/dashboard');
+          $location.path('/dashboard');
         });
     };
 

@@ -24,8 +24,8 @@
       <div class="header_r">
         <ul class="header_topnav" data-ng-show="currentUser.authenticated" style="display: none">
           <li><a href="#" class="user">Hello, {{ currentUser.email }}</a></li>
-          <li><a href="/account/dashboard" class="button">Dashboard</a></li>
-          <li><a href="/account/settings" class="button">Settings</a></li>
+          <li><a href="/dashboard" class="button">Dashboard</a></li>
+          <li><a href="/dashboard/settings" class="button">Settings</a></li>
           <li><a ng-click="logout()" class="button">Logout</a></li>
         </ul>
         <ul class="header_topnav" data-ng-hide="currentUser.authenticated">

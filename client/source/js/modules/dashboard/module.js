@@ -12,7 +12,7 @@ define(['angular', '../../config', '../../services/index'], function (ng) {
 
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
-      $routeProvider.when('/account/dashboard', {
+      $routeProvider.when('/dashboard', {
         title: 'Dashboard',
         crumb: 'Dashboard',
         requireLogin: true,
@@ -20,7 +20,7 @@ define(['angular', '../../config', '../../services/index'], function (ng) {
         controller : 'DashboardHomeController'
       });
 
-      $routeProvider.when('/account/settings', {
+      $routeProvider.when('/dashboard/settings', {
         title: 'Manage Data Settings',
         crumb: 'Manage Data Settings',
         requireLogin: true,
