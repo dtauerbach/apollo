@@ -70,7 +70,7 @@ def persona_login():
 def get_facebook_urlparams():
     return dict(
         client_id=current_app.config['SOCIAL_FACEBOOK']['consumer_key'],
-        redirect_uri=url_for('social_login.facebook_login_callback', _external=True),
+        redirect_uri="http://local.apollo.com/api/facebook_login_callback",
         scope='email')
 
 
@@ -98,13 +98,13 @@ def facebook_login_callback():
     user_req_url = "https://graph.facebook.com/me?" + urlencode(dict(access_token=access_token))
     user_data = json.loads(requests.get(user_req_url).content)
     login_or_register_by_email(user_data['email'])
-    return redirect(url_for('dashboard'))
+    return redirect('http://local.apollo.com/')
 
 # These URLparams are static between the first two oAuth requests to Google.
 def get_google_urlparams():
     return dict(
         client_id=current_app.config['SOCIAL_GOOGLE']['consumer_key'],
-        redirect_uri=url_for('social_login.google_login_callback', _external=True))
+        redirect_uri='http://local.apollo.com/api/google_login_callback')
 
 # Google oAuth code is adopted from:
 # http://stackoverflow.com/questions/9499286/using-google-oauth2-with-flask
@@ -139,4 +139,4 @@ def google_login_callback():
     if 'email' not in profile_obj:
         return "Could not get user e-mail."
     login_or_register_by_email(profile_obj['email'])
-    return redirect(url_for('dashboard'))
+    return redirect('http://local.apollo.com/')
