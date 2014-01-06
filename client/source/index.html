@@ -15,95 +15,32 @@
 </head>
 <body data-ng-controller="LayoutController">
 
+  <!-- Header -->
+  <div data-ng-include="'/js/modules/layout/header.html'"></div>
+   
   <!-- Content -->
-  <div class="header">
-    <div class="container">
-      <div class="header_l">
-        <a href="/"><img width="200" src="/assets/images/logo.png" alt="Apollo" /></a>
-      </div>
-      <div class="header_r">
-        <ul class="header_topnav" data-ng-show="currentUser.authenticated" style="display: none">
-          <li><a href="#" class="user">Hello, {{ currentUser.email }}</a></li>
-          <li><a href="/dashboard" class="button">Dashboard</a></li>
-          <li><a href="/dashboard/settings" class="button">Settings</a></li>
-          <li><a ng-click="logout()" class="button">Logout</a></li>
-        </ul>
-        <ul class="header_topnav" data-ng-hide="currentUser.authenticated">
-          <li><a class="button" data-ng-click="login()">Sign in</a></li>
-          <li><a class="button" data-ng-click="register()">Join</a></li>
-        </ul>
-        <ul class="menu">
-          <li><a href="/researchers">Researchers</a></li>
-          <li><a href="/providers">Health care providers</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <div class="main container" data-ui-view></div>
   
-  <div class="page-title" data-ng-show="title" style="display: none">
-    <div class="container">
-      <h1>{{ title }}</h1>
-    </div>
-  </div>
-  
-  <div class="container" data-ng-show="crumb" style="display: none">
-    <ul class="breadcrumbs">
-      <li><a href="/">Home</a></li>
-      <li><a href="/">{{ crumb }}</a></li>
-    </ul>
-  </div>
+  <!-- Footer -->
+  <div data-ng-include="'/js/modules/layout/footer.html'"></div>
 
-  <div class="container" data-ng-show="notification" style="display: none">
-    <div class="alert alert-{{ notification.type }}">{{ notification.message }}</div>
-  </div>
-  
-  <!-- Content -->
-  <div class="main container" data-ng-view></div>
-  
-  <div class="footer">
-    <div class="container">
-      <div class="footer_logo">
-        <a href="#" title="Go to top">
-          <img src="/assets/images/logo_small.png" width="40" />
-        </a>
-      </div>
-      <ul class="footer_social">
-        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-      </ul>
-      <ul class="menu">
-        <li><a href="/researchers">Researchers</a></li>
-        <li><a href="/providers">Health care providers</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/privacy">Privacy</a></li>
-        <li><a href="#">Sitemap</a></li>
-      </ul>
-      <p class="footer_text">Apollo the human data project &copy; 2013 All rights reserved.</p>
-    </div>
-  </div>
+  <!-- Scripts -->
+  <script src="/vendor/requirejs/require.js"></script>
+  <script>
+    // obtain requirejs config
+    require(['require', '/js/config-require.js'], function (require, config) {
 
+      // set cache beater
+      config.urlArgs = 'bust=v0.4.0';
+      config.baseUrl = '/';
 
+      // update global require config
+      window.require.config(config);
 
-<!-- Scripts -->
-<script src="/vendor/requirejs/require.js"></script>
-<script>
-  // obtain requirejs config
-  require(['require', '/js/config-require.js'], function (require, config) {
-
-    // set cache beater
-    config.urlArgs = 'bust=v0.4.0';
-    config.baseUrl = '/';
-
-    // update global require config
-    window.require.config(config);
-
-    // load app
-    require(['./js/main']);
-  });
-</script>
+      // load app
+      require(['./js/main']);
+    });
+  </script>
 
 </body>
 </html>

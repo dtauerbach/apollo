@@ -9,6 +9,7 @@ define({
     "underscore"      : "../vendor/underscore/underscore",
     "angular"         : "../vendor/angular/angular",
     "angular-bootstrap" : "../vendor/angular-bootstrap/ui-bootstrap-tpls",
+    "angular-ui-router" : "../vendor/angular-ui-router/release/angular-ui-router",
     "angular-resource": "../vendor/angular-resource/angular-resource",
     "async"           : "../vendor/requirejs-plugins/src/async",
     "domReady"        : "../vendor/requirejs-domready/domReady"
@@ -19,6 +20,9 @@ define({
       "deps": ["jquery"]
     },
     "angular-bootstrap" : {
+      "deps": ["angular"]
+    },
+    "angular-ui-router" : {
       "deps": ["angular"]
     },
     "angular-mocks" : {

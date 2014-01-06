@@ -8,25 +8,29 @@
 define(['angular', '../../config', '../../services/index'], function (ng) {
   'use strict';
 
-  return ng.module('app.dashboard', ['app.constants', 'app.services'])
+  return ng.module('app.dashboard', ['app.constants', 'app.services', 'ui.router'])
 
-    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
 
-      $routeProvider.when('/dashboard', {
-        title: 'Dashboard',
-        crumb: 'Dashboard',
-        requireLogin: true,
-        templateUrl: '/js/modules/dashboard/home.html',
-        controller : 'DashboardHomeController'
-      });
+      $stateProvider
 
-      $routeProvider.when('/dashboard/settings', {
-        title: 'Manage Data Settings',
-        crumb: 'Manage Data Settings',
-        requireLogin: true,
-        templateUrl: '/js/modules/dashboard/settings.html',
-        controller : 'DashboardSettingsController'
-      });
+        .state('dashboard-home', {
+          url: '/dashboard',
+          title: 'Dashboard',
+          crumb: 'Dashboard',
+          requireLogin: true,
+          templateUrl: '/js/modules/dashboard/home.html',
+          controller : 'DashboardHomeController'
+        })
+
+        .state('dashboard-settings', {
+          url: '/dashboard/settings',
+          title: 'Manage Data Settings',
+          crumb: 'Manage Data Settings',
+          requireLogin: true,
+          templateUrl: '/js/modules/dashboard/settings.html',
+          controller : 'DashboardSettingsController'
+        });
 
     }]);
 

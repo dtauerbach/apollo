@@ -8,42 +8,54 @@
 define(['angular', '../../config', '../../services/index'], function (ng) {
   'use strict';
 
-  return ng.module('app.public', ['app.constants', 'app.services'])
+  return ng.module('app.public', [
+    'app.constants',
+    'app.services',
+    'ui.router'
+  ])
 
-    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
 
-      $routeProvider.when('/', {
-        templateUrl: '/js/modules/public/home.html',
-        controller : 'HomeController'
-      });
+      $stateProvider
 
-      $routeProvider.when('/about', {
-        title: 'About',
-        crumb: 'About',
-        templateUrl: '/js/modules/public/about.html',
-        controller : 'AboutController'
-      });
+        .state('home', {
+          url: '/',
+          templateUrl: '/js/modules/public/home.html',
+          controller : 'HomeController'
+        })
 
-      $routeProvider.when('/privacy', {
-        title: 'Privacy Policy',
-        crumb: 'Privacy',
-        templateUrl: '/js/modules/public/privacy.html',
-        controller : 'PrivacyController'
-      });
+        .state('about', {
+          title: 'About',
+          crumb: 'About',
+          url: '/about',
+          templateUrl: '/js/modules/public/about.html',
+          controller : 'AboutController'
+        })
 
-      $routeProvider.when('/providers', {
-        title: 'Health Care Providers',
-        crumb: 'Health Care Providers',
-        templateUrl: '/js/modules/public/providers.html',
-        controller : 'ProvidersController'
-      });
+        .state('privacy', {
+          url: '/privacy',
+          title: 'Privacy Policy',
+          crumb: 'Privacy',
+          templateUrl: '/js/modules/public/privacy.html',
+          controller : 'PrivacyController'
+        })
 
-      $routeProvider.when('/researchers', {
-        title: 'Researchers',
-        crumb: 'Researchers',
-        templateUrl: '/js/modules/public/researchers.html',
-        controller : 'ResearchersController'
-      });
+        .state('providers', {
+          url: '/providers',
+          title: 'Health Care Providers',
+          crumb: 'Health Care Providers',
+          templateUrl: '/js/modules/public/providers.html',
+          controller : 'ProvidersController'
+        })
+
+        .state('researchers', {
+          url: '/researchers',
+          title: 'Researchers',
+          crumb: 'Researchers',
+          templateUrl: '/js/modules/public/researchers.html',
+          controller : 'ResearchersController'
+        })
+      ;
 
     }]);
 
