@@ -7,26 +7,36 @@ define(['./module'], function (controllers) {
 
   controllers.controller('DashboardSettingsController', function ($scope, $http, $location, User) {
 
-    $scope.privacySetting = User.privacy_setting || 'none';
+    $scope.privacy = {
+      privacy: /*User.privacy_setting || */'private',
+      streams: {}
+    };
 
     $scope.streams = [];
 
-    $scope.projects = ['Sleep study',  'Fitness study', 'Food study'];
+    // kepp $scope.privacy json structure up to date with $scope.streams
+    $scope.$watch('streams', function (streams) {
+      $scope.privacy.streams = {};
+      _.each(streams, function (stream) {
+        $scope.privacy.streams[stream.key] = { projects: {} };
+      });
+    });
 
-    $scope.privacySettings = [
-      { key: 'none', label: 'Don\'t share data' },
-      { key: 'researchers_partners', label: 'Share only with researchers' },
-      { key: 'researchers', label: 'Share only with approved researchers' },
-      { key: 'all', label: 'Make fully public' }
+    $scope.projects = [
+      { key: 'sleep_study', label: 'Sleep study' },
+      { key: 'fitness_study', label: 'Fitness study' },
+      { key: 'food_study', label: 'Food study' }
     ];
 
-    // fix bug ng-model not working
-    $scope.setPrivacySetting = function (privacySetting) {
-      $scope.privacySetting = privacySetting;
-    };
+    $scope.privacySettings = [
+      { key: 'private', label: 'Don\'t share data' },
+      { key: 'researchers', label: 'Share only with researchers' },
+      { key: 'approved_researchers', label: 'Share only with approved researchers' },
+      { key: 'public', label: 'Make fully public' }
+    ];
 
     $scope.updatePrivacySetting = function () {
-      $http.post('/api/privacySetting', { privacySetting: $scope.privacySetting })
+      $http.post('/api/streams/privacy', { privacy: $scope.privacy })
         .success(function () {
           $location.path('/dashboard');
         });

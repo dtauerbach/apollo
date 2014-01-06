@@ -2,7 +2,7 @@
   <div class="settings-title">
     <h1 class="subtitle">Default sharing policy</h1>
   </div>
-  <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'"></div>
+  <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'" onload="obj=privacy;name='global'"></div>
 </div>
 
 <div class="settings" data-ng-repeat="stream in streams">
@@ -15,16 +15,18 @@
   </div>
   <div data-ng-show="stream.toggled">
     <div class="settings-body">
-      <div data-ng-include="'/js/partials/privacy_setting.html'"></div>
+      <div data-ng-include="'/js/partials/privacy_setting.html'" onload="obj=privacy.streams[stream.key];name=stream.key"></div>
       <div class="settings" data-ng-repeat="project in projects">
         <div class="settings-title">
           <h2 class="subtitle">
-              {{ project }}
+              {{ project.label }}
               <button class="btn btn-toggle btn-primary btn-xs">Reset to default</button>
           </h2>
         </div>
-        <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'"></div>
+        <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'" onload="obj=privacy.streams[stream.key].projects[project.key];name=stream.key+'_'+project.key"></div>
       </div>
     </div>
   </div>
 </div>
+
+<pre>{{ privacy | json }}</pre>
