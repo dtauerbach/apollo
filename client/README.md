@@ -18,6 +18,12 @@ Install Ruby dependencies required to compile styles from sass:
 
     $ bundle install
 
+Note that on Ubuntu (and possibly other systems), grunt points to 'node' but it should point instead
+to 'nodejs'. To fix this, run 'which grunt' to locate where grunt is installed, and edit the #! line
+to point to nodejs instead of node:
+
+   $ #!/usr/bin/env nodejs
+
 Create your own copy of nginx.conf.example naming it to nginx.conf, and changing the relevant settings.
 Include the Apollo nginx.conf into the main Nginx conf.
 
