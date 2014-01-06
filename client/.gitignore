@@ -6,3 +6,4 @@ build
 coverage
 node_modules
 test-results-*.xml
+source/vendor
