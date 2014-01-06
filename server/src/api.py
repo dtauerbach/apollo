@@ -10,6 +10,7 @@ import config
 from db import db
 from repository import UserRepository
 import auth
+import oauth
 from scrapers import scraper_23andme
 
 
@@ -35,6 +36,7 @@ user_repository = UserRepository()
 security = Security().init_app(app, user_repository.user_datastore)
 auth.user_repository = user_repository
 app.register_blueprint(auth.social_login)
+app.register_blueprint(oauth.oauth_streams)
 
 
 @app.route('/api')
