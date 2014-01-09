@@ -1,5 +1,5 @@
 ---
-  share: false
+  source_dir_shared: false
   host_name: apollo.startersquad.com
   version: develop
   git_repository: git@github.com:dtauerbach/apollo.git
