@@ -1,30 +1,32 @@
-<div class="settings">
+<div class="settings" data-ng-controller="DashboardSettingsBoxController">
   <div class="settings-title">
     <h1 class="subtitle">Default sharing policy</h1>
   </div>
-  <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'" onload="obj=privacy;name='global'"></div>
+  <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'"></div>
 </div>
 
-<div class="settings" data-ng-repeat="stream in streams">
-  <div class="settings-title" data-ng-click="stream.toggled=!stream.toggled">
+<div class="settings" data-ng-repeat="stream in streams" data-ng-controller="DashboardSettingsBoxController">
+  <div class="settings-title">
     <h1 class="subtitle">
       {{ stream.full_name }}
-      <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="stream.toggled">Reset to default sharing policy</button>
-      <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="!stream.toggled">Set custom sharing policy only for this stream</button>
+      <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="isBoxOpen()" data-ng-click="closeBox()">Reset to default sharing policy</button>
+      <button class="btn btn-toggle btn-primary btn-xs" data-ng-hide="isBoxOpen()" data-ng-click="openBox()">Customize sharing policy</button>
     </h1>
   </div>
-  <div data-ng-show="stream.toggled">
+  <div data-ng-show="isBoxOpen()">
     <div class="settings-body">
-      <div data-ng-include="'/js/partials/privacy_setting.html'" onload="obj=privacy.streams[stream.key];name=stream.key"></div>
-      <div class="settings" data-ng-repeat="project in projects">
+      <div data-ng-include="'/js/partials/privacy_setting.html'"></div>
+      <div class="settings" data-ng-repeat="project in projects" data-ng-controller="DashboardSettingsBoxController">
         <div class="settings-title">
           <h2 class="subtitle">
               {{ project.label }}
-              <button class="btn btn-toggle btn-primary btn-xs">Reset to default</button>
+              <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="isBoxOpen()" data-ng-click="closeBox()">Reset to default sharing policy</button>
+              <button class="btn btn-toggle btn-primary btn-xs" data-ng-hide="isBoxOpen()" data-ng-click="openBox()">Customize sharing policy</button>
           </h2>
         </div>
-        <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'" onload="obj=privacy.streams[stream.key].projects[project.key];name=stream.key+'_'+project.key"></div>
+        <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'" data-ng-show="isBoxOpen()"></div>
       </div>
+
     </div>
   </div>
 </div>
