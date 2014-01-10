@@ -198,6 +198,12 @@ module.exports = function (grunt) {
       "require(['./js/main.js'], function () { require(['main']); })",
       'build/index.html'
     );
+    shell.sed(
+      '-i',
+      '<base href="/">',
+      '<base href="/build/">',
+      'build/index.html'
+    );
   });
 
   grunt.loadNpmTasks('grunt-autoprefixer');
