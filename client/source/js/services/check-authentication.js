@@ -32,12 +32,15 @@ define(['./module'], function(services) {
       },
 
       checkRoute: function(current, prev) {
+        //console.log('checkroute invoked ----', current, prev, User.authenticated);
         if (current.$$route.requireLogin && !User.authenticated) {
+          //console.log('redirecting to /');
           $location.path('/');
         }
 
         // show/hide notifications
-        if (prev && prev.$$route && prev.$$route.requireLogin) {
+        if (prev && prev.$$route && prev.$$route.requireLogin && !User.authenticated) {
+          //console.log(prev);
           $rootScope.notification = {
             type: 'warning',
             message: 'You must be authenticated to access this page, please login.'
@@ -46,6 +49,7 @@ define(['./module'], function(services) {
           delete $rootScope.notification;
         }
       }
+
     };
 
   });

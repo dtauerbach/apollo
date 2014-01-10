@@ -14,57 +14,50 @@ define([
       $provide.value('User', User);
     }));
 
-    function goToRoute(currentRoute) {
-      rootScope.$broadcast('$routeChangeStart',
-        { '$$route': currentRoute },
-        { '$$route': prevRoute }
-      );
-
-      prevRoute = currentRoute;
+    function goToRoute(prevRoute, currentRoute) {
+      rootScope.$broadcast('$routeChangeStart',{ '$$route': prevRoute });
+      if (currentRoute) {
+        rootScope.$broadcast('$routeChangeStart',{ '$$route': currentRoute }, { '$$route': prevRoute });
+      }
     }
 
-    beforeEach(inject(function ($rootScope, $location, CheckAuthentication) {
+    beforeEach(inject(function ($rootScope, $location, $httpBackend, CheckAuthentication) {
       rootScope = $rootScope;
       location = $location;
       checkAuthentication = CheckAuthentication;
+
+      $httpBackend.when('GET', '/api/auth/check_authentication').respond('');
+      checkAuthentication.applicationIsBootstraped = true;
+      checkAuthentication.start();
+
+      User.authenticated = false;
     }));
 
-    describe('start()', function () {
-      beforeEach(inject(function ($httpBackend) {
-        $httpBackend.when('GET', '/api/auth/check_authentication').respond('');
-        checkAuthentication.applicationIsBootstraped = true;
-        checkAuthentication.start();
-        location.path('/randomPath');
-      }));
-
-      it('redirect to "/" if user need authentication', function () {
-        expect(location.path()).not.toBe('/');
-        expect(User.authenticated).toBeUndefined();
-        goToRoute({ requireLogin: true });
-        expect(location.path()).toBe('/');
-      });
-
-      it('add notification if previous page was protected', function () {
-        expect(rootScope.notification).toBeUndefined();
-        goToRoute({ requireLogin: false }, { requireLogin: true });
-        expect(rootScope.notification).toBeObject();
-      });
-
-      it('remove notification next page load', function () {
-        rootScope.notification = { msg: 'foo' };
-
-        goToRoute({ requireLogin: false }, { requireLogin: false });
-        expect(rootScope.notification).toBeUndefined();
-      });
-
-      it('do nothing if user is authenticated', function () {
-        User.authenticated = true;
-        location.path('/account/dashboard');
-
-        expect(rootScope.notification).toBeUndefined();
-        goToRoute({ requireLogin: true }, { requireLogin: false });
-        expect(location.path()).toBe('/account/dashboard');
-      });
+    it('should not show warning for /', function() {
+      goToRoute({ requireLogin: false, path: '/' });
+      expect(rootScope.notification).toBeUndefined();
     });
+
+    it('should show warning when accessing dashboard', function() {
+      // when accessing the dashboard (i'm not logged in) then I get redirected to /
+      // so we are actually testing the end result of our navigation
+      goToRoute({ requireLogin: true, path: '/account/dashboard' }, { requireLogin: false, path: '/' });
+      expect(rootScope.notification).toBeObject();
+    });
+
+    it('after login should hide the warning', function() {
+      User.authenticated = true;
+      goToRoute({ requireLogin: true, path: '/account/dashboard' }, { requireLogin: false, path: '/' });
+      expect(rootScope.notification).toBeUndefined();
+    });
+
+//    it('while on private page, I logout and I get redirected to / without seeing the warning', function() {
+//      User.authenticated = true;
+//      goToRoute({ requireLogin: false, path: '/' }, { requireLogin: true, path: '/account/settings' });
+//      User.authenticated = false;
+//      goToRoute({ requireLogin: true, path: '/account/settings' }, { requireLogin: false, path: '/' });
+//      expect(rootScope.notification).toBeUndefined();
+//    });
+
   });
 });
