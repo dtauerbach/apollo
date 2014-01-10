@@ -4,7 +4,7 @@
   "devDependencies": {
     "amdefine"                  : "latest",
     "shelljs"                   : "latest",
-    "protractor"                : "latest",
+    "protractor"                : "0.15",
     "grunt"                     : "latest",
     "grunt-autoprefixer"        : "latest",
     "grunt-contrib-sass"        : "latest",
