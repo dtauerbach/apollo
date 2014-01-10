@@ -69,6 +69,12 @@ module.exports = function (grunt) {
           },
           {
             expand: true,
+            cwd   : 'source/js',
+            src   : ['config-require.js'],
+            dest  : 'build/js'
+          },
+          {
+            expand: true,
             cwd   : assetsDir,
             src   : ['**/*'],
             dest  : 'build/assets/'
@@ -122,14 +128,14 @@ module.exports = function (grunt) {
         configFile: 'p.conf.js',
         keepAlive: true, // If false, the grunt process stops when the test fails.
         args: {
-          baseUrl: 'http://apollo.dev', // Arguments passed to the command
+          baseUrl: 'http://local.apollo.com', // Arguments passed to the command
           specs: ['source/js/**/*.e2e.js']
         }
       },
       source: {},
       build: {
         args: {
-          baseUrl: 'http://apollo.dev/build'
+          baseUrl: 'http://local.apollo.com/build'
         }
       }
     },
@@ -189,7 +195,7 @@ module.exports = function (grunt) {
     shell.sed(
       '-i',
       "require(['./js/main'])",
-      "require(['/build/js/main.js'], function () { require(['main']); })",
+      "require(['./js/main.js'], function () { require(['main']); })",
       'build/index.html'
     );
   });
@@ -211,9 +217,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
   grunt.registerTask('build-css', ['css']);
-  grunt.registerTask('build', ['build-js', 'build-css']);
+  grunt.registerTask('build', ['build-js', 'build-css', 'modifyBuildIndex']);
   grunt.registerTask('test', ['karma:unitSingleRun', 'protractor:source', 'karma:ci', 'protractor:build']);
 
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('default', ['build', 'test']);
 
 };

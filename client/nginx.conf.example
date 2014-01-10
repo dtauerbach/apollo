@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name apollo.dev;
+    server_name local.apollo.com;
 
     charset utf-8;
 
