@@ -8,7 +8,7 @@
     "components"
   ],
   "dependencies": {
-    "angular": "latest",
+    "angular": "~1.2.7",
     "angular-resource": "latest",
     "angular-mocks": "latest",
     "angular-ui-router": "latest",
