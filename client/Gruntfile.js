@@ -200,6 +200,12 @@ module.exports = function (grunt) {
     );
     shell.sed(
       '-i',
+      "config.baseUrl = '/'",
+      "config.baseUrl = '/build/'",
+      'build/index.html'
+    );
+    shell.sed(
+      '-i',
       '<base href="/">',
       '<base href="/build/">',
       'build/index.html'
