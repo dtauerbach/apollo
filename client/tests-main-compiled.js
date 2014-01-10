@@ -5,7 +5,7 @@
 (function (global) {
   var original_define = global.define;
   // reg exp for testing if dependency is app file
-  var isAppFile = /^Source\/modules\//;
+  var isAppFile = /^Source\/(modules|services)\//;
 
   // Override
   global.define = function (name, deps, callback) {
@@ -57,7 +57,7 @@
       }
     }
   }
-}(this));
+})(this);
 
 
 require(['base/source/js/config-require'], function (config) {
