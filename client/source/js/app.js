@@ -6,9 +6,11 @@ define([
   'angular',
   'jquery',
   'underscore',
+  'angular-ui-router',
   './config',
   './services/index',
   './modules/public/index',
+  './modules/layout/index',
   './modules/dashboard/index'
 ], function (ng) {
   'use strict';
@@ -18,19 +20,22 @@ define([
       'app.constants',
       'app.public',
       'app.dashboard',
+      'app.layout',
       'app.services',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'ui.router'
     ])
 
-    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-      $routeProvider.when('/404', {
+    .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
+      $stateProvider.state('404', {
+        url: '/404',
         templateUrl: '/js/partials/404.html',
         controller : function () {
           console.error('page not found');
         }
       });
 
-      $routeProvider.otherwise({redirectTo: '/404'});
+      $urlRouterProvider.otherwise('/404');
       $locationProvider.html5Mode(true);
     }])
 
@@ -48,10 +53,10 @@ define([
       });
     }])
 
-    .run(function($rootScope, User, CheckAuthentication) {
-      $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-        $rootScope.title = current.$$route.title;
-        $rootScope.crumb = current.$$route.crumb;
+    .run(function($rootScope, CheckAuthentication) {
+      $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {
+        $rootScope.title = current.title;
+        $rootScope.crumb = current.crumb;
       });
 
       CheckAuthentication.start();

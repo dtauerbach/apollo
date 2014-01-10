@@ -1,6 +1,6 @@
 define([
   'angular-mocks',
-  'Source/modules/public/_layout-ctrl'
+  'Source/modules/layout/layout-ctrl'
 ], function () {
   describe('LayoutController in app.public', function () {
 
@@ -8,7 +8,7 @@ define([
 
     beforeEach(function () {
 
-      module('app.public');
+      module('app.layout');
 
       module(function($provide){
         $provide.value('$modal', {

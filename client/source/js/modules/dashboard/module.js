@@ -5,28 +5,32 @@
  * below, you can see we bring in our services and constants modules
  * which avails each controller of, for example, the `config` constants object.
  **/
-define(['angular', '../../config', '../../services/index'], function (ng) {
+define(['angular', 'angular-ui-router', '../../config', '../../services/index'], function (ng) {
   'use strict';
 
-  return ng.module('app.dashboard', ['app.constants', 'app.services'])
+  return ng.module('app.dashboard', ['app.constants', 'app.services', 'ui.router'])
 
-    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
 
-      $routeProvider.when('/account/dashboard', {
-        title: 'Dashboard',
-        crumb: 'Dashboard',
-        requireLogin: true,
-        templateUrl: '/js/modules/dashboard/dashboard.html',
-        controller : 'DashboardController'
-      });
+      $stateProvider
 
-      $routeProvider.when('/account/settings', {
-        title: 'Manage Data Settings',
-        crumb: 'Manage Data Settings',
-        requireLogin: true,
-        templateUrl: '/js/modules/dashboard/settings.html',
-        controller : 'SettingsController'
-      });
+        .state('dashboard-home', {
+          url: '/dashboard',
+          title: 'Dashboard',
+          crumb: 'Dashboard',
+          requireLogin: true,
+          templateUrl: '/js/modules/dashboard/home.html',
+          controller : 'DashboardHomeController'
+        })
+
+        .state('dashboard-settings', {
+          url: '/dashboard/settings',
+          title: 'Manage Data Settings',
+          crumb: 'Manage Data Settings',
+          requireLogin: true,
+          templateUrl: '/js/modules/dashboard/settings.html',
+          controller : 'DashboardSettingsController'
+        });
 
     }]);
 

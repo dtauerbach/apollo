@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('LoginController', function ($scope, $modalInstance, User, SERVER_URL) {
+  controllers.controller('LoginController', function ($scope, $modalInstance, User) {
 
     $scope.user = {
       email: '',
@@ -21,7 +21,7 @@ define(['./module'], function (controllers) {
     };
 
     $scope.submit = function () {
-      $.post(SERVER_URL + '/auth/login', $scope.user, function(resp) {
+      $.post('/api/auth/login', $scope.user, function(resp) {
         if (resp.success) {
           $scope.error = false;
           $modalInstance.close(true);

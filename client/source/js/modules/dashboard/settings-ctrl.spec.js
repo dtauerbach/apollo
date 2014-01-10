@@ -3,21 +3,25 @@ define([
   'Source/modules/dashboard/settings-ctrl'
 ], function () {
 
-  describe('SettingsController in app.dashboard', function () {
+  describe('DashboardSettingsController in app.dashboard', function () {
 
-    var scope, subject;
+    var scope, subject, httpBackend;
 
     beforeEach(function () {
       module('app.dashboard');
 
       module(function($provide){
-        $provide.value('User', {
-        })
+        $provide.value('User', {})
       });
 
-      inject(function ($rootScope, $controller) {
+      inject(function ($rootScope, $controller, $httpBackend) {
+        httpBackend = $httpBackend;
+        httpBackend.expectGET('/api/streams.json').respond(200, '');
+
         scope = $rootScope.$new();
-        subject = $controller('SettingsController', { $scope: scope });
+        subject = $controller('DashboardSettingsController', { $scope: scope });
+
+        httpBackend.flush();
       });
     });
 
@@ -33,5 +37,9 @@ define([
       });
     });
 
+    afterEach(function() {
+      httpBackend.verifyNoOutstandingExpectation();
+      httpBackend.verifyNoOutstandingRequest();
+    });
   });
 });

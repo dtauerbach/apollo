@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('RegisterController', function ($scope, $modalInstance, User, SERVER_URL) {
+  controllers.controller('RegisterController', function ($scope, $modalInstance, User) {
 
     $scope.user = {
       /*
@@ -32,7 +32,7 @@ define(['./module'], function (controllers) {
 
       $scope.errors.terms = false;
 
-      $.post(SERVER_URL + '/auth/register', $scope.user, function(resp) {
+      $.post('/api/auth/register', $scope.user, function(resp) {
         if (resp.success) {
           $scope.errors = {};
           $modalInstance.close(true);

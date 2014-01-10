@@ -100,12 +100,12 @@ module.exports = function (grunt) {
     },
     karma    : {
       ci  : { // runs tests one time in PhantomJS, good for continuous integration
-        autoWatch : false,
+        autoWatch: false,
         configFile: 'karma-compiled.conf.js',
         browsers  : ['PhantomJS']
       },
       unit: { // start testing server that listens for code updates
-        autoWatch : true,
+        autoWatch: true,
         configFile: 'karma.conf.js',
         singleRun : false,
         browsers  : ['PhantomJS']
@@ -119,7 +119,7 @@ module.exports = function (grunt) {
       watch: { // used in grunt watch context
         background: true,
         configFile: 'karma.conf.js',
-        singleRun : false,
+        singleRun: false,
         browsers  : ['PhantomJS']
       }
     },
@@ -195,7 +195,7 @@ module.exports = function (grunt) {
     shell.sed(
       '-i',
       "require(['./js/main'])",
-      "require(['./js/main.js'], function () { require(['main']); })",
+      "require(['./js/main'], function () { require(['main']); })",
       'build/index.html'
     );
     shell.sed(

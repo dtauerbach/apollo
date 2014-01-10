@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('ServiceModalController', function ($scope, SERVER_URL) {
+  controllers.controller('DashboardServiceModalController', function ($scope) {
 
     $scope.scrapeState = 'start';
 
@@ -14,7 +14,7 @@ define(['./module'], function (controllers) {
       $scope.scrapeState = 'pending';
 
       $.ajax({
-        url: SERVER_URL + '/connect/23andme/1',
+        url: '/api/connect/23andme/1',
         type: 'POST',
         data: JSON.stringify({
           scrapeEmail: $scope.scrapeEmail,

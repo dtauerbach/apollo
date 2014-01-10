@@ -1,17 +1,17 @@
 /**
- * Dashboard controller definition
+ * Home controller definition
  * @scope Controllers
  */
 define(['./module', 'underscore'], function (controllers) {
   'use strict';
 
-  controllers.controller('DashboardController', function ($scope, $http, $modal, SERVER_URL) {
+  controllers.controller('DashboardHomeController', function ($scope, $http, $modal) {
 
     var servicesObj = {};
 
     // Download services JSON, render list
-    $http.get(SERVER_URL + '/streams.json').success(function(data) {
-      $scope.services = _(data.services).map(function(service, serviceName) {
+    $http.get('/api/streams.json').success(function(services) {
+      $scope.services = _(services).map(function(service, serviceName) {
         service.name = serviceName;
         return service;
       });
@@ -21,7 +21,7 @@ define(['./module', 'underscore'], function (controllers) {
     $scope.loadService = function(service) {
       $modal.open({
         templateUrl: '/js/modules/dashboard/service-modal.html',
-        controller: 'ServiceModalController',
+        controller: 'DashboardServiceModalController',
         windowClass: 'modal-service',
         scope: angular.extend($scope.$new(), { service: service })
       });

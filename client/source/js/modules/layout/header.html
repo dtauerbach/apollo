@@ -1,0 +1,42 @@
+<div class="header">
+  <div class="container">
+    <div class="header_l">
+      <a data-ui-sref="home"><img width="200" src="/assets/images/logo.png" alt="Apollo" /></a>
+    </div>
+    <div class="header_r ng-cloak">
+      <ul class="header_topnav" data-ng-show="currentUser.authenticated">
+        <li><a data-ui-sref="home" class="user">Hello, {{ currentUser.email }}</a></li>
+        <li><a data-ui-sref="dashboard-home" class="button">Dashboard</a></li>
+        <li><a data-ui-sref="dashboard-settings" class="button">Settings</a></li>
+        <li><a ng-click="logout()" class="button">Logout</a></li>
+      </ul>
+      <ul class="header_topnav ng-cloak" data-ng-hide="currentUser.authenticated">
+        <li><a class="button" data-ng-click="login()">Sign in</a></li>
+        <li><a class="button" data-ng-click="register()">Join</a></li>
+      </ul>
+      <ul class="menu">
+        <li><a data-ui-sref="researchers">Researchers</a></li>
+        <li><a data-ui-sref="providers">Health care providers</a></li>
+        <li><a data-ui-sref="about">About</a></li>
+        <li><a data-ui-sref="privacy">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="page-title" data-ng-show="title">
+  <div class="container">
+    <h1>{{ title }}</h1>
+  </div>
+</div>
+
+<div class="container" data-ng-show="crumb">
+  <ul class="breadcrumbs">
+    <li><a href="/">Home</a></li>
+    <li><a href="/">{{ crumb }}</a></li>
+  </ul>
+</div>
+
+<div class="container" data-ng-show="notification">
+  <div class="alert alert-{{ notification.type }}">{{ notification.message }}</div>
+</div>
