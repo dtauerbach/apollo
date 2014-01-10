@@ -5,7 +5,8 @@
 define(['./module', 'angular-bootstrap'], function (controllers) {
   'use strict';
 
-  controllers.controller('LayoutController', function ($scope, $rootScope, $modal, $http, $location, User) {
+  controllers.controller('LayoutController', function ($scope, $rootScope, $modal, $http, $location, User, CheckAuthentication) {
+    CheckAuthentication.initAuth();
 
     $scope.currentUser = User;
 

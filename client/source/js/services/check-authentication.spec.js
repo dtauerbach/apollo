@@ -28,7 +28,7 @@ define([
 
       $httpBackend.when('GET', '/api/auth/check_authentication').respond('');
       checkAuthentication.applicationIsBootstraped = true;
-      checkAuthentication.start();
+      checkAuthentication.initAuth();
 
       User.authenticated = false;
     }));

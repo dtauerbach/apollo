@@ -4,17 +4,36 @@ define(['./module'], function(services) {
 
     var currentRoute, prevRoute;
 
+    function checkRoute(current, prev) {
+      //console.log('checkroute invoked ----', current, prev, User.authenticated);
+      if (current.requireLogin && !User.authenticated) {
+        //console.log('redirecting to /');
+        $location.path('/');
+      }
+
+      // show/hide notifications
+      if (prev  && prev.requireLogin && !User.authenticated) {
+        //console.log(prev);
+        $rootScope.notification = {
+          type: 'warning',
+          message: 'You must be authenticated to access this page, please login.'
+        };
+      } else {
+        delete $rootScope.notification;
+      }
+    }
+
     return {
 
       applicationIsBootstraped: false,
 
-      start: function () {
+      initAuth: function () {
         $rootScope.$on('$stateChangeStart', _.bind(function(event, current, prev) {
           currentRoute = current;
           prevRoute = prev;
 
           if (this.applicationIsBootstraped) {
-            this.checkRoute(current, prev);
+            checkRoute(current, prev);
           }
         }, this));
 
@@ -26,28 +45,9 @@ define(['./module'], function(services) {
           }
 
           if (currentRoute) {
-            this.checkRoute(currentRoute, prevRoute);
+            checkRoute(currentRoute, prevRoute);
           }
         }, this));
-      },
-
-      checkRoute: function(current, prev) {
-        //console.log('checkroute invoked ----', current, prev, User.authenticated);
-        if (current.requireLogin && !User.authenticated) {
-          //console.log('redirecting to /');
-          $location.path('/');
-        }
-
-        // show/hide notifications
-        if (prev  && prev.requireLogin && !User.authenticated) {
-          //console.log(prev);
-          $rootScope.notification = {
-            type: 'warning',
-            message: 'You must be authenticated to access this page, please login.'
-          };
-        } else {
-          delete $rootScope.notification;
-        }
       }
 
     };

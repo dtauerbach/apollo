@@ -53,12 +53,10 @@ define([
       });
     }])
 
-    .run(function($rootScope, CheckAuthentication) {
+    .run(function($rootScope) {
       $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.title;
         $rootScope.crumb = current.crumb;
       });
-
-      CheckAuthentication.start();
     });
 });
