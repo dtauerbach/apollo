@@ -1,6 +1,6 @@
 define(['./module'], function(services) {
 
-  services.factory('CheckAuthentication', function($rootScope, $location, $http, User, SERVER_URL) {
+  services.factory('CheckAuthentication', function($rootScope, $location, $http, User) {
 
     var currentRoute, prevRoute;
 
@@ -9,7 +9,7 @@ define(['./module'], function(services) {
       applicationIsBootstraped: false,
 
       start: function () {
-        $rootScope.$on('$routeChangeStart', _.bind(function(event, current, prev) {
+        $rootScope.$on('$stateChangeStart', _.bind(function(event, current, prev) {
           currentRoute = current;
           prevRoute = prev;
 
@@ -18,7 +18,7 @@ define(['./module'], function(services) {
           }
         }, this));
 
-        $http.get(SERVER_URL + '/auth/check_authentication').success(_.bind(function (resp) {
+        $http.get('/api/auth/check_authentication').success(_.bind(function (resp) {
           this.applicationIsBootstraped = true;
 
           if (resp.username) {
@@ -33,13 +33,13 @@ define(['./module'], function(services) {
 
       checkRoute: function(current, prev) {
         //console.log('checkroute invoked ----', current, prev, User.authenticated);
-        if (current.$$route.requireLogin && !User.authenticated) {
+        if (current.requireLogin && !User.authenticated) {
           //console.log('redirecting to /');
           $location.path('/');
         }
 
         // show/hide notifications
-        if (prev && prev.$$route && prev.$$route.requireLogin && !User.authenticated) {
+        if (prev  && prev.requireLogin && !User.authenticated) {
           //console.log(prev);
           $rootScope.notification = {
             type: 'warning',

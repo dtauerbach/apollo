@@ -53,7 +53,7 @@ define([
       });
     }])
 
-    .run(function($rootScope, $http, $location, User) {
+    .run(function($rootScope, CheckAuthentication) {
       $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.title;
         $rootScope.crumb = current.crumb;

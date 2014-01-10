@@ -15,9 +15,9 @@ define([
     }));
 
     function goToRoute(prevRoute, currentRoute) {
-      rootScope.$broadcast('$routeChangeStart',{ '$$route': prevRoute });
+      rootScope.$broadcast('$stateChangeStart', prevRoute);
       if (currentRoute) {
-        rootScope.$broadcast('$routeChangeStart',{ '$$route': currentRoute }, { '$$route': prevRoute });
+        rootScope.$broadcast('$stateChangeStart', currentRoute, prevRoute);
       }
     }
 
