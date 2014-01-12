@@ -32,7 +32,7 @@ app.extensions['mail'] = mail
 
 user_repository = UserRepository()
 # security state is returned from init_app and is used to get the login_manager
-security = Security().init_app(app, user_repository.user_datastore)
+security = Security().init_app(app, user_repository.ud)
 auth.user_repository = user_repository
 app.register_blueprint(auth.social_login)
 
