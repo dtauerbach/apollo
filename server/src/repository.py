@@ -217,7 +217,7 @@ class StreamRepository(object):
         for s in Stream.query.all():
             res.append(dict(
                 key=s.id,
-                full_name=s.name,
+                name=s.name,
                 url=s.url,
                 icon=s.icon,
                 keywords=s.keywords.split(','),

@@ -11,10 +11,7 @@ define(['./module', 'underscore'], function (controllers) {
 
     // Download services JSON, render list
     $http.get('/api/streams.json').success(function(services) {
-      $scope.services = _(services).map(function(service, serviceName) {
-        service.name = serviceName;
-        return service;
-      });
+      $scope.services = services;
     });
 
     // Services modal
@@ -34,7 +31,6 @@ define(['./module', 'underscore'], function (controllers) {
       _.each($scope.services, function(service) {
         var keywordFound = _.any(keywords, function(keyword) {
           return service.keywords.join(' ').indexOf(keyword) !== -1;
-//          return (service.keywords.join(' ').indexOf(keyword) !== -1) || (service.full_name.indexOf(keyword));
         });
 
         service.hide = keywords.length && !keywordFound;

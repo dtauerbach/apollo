@@ -42,7 +42,7 @@ class TestApi(unittest.TestCase):
 
         res = self.client.get('/api/streams.json')
         assert res.status_code == 200
-        assert 'sse' in json.loads(res.data)[0]['full_name']
+        assert 'sse' in json.loads(res.data)[0]['name']
 
     def test_projects(self):
         self.session.add(Project('prr', 'url', 'descr'))
