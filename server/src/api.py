@@ -6,12 +6,12 @@ from flask import Flask, make_response
 from flask.ext.login import current_user
 from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required
-import repository
 from selenium import webdriver
 from flask import jsonify, request
 import config
 from db import db
 from repository import UserRepository, StreamRepository, ProjectRepository
+from repository import PRIVACY_CONST, PRIVACY_CONST_INV
 import auth
 from scrapers import scraper_23andme
 
@@ -60,49 +60,45 @@ def projects():
 @app.route('/api/privacy', methods=['GET'])
 @login_required
 def get_privacy():
-    return json.dumps({
-        'privacy': 'public',
-        'streams': {
-            1: {
-                'name': '23andMe',
-                'privacy': 'common_researchers',
-                'projects': {
-                    1: {
-                        'name': 'Sleep study',
-                        'privacy': 'private'
-                    }
+    all_us_privacy = {}
+    for us in current_user.connected_streams:
+        all_usp_privacy = {}
+        for usp in us.connected_projects:
+            all_usp_privacy.update({
+                usp.project.id: {
+                    'name': usp.project.name,
+                    'privacy': PRIVACY_CONST[usp.privacy]
                 }
+            })
+        all_us_privacy.update({
+            us.stream.id: {
+                'name': us.stream.name,
+                'privacy': PRIVACY_CONST[us.privacy],
+                'projects': all_usp_privacy
             }
-        }
+        })
+    return json.dumps({
+        'privacy': PRIVACY_CONST[current_user.global_privacy],
+        'streams': all_us_privacy
     })
+
 
 @app.route('/api/privacy', methods=['POST'])
 @login_required
 def set_privacy():
     req = request.json
-    current_user.update_global_privacy(map_privacy(req['privacy']))
+    current_user.update_global_privacy(PRIVACY_CONST_INV[req['privacy']])
     stream_policies = req['streams']
     for stream in stream_policies:
         if 'privacy' in stream_policies[stream]:
             stream_privacy = stream_policies[stream]['privacy']
-            current_user.update_stream_privacy(stream, map_privacy(stream_privacy))
+            current_user.update_stream_privacy(stream, PRIVACY_CONST_INV[stream_privacy])
             project_policies = stream_policies[stream]['projects']
             for project in project_policies:
                 if 'privacy' in project_policies[project]:
                     project_privacy = project_policies[project]['privacy']
-                    current_user.update_project_privacy(stream, project, map_privacy(project_privacy))
+                    current_user.update_project_privacy(stream, project, PRIVACY_CONST_INV[project_privacy])
     return 'ok'
-
-
-def map_privacy(value):
-    if value in 'private':
-        return repository.PRIVACY_PRIVATE
-    elif value in 'approved_researchers':
-        return repository.PRIVACY_APPROVED_RESEARCHER
-    elif value in 'researchers':
-        return repository.PRIVACY_COMMON_RESEARCHER
-    elif value in 'public':
-        return repository.PRIVACY_PUBLIC
 
 
 @app.route('/api/connect/23andme/1', methods=['POST'])

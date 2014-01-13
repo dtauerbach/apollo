@@ -13,13 +13,12 @@ db.create_all()
 
 s = db.session
 
-s.add(User('dan@example.com', 'Dan', 'pass', repository.PRIVACY_PUBLIC))
+test_user = User('dan@example.com', 'Dan', 'pass', repository.PRIVACY_PUBLIC)
+s.add(test_user)
 
-s.add(Stream('23andMe',
-             'http://23andme.com',
-             '23andMe_Logo_blog.jpg',
-             ','.join(['genes', 'genetics', 'biology', 'disease', '23andme']),
-             repository.CONNECTION_TYPE_SCRAPING))
+stream1 = Stream('23andMe', 'http://23andme.com', '23andMe_Logo_blog.jpg',
+                ','.join(['genes', 'genetics', 'biology', 'disease', '23andme']), repository.CONNECTION_TYPE_SCRAPING)
+s.add(stream1)
 s.add(Stream('Jawbone UP',
              'http://jawbone.com',
              'jawbone_up.jpg',
@@ -41,9 +40,8 @@ s.add(Stream('Nike+',
              ','.join(['exercise', 'wellness', 'quantified self', 'running', 'nike']),
              repository.CONNECTION_TYPE_OAUTH))
 
-s.add(Project('Sleep Study',
-              'http://some-study1.com',
-              'Study about people\'s sleeping behaviour'))
+project1 = Project('Sleep Study', 'http://some-study1.com', 'Study about people\'s sleeping behaviour')
+s.add(project1)
 s.add(Project('Fitness Study',
               'http://some-study2.com',
               'Study about people\'s health and strength conditions'))
@@ -51,4 +49,8 @@ s.add(Project('Food Study',
               'http://some-study3.com',
               'Study about people\'s eating habits'))
 
+s.commit()
+
+test_user.update_stream_privacy(stream1.id, repository.PRIVACY_COMMON_RESEARCHER)
+test_user.update_project_privacy(stream1.id, project1.id, repository.PRIVACY_APPROVED_RESEARCHER)
 s.commit()

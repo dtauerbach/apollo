@@ -19,12 +19,16 @@ define(['angular', './module'], function (ng, controllers) {
       $scope.privacy = ng.copy($scope.streams);
     });
 
-    $scope.updatePrivacySetting = function () {
-      $http.post('/api/privacy', { privacy: $scope.privacy })
+    $scope.save = function () {
+      $http.post('/api/privacy', $scope.privacy)
         .success(function () {
           $location.path('/dashboard');
         });
     };
+
+    $scope.reset = function() {
+      $scope.privacy = ng.copy($scope.streams);
+    }
 
   });
 
@@ -86,6 +90,8 @@ define(['angular', './module'], function (ng, controllers) {
     // by default close all boxes
     if (!$scope.boxValue.privacy) {
       $scope.closeBox();
+    } else {
+      $scope.openBox();
     }
 
   });

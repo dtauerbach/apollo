@@ -50,7 +50,7 @@ class TestApi(unittest.TestCase):
         assert res.status_code == 200
         assert 'prr' in json.loads(res.data)[0]['name']
 
-    def test_privacy(self):
+    def test_set_privacy(self):
         stream = Stream('23andMe', 'url2', 'i', 'none', repository.CONNECTION_TYPE_SCRAPING)
         project = Project('Sleep study', 'url2', 'descr')
         self.session.add(stream)
@@ -61,7 +61,7 @@ class TestApi(unittest.TestCase):
             'privacy': 'public',
             'streams': {
                 stream.id: {
-                    'privacy': 'researchers',
+                    'privacy': 'common_researchers',
                     'projects': {
                         project.id: {'privacy': 'private'}
                     }

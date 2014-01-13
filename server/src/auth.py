@@ -18,7 +18,7 @@ def check_authentication():
         return jsonify({
             'email': current_user.email,
             'username': current_user.username,
-            'privacy': repository.PRIVACY_CONFIG[current_user.global_privacy]
+            'privacy': repository.PRIVACY_CONST[current_user.global_privacy]
         })
     return jsonify({})
 
