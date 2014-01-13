@@ -22,7 +22,7 @@ class TestModel(unittest.TestCase):
         test_user = self.ur.create('user1', 'email@wahtever.com', 'beatiful pwd')
         assert self.ur.get('email@wahtever.com') == test_user
 
-    def test_set_all_privacy_setting(self):
+    def test_set_all_privacy_settings(self):
         test_user = self.ur.create('user2', 'email@hello.com', 'lala pwd')
         test_user.global_privacy = repository.PRIVACY_PRIVATE
 
