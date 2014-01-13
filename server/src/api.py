@@ -1,5 +1,6 @@
 import logging
 import os
+import json
 
 from flask import Flask, make_response
 from flask.ext.login import current_user
@@ -56,9 +57,28 @@ def projects():
     return ProjectRepository.projects_to_json()
 
 
+@app.route('/api/privacy', methods=['GET'])
+@login_required
+def get_privacy():
+    return json.dumps({
+        'privacy': 'public',
+        'streams': {
+            1: {
+                'name': '23andMe',
+                'privacy': 'researchers',
+                'projects': {
+                    1: {
+                        'name': 'Sleep study',
+                        'privacy': 'private'
+                    }
+                }
+            }
+        }
+    })
+
 @app.route('/api/privacy', methods=['POST'])
 @login_required
-def privacy():
+def set_privacy():
     req = request.json
     current_user.update_global_privacy(map_privacy(req['privacy']))
     stream_policies = req['streams']

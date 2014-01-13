@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
 from flask.ext.security import utils, current_user
+import repository
 import requests
 import json
 from cgi import parse_qs
@@ -17,7 +18,7 @@ def check_authentication():
         return jsonify({
             'email': current_user.email,
             'username': current_user.username,
-            'privacy': current_user.global_privacy
+            'privacy': repository.PRIVACY_CONFIG[current_user.global_privacy]
         })
     return jsonify({})
 

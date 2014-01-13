@@ -14,6 +14,13 @@ PRIVACY_APPROVED_RESEARCHER = 1
 PRIVACY_COMMON_RESEARCHER = 2
 PRIVACY_PUBLIC = 3
 
+PRIVACY_CONFIG = {
+    0: 'private',
+    1: 'approved_researchers',
+    2: 'common_researchers',
+    3: 'public'
+}
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,7 +33,7 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='roles_users', backref=db.backref('users', lazy='dynamic'))
     connected_streams = db.relationship('UserStream', backref='user', cascade='all, delete-orphan')
 
-    def __init__(self, email, username, password, global_privacy=None, active=None, roles=None):
+    def __init__(self, email, username, password, global_privacy=0, active=None, roles=None):
         self.email = email
         self.username = username
         self.password = password
