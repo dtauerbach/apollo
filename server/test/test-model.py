@@ -4,7 +4,7 @@ import sys
 sys.path.append('../src')
 import api
 import repository
-from repository import User, UserStream, Stream, UserRepository, Project, UserStreamProject
+from repository import User, UserRepository, Stream, Project
 
 
 class TestModel(unittest.TestCase):
@@ -29,20 +29,18 @@ class TestModel(unittest.TestCase):
         stream = Stream('23andMe', 'url', 'icon', 'key,words', repository.CONNECTION_TYPE_SCRAPING)
         project = Project('Sleep study', 'url', 'desc')
         stream.link_project(project)
-
-        us = UserStream(stream, repository.PRIVACY_PRIVATE)
-        test_user.connect_stream(us)
-
-        usp = UserStreamProject(project, repository.PRIVACY_APPROVED_RESEARCHER)
-        us.connect_project(usp)
-        self.session.add(usp)
-
+        self.session.add(stream)
+        self.session.add(project)
         self.session.commit()
+
+        test_user.update_stream_privacy('23andMe', repository.PRIVACY_COMMON_RESEARCHER)
+
+        test_user.update_project_privacy('23andMe', 'Sleep study', repository.PRIVACY_APPROVED_RESEARCHER)
 
         user_queried = User.query.filter_by(username='user2').one()
         assert user_queried.global_privacy == repository.PRIVACY_PRIVATE
         assert user_queried.connected_streams[0].stream == stream
-        assert user_queried.connected_streams[0].privacy == repository.PRIVACY_PRIVATE
+        assert user_queried.connected_streams[0].privacy == repository.PRIVACY_COMMON_RESEARCHER
         assert user_queried.connected_streams[0].connected_projects[0].project == project
         assert user_queried.connected_streams[0].connected_projects[0].privacy == repository.PRIVACY_APPROVED_RESEARCHER
 

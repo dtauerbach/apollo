@@ -10,8 +10,8 @@ CONNECTION_TYPE_OAUTH = 1
 CONNECTION_TYPE_MANUAL_UPLOAD = 2
 
 PRIVACY_PRIVATE = 0
-PRIVACY_NOT_RESEARCHER = 1
-PRIVACY_APPROVED_RESEARCHER = 2
+PRIVACY_APPROVED_RESEARCHER = 1
+PRIVACY_COMMON_RESEARCHER = 2
 PRIVACY_PUBLIC = 3
 
 
@@ -34,6 +34,29 @@ class User(db.Model, UserMixin):
 
     def connect_stream(self, stream):
         self.connected_streams.append(stream)
+
+    def get_or_connect_stream(self, stream_name):
+        user_stream = None
+        for us in self.connected_streams:
+            if us.stream.name in stream_name:
+                user_stream = us
+        if not user_stream:
+            stream = Stream.query.filter_by(name=stream_name).one()
+            user_stream = UserStream(stream, None)
+            db.session.add(user_stream)
+            self.connect_stream(user_stream)
+        return user_stream
+
+    def update_stream_privacy(self, stream_name, privacy):
+        us = self.get_or_connect_stream(stream_name)
+        us.privacy = privacy
+        db.session.commit()
+
+    def update_project_privacy(self, stream_name, project_name, privacy):
+        us = self.get_or_connect_stream(stream_name)
+        usp = us.get_or_connect_project(project_name)
+        usp.privacy = privacy
+        db.session.commit()
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -92,6 +115,18 @@ class UserStream(db.Model):
 
     def connect_project(self, usp):
         self.connected_projects.append(usp)
+
+    def get_or_connect_project(self, project_name):
+        user_stream_project = None
+        for usp in self.connected_projects:
+            if usp.project.name in project_name:
+                user_stream_project = usp
+        if not user_stream_project:
+            project = Project.query.filter_by(name=project_name).one()
+            user_stream_project = UserStreamProject(project, None)
+            db.session.add(user_stream_project)
+            self.connect_project(user_stream_project)
+        return user_stream_project
 
     def __repr__(self):
         return '<UserStream user: %r stream: %r, privacy:%r>' % (self.user, self.stream, self.privacy)
