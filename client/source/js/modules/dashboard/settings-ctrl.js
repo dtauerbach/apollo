@@ -2,36 +2,21 @@
  * Dashboard controller definition
  * @scope Controllers
  */
-define(['./module'], function (controllers) {
+define(['angular', './module'], function (ng, controllers) {
   'use strict';
 
   // This file contains two controller
 
   controllers.controller('DashboardSettingsController', function ($scope, $http, $location, User) {
 
-    console.log(User.privacy);
-
     $scope.privacy = {
       privacy: User.privacy,
       streams: {}
     };
 
-    $scope.streams = [];
-
     $http.get('/api/privacy').success(function (response) {
-      $scope.streams = response.streams;
-    });
-
-    // keep $scope.privacy json structure up to date with $scope.streams
-    $scope.$watch('streams', function (streams) {
-      $scope.privacy.streams = {};
-      _.each(streams, function (stream, streamId) {
-        var projects = {};
-        _.each(stream.projects, function (project, projectId) {
-          projects[projectId] = {privacy: ''};
-        });
-        $scope.privacy.streams[streamId] = { projects: projects };
-      });
+      $scope.streams = response;
+      $scope.privacy = ng.copy($scope.streams);
     });
 
     $scope.updatePrivacySetting = function () {
@@ -73,7 +58,6 @@ define(['./module'], function (controllers) {
       $scope.boxModel = User;
       $scope.boxValue = $scope.privacy;
       $scope.boxKey = 'global_privacy';
-      console.log($scope.boxModel, $scope.boxValue);
     }
 
    
@@ -83,7 +67,9 @@ define(['./module'], function (controllers) {
 
     $scope.openBox = function () {
       $scope.boxModel.isOpen = true;
-      $scope.boxValue.privacy = $scope.boxParent.privacy;
+      if (!$scope.boxValue.privacy) {
+        $scope.boxValue.privacy = $scope.boxParent.privacy;
+      }
     };
 
     $scope.closeBox = function () {
@@ -94,6 +80,8 @@ define(['./module'], function (controllers) {
     $scope.isBoxOpen = function () {
       return $scope.boxModel.isOpen;
     };
+
+    //console.log($scope.boxModel,$scope.boxValue,$scope.boxKey);
 
     // by default close all boxes
     if (!$scope.boxValue.privacy) {

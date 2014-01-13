@@ -65,7 +65,7 @@ def get_privacy():
         'streams': {
             1: {
                 'name': '23andMe',
-                'privacy': 'researchers',
+                'privacy': 'common_researchers',
                 'projects': {
                     1: {
                         'name': 'Sleep study',
@@ -83,12 +83,14 @@ def set_privacy():
     current_user.update_global_privacy(map_privacy(req['privacy']))
     stream_policies = req['streams']
     for stream in stream_policies:
-        stream_privacy = stream_policies[stream]['privacy']
-        current_user.update_stream_privacy(stream, map_privacy(stream_privacy))
-        project_policies = stream_policies[stream]['projects']
-        for project in project_policies:
-            project_privacy = project_policies[project]['privacy']
-            current_user.update_project_privacy(stream, project, map_privacy(project_privacy))
+        if 'privacy' in stream_policies[stream]:
+            stream_privacy = stream_policies[stream]['privacy']
+            current_user.update_stream_privacy(stream, map_privacy(stream_privacy))
+            project_policies = stream_policies[stream]['projects']
+            for project in project_policies:
+                if 'privacy' in project_policies[project]:
+                    project_privacy = project_policies[project]['privacy']
+                    current_user.update_project_privacy(stream, project, map_privacy(project_privacy))
     return 'ok'
 
 
