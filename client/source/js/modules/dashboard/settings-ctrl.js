@@ -44,7 +44,7 @@ define(['./module'], function (controllers) {
     });
 
     $scope.updatePrivacySetting = function () {
-      $http.post('/api/streams/privacy', { privacy: $scope.privacy })
+      $http.post('/api/privacy', { privacy: $scope.privacy })
         .success(function () {
           $location.path('/dashboard');
         });

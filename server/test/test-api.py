@@ -1,20 +1,18 @@
 import unittest
 import sys
 import json
-import repository
-from repository import Stream, Project
 
 sys.path.append('../src')
 import api
+import repository
+from repository import User, Stream, Project
 
 
 class TestApi(unittest.TestCase):
-    @classmethod
-    def setUpClass(TestApi):
-        api.db.drop_all()
-        api.db.create_all()
 
     def setUp(self):
+        api.db.drop_all()
+        api.db.create_all()
         self.client = api.app.test_client()
         self.session = api.db.session
 
@@ -37,7 +35,7 @@ class TestApi(unittest.TestCase):
         assert json.loads(res.data)['success'] is True
 
     def test_streams(self):
-        self.session.add(Stream('sse', 'url', 'i', 'none', repository.CONNECTION_TYPE_OAUTH))
+        self.session.add(Stream('sse', 'url1', 'i', 'none', repository.CONNECTION_TYPE_OAUTH))
         self.session.commit()
 
         res = self.client.get('/api/streams.json')
@@ -45,7 +43,7 @@ class TestApi(unittest.TestCase):
         assert 'sse' in json.loads(res.data)[0]['name']
 
     def test_projects(self):
-        self.session.add(Project('prr', 'url', 'descr'))
+        self.session.add(Project('prr', 'url1', 'descr'))
         self.session.commit()
 
         res = self.client.get('/api/projects.json')
@@ -53,19 +51,34 @@ class TestApi(unittest.TestCase):
         assert 'prr' in json.loads(res.data)[0]['name']
 
     def test_privacy(self):
+        stream = Stream('23andMe', 'url2', 'i', 'none', repository.CONNECTION_TYPE_SCRAPING)
+        project = Project('Sleep study', 'url2', 'descr')
+        self.session.add(stream)
+        self.session.add(project)
+        self.session.commit()
+
         data = json.dumps({
             'privacy': 'public',
             'streams': {
-                '23andme': {
+                stream.id: {
                     'privacy': 'researchers',
                     'projects': {
-                        'sleep-study': {'privacy': 'private'}
+                        project.id: {'privacy': 'private'}
                     }
                 }
             }
         })
+
+        user = User('priv_email', 'priv_user', 'bar')
+        self.session.add(user)
+        self.session.commit()
+        with self.client.session_transaction() as sess:
+            sess['user_id'] = user.id
+            sess['_fresh'] = True  # http://pythonhosted.org/Flask-Login/#fresh-logins
+
         res = self.client.post('/api/privacy', data=data, content_type='application/json')
         assert res.status_code == 200
+
 
 if __name__ == '__main__':
     unittest.main()

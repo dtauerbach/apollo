@@ -2,8 +2,10 @@ import logging
 import os
 
 from flask import Flask, make_response
+from flask.ext.login import current_user
 from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required
+import repository
 from selenium import webdriver
 from flask import jsonify, request
 import config
@@ -54,6 +56,33 @@ def projects():
     return ProjectRepository.projects_to_json()
 
 
+@app.route('/api/privacy', methods=['POST'])
+@login_required
+def privacy():
+    req = request.json
+    current_user.update_global_privacy(map_privacy(req['privacy']))
+    stream_policies = req['streams']
+    for stream in stream_policies:
+        stream_privacy = stream_policies[stream]['privacy']
+        current_user.update_stream_privacy(stream, map_privacy(stream_privacy))
+        project_policies = stream_policies[stream]['projects']
+        for project in project_policies:
+            project_privacy = project_policies[project]['privacy']
+            current_user.update_project_privacy(stream, project, map_privacy(project_privacy))
+    return 'ok'
+
+
+def map_privacy(value):
+    if value in 'private':
+        return repository.PRIVACY_PRIVATE
+    elif value in 'approved_researchers':
+        return repository.PRIVACY_APPROVED_RESEARCHER
+    elif value in 'researchers':
+        return repository.PRIVACY_COMMON_RESEARCHER
+    elif value in 'public':
+        return repository.PRIVACY_PUBLIC
+
+
 @app.route('/api/connect/23andme/1', methods=['POST'])
 @login_required
 def connect_23andme():
@@ -61,14 +90,6 @@ def connect_23andme():
     browser = webdriver.PhantomJS('phantomjs')
     question = scraper_23andme.getSecretQuestion(browser, request.json['scrapeEmail'], request.json['scrapePassword'])
     return question
-
-
-@app.route('/api/privacy', methods=['POST'])
-@login_required
-def privacy():
-    # TODO WIP
-    print request.json
-    return 'ok'
 
 
 @security.login_manager.unauthorized_handler

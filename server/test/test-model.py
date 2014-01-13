@@ -33,9 +33,9 @@ class TestModel(unittest.TestCase):
         self.session.add(project)
         self.session.commit()
 
-        test_user.update_stream_privacy('23andMe', repository.PRIVACY_COMMON_RESEARCHER)
+        test_user.update_stream_privacy(stream.id, repository.PRIVACY_COMMON_RESEARCHER)
 
-        test_user.update_project_privacy('23andMe', 'Sleep study', repository.PRIVACY_APPROVED_RESEARCHER)
+        test_user.update_project_privacy(stream.id, project.id, repository.PRIVACY_APPROVED_RESEARCHER)
 
         user_queried = User.query.filter_by(username='user2').one()
         assert user_queried.global_privacy == repository.PRIVACY_PRIVATE
