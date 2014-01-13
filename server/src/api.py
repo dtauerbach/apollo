@@ -1,14 +1,14 @@
 import logging
 import os
 
-from flask import Flask, make_response, render_template
+from flask import Flask, make_response
 from flask.ext.mail import Mail
-from flask.ext.security import Security, login_required, current_user
+from flask.ext.security import Security, login_required
 from selenium import webdriver
 from flask import jsonify, request
 import config
 from db import db
-from repository import UserRepository
+from repository import UserRepository, StreamRepository, ProjectRepository
 import auth
 from scrapers import scraper_23andme
 
@@ -44,8 +44,14 @@ def index():
 
 @app.route('/api/streams.json')
 @login_required
-def servicesjson():
-    return render_template('streams.json')
+def streams():
+    return StreamRepository.streams_to_json()
+
+
+@app.route('/api/projects.json')
+@login_required
+def projects():
+    return ProjectRepository.projects_to_json()
 
 
 @app.route('/api/connect/23andme/1', methods=['POST'])
@@ -57,11 +63,11 @@ def connect_23andme():
     return question
 
 
-@app.route('/api/privacySetting', methods=['POST'])
+@app.route('/api/privacy', methods=['POST'])
 @login_required
-def privacy_setting():
-    current_user.privacy_setting = request.form['privacySetting']
-    db.session.commit()
+def privacy():
+    # TODO WIP
+    print request.json
     return 'ok'
 
 

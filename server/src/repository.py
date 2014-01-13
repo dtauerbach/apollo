@@ -1,6 +1,9 @@
+import json
+
 from flask.ext.login import UserMixin
 from flask.ext.security import RoleMixin, SQLAlchemyUserDatastore, login_user
 from db import db
+
 
 CONNECTION_TYPE_SCRAPING = 0
 CONNECTION_TYPE_OAUTH = 1
@@ -23,10 +26,11 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='roles_users', backref=db.backref('users', lazy='dynamic'))
     connected_streams = db.relationship('UserStream', backref='user', cascade='all, delete-orphan')
 
-    def __init__(self, email, username, password, active=None, roles=None):
+    def __init__(self, email, username, password, global_privacy=None, active=None, roles=None):
         self.email = email
         self.username = username
         self.password = password
+        self.global_privacy = global_privacy
 
     def connect_stream(self, stream):
         self.connected_streams.append(stream)
@@ -169,3 +173,33 @@ class UserRepository(object):
             return login_user(user_obj)
         else:
             return False
+
+
+class StreamRepository(object):
+    @staticmethod
+    def streams_to_json():
+        res = []
+        for s in Stream.query.all():
+            res.append(dict(
+                key=s.id,
+                full_name=s.name,
+                url=s.url,
+                icon=s.icon,
+                keywords=s.keywords.split(','),
+                connect_type=s.connection_type
+            ))
+        return json.dumps(res)
+
+
+class ProjectRepository(object):
+    @staticmethod
+    def projects_to_json():
+        res = []
+        for p in Project.query.all():
+            res.append(dict(
+                key=p.id,
+                name=p.name,
+                url=p.url,
+                description=p.description
+            ))
+        return json.dumps(res)
