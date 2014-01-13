@@ -19,7 +19,7 @@ class TestModel(unittest.TestCase):
         self.ur = UserRepository()
 
     def test_user_create_and_get(self):
-        test_user = self.ur.create('user1', 'email@wahtever.com', 'beatiful pwd')
+        test_user = self.ur.create('user1', 'email@wahtever.com', 'beautiful pwd')
         assert self.ur.get('email@wahtever.com') == test_user
 
     def test_set_all_privacy_settings(self):
@@ -40,8 +40,11 @@ class TestModel(unittest.TestCase):
         self.session.commit()
 
         user_queried = User.query.filter_by(username='user2').one()
-        assert user_queried.connected_streams[0].stream.name == '23andMe'
-        assert user_queried.connected_streams[0].connected_projects[0].project.name == 'Sleep study'
+        assert user_queried.global_privacy == repository.PRIVACY_PRIVATE
+        assert user_queried.connected_streams[0].stream == stream
+        assert user_queried.connected_streams[0].privacy == repository.PRIVACY_PRIVATE
+        assert user_queried.connected_streams[0].connected_projects[0].project == project
+        assert user_queried.connected_streams[0].connected_projects[0].privacy == repository.PRIVACY_APPROVED_RESEARCHER
 
     def query_db(self, query, args=(), one=False):
         cur = self.session.execute(query, args)
