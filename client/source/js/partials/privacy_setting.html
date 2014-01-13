@@ -1,12 +1,12 @@
 <ul class="list-unstyled">
-  <li class="setting" data-ng-repeat="setting in privacySettings">
+  <li class="setting" data-ng-repeat="privacySetting in privacySettings">
     <label>
       <input type="radio"
         name="{{ boxKey }}"
         data-ng-model="boxValue.privacy"
-        data-ng-value="setting.key"
+        data-ng-value="privacySetting.key"
       />
-      {{ setting.label }}
+      {{ privacySetting.label }}
     </label>
   </li>
 </ul>
