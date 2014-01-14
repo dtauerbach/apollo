@@ -1,14 +1,17 @@
 import logging
 import os
+import json
 
-from flask import Flask, make_response, render_template
+from flask import Flask, make_response
+from flask.ext.login import current_user
 from flask.ext.mail import Mail
-from flask.ext.security import Security, login_required, current_user
+from flask.ext.security import Security, login_required
 from selenium import webdriver
 from flask import jsonify, request
 import config
 from db import db
-from repository import UserRepository
+from repository import UserRepository, StreamRepository, ProjectRepository
+from repository import PRIVACY_CONST, PRIVACY_CONST_INV
 import auth
 from scrapers import scraper_23andme
 
@@ -32,7 +35,7 @@ app.extensions['mail'] = mail
 
 user_repository = UserRepository()
 # security state is returned from init_app and is used to get the login_manager
-security = Security().init_app(app, user_repository.user_datastore)
+security = Security().init_app(app, user_repository.ud)
 auth.user_repository = user_repository
 app.register_blueprint(auth.social_login)
 
@@ -44,8 +47,58 @@ def index():
 
 @app.route('/api/streams.json')
 @login_required
-def servicesjson():
-    return render_template('streams.json')
+def streams():
+    return StreamRepository.streams_to_json()
+
+
+@app.route('/api/projects.json')
+@login_required
+def projects():
+    return ProjectRepository.projects_to_json()
+
+
+@app.route('/api/privacy', methods=['GET'])
+@login_required
+def get_privacy():
+    all_us_privacy = {}
+    for us in current_user.connected_streams:
+        all_usp_privacy = {}
+        for usp in us.connected_projects:
+            all_usp_privacy.update({
+                usp.project.id: {
+                    'name': usp.project.name,
+                    'privacy': PRIVACY_CONST[usp.privacy]
+                }
+            })
+        all_us_privacy.update({
+            us.stream.id: {
+                'name': us.stream.name,
+                'privacy': PRIVACY_CONST[us.privacy],
+                'projects': all_usp_privacy
+            }
+        })
+    return json.dumps({
+        'privacy': PRIVACY_CONST[current_user.global_privacy],
+        'streams': all_us_privacy
+    })
+
+
+@app.route('/api/privacy', methods=['POST'])
+@login_required
+def set_privacy():
+    req = request.json
+    current_user.update_global_privacy(PRIVACY_CONST_INV[req['privacy']])
+    stream_policies = req['streams']
+    for stream in stream_policies:
+        if 'privacy' in stream_policies[stream]:
+            stream_privacy = stream_policies[stream]['privacy']
+            current_user.update_stream_privacy(stream, PRIVACY_CONST_INV[stream_privacy])
+            project_policies = stream_policies[stream]['projects']
+            for project in project_policies:
+                if 'privacy' in project_policies[project]:
+                    project_privacy = project_policies[project]['privacy']
+                    current_user.update_project_privacy(stream, project, PRIVACY_CONST_INV[project_privacy])
+    return 'ok'
 
 
 @app.route('/api/connect/23andme/1', methods=['POST'])
@@ -55,14 +108,6 @@ def connect_23andme():
     browser = webdriver.PhantomJS('phantomjs')
     question = scraper_23andme.getSecretQuestion(browser, request.json['scrapeEmail'], request.json['scrapePassword'])
     return question
-
-
-@app.route('/api/privacySetting', methods=['POST'])
-@login_required
-def privacy_setting():
-    current_user.privacy_setting = request.form['privacySetting']
-    db.session.commit()
-    return 'ok'
 
 
 @security.login_manager.unauthorized_handler

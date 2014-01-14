@@ -40,18 +40,18 @@ define([
     }])
 
     // Intercept POST requests, convert to standard form encoding
-    .config(['$httpProvider', function ($httpProvider) {
-      $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-      $httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
-        var key, result = [];
-        for (key in data) {
-          if (data.hasOwnProperty(key)) {
-            result.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
-          }
-        }
-        return result.join("&");
-      });
-    }])
+//    .config(['$httpProvider', function ($httpProvider) {
+//      $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+//      $httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
+//        var key, result = [];
+//        for (key in data) {
+//          if (data.hasOwnProperty(key)) {
+//            result.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
+//          }
+//        }
+//        return result.join("&");
+//      });
+//    }])
 
     .run(function($rootScope) {
       $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {

@@ -14,8 +14,8 @@ then
   pip install -r ./requirements.txt
 fi
 
-cd ./test
+cd ./src
 
-../env/bin/python tests.py
+../env/bin/python setup.py
 
 deactivate

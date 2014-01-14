@@ -42,14 +42,14 @@ define([
     describe('check search', function () {
       it('should return matching servive 1', function () {
         var s1 = {
-          "full_name": "23andme",
+          "name": "23andme",
           "url": "http://23andme.com",
           "icon": "23andMe_Logo_blog.jpg",
           "keywords": ["genes", "genetics", "biology", "disease", "23andme"],
           "connect_type": "scraping"
         };
         var s2 = {
-          "full_name": "Jawbone UP",
+          "name": "Jawbone UP",
           "url": "http://jawbone.com",
           "icon": "jawbone_up.jpg",
           "keywords": ["jawbone", "exercise", "wellness", "quantified self", "jawbone up"],
