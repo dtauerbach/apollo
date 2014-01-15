@@ -1,0 +1,26 @@
+{
+  "name": "StarterSquad AngularJS + RequireJS Seed",
+  "version": "0.3.0",
+  "main": "source/index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "angular": "1.2.7",
+    "angular-resource": "1.2.7",
+    "angular-mocks": "1.2.7",
+    "angular-ui-router": "0.2.7",
+    "angular-scenario": "1.2.7",
+    "angular-bootstrap": "0.9.0",
+    "jasmine-matchers": "https://github.com/JamieMason/Jasmine-Matchers.git",
+    "requirejs": "2.1.10",
+    "requirejs-domready": "2.0.1",
+    "requirejs-text": "2.0.10",
+    "requirejs-plugins": "1.0.2",
+    "font-awesome": "~4.0.3",
+    "bootstrap": "~3.0.2",
+    "underscore": "1.5.2"
+  }
+}

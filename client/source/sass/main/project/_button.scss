@@ -1,0 +1,54 @@
+.btn-primary {
+  background: #1d4d64;
+  border-color: #1d4d64;
+  border-radius: 2px;
+}
+
+.button {
+  background: #4aafe8;
+  color: #fff;
+  padding: 8px 22px;
+  border-radius: 2px;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: left;
+  border: none;
+  border-bottom: 5px solid #3d92c1;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .4);
+
+  &:hover {
+    background: darken(#4aafe8, 5%);
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .fa {
+    font-size: 14px;
+    width: 16px;
+  }
+
+  &.button-small {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  &.button-fixed-width {
+    width: 180px;
+  }
+
+  &.button-facebook {
+    background: #5c83cc;
+    border-color: #4a69a3;
+  }
+
+  &.button-google {
+    background: #f05c51;
+    border-color: #c04a41;
+  }
+
+  &.button-persona {
+    background: #3694bd;
+    border-color: #2c7797;
+  }
+}

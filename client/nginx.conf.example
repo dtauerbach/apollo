@@ -1,0 +1,38 @@
+server {
+    listen 80;
+    server_name local.apollo.com;
+
+    charset utf-8;
+
+    # @FIXME update this path with yours
+    set $host_path "{{PATH TO APOLLO}}/client";
+
+    # Path for static files
+    root $host_path/source;
+
+    expires -1;
+
+    # opt-in to the future
+    add_header "X-UA-Compatible" "IE=Edge,chrome=1";
+
+    #location /assets/ {
+    #    root  $host_path;
+    #}
+
+    location /build {
+        root  $host_path;
+    }
+
+    location / {
+        index  index.html index.htm;
+        try_files $uri /index.html;
+    }
+
+    location /api {
+        proxy_pass http://localhost:5000;
+    }
+
+    location /tests {
+        root  $host_path;
+    }
+}

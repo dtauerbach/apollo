@@ -1,0 +1,11 @@
+---
+  version: release/0.5
+  source_dir_shared: false
+  host_name: apollo.startersquad.com
+  git_repository: git@github.com:dtauerbach/apollo.git
+  install_dir: /opt/apollo
+
+  log_file_path: /opt/apollo/server/log
+  log_file_name: api.log
+
+  mysql_root_password: root

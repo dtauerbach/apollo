@@ -1,0 +1,20 @@
+.DS_Store
+*.py[cod]
+src/config.py
+
+# virtualenv
+venv
+env
+
+# logs
+pip-log.txt
+log
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Intellij Idea
+.idea
+*.iml

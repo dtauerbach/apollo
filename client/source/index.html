@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Apollo</title>
+  <link href="/assets/css/main.css" rel="stylesheet" media="screen">
+  <base href="/">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="/assets/js/html5shiv.js"></script>
+    <script src="/assets/js/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body data-ng-controller="LayoutController">
+
+  <!-- Header -->
+  <div data-ng-include="'/js/modules/layout/header.html'"></div>
+   
+  <!-- Content -->
+  <div class="main container" data-ui-view></div>
+  
+  <!-- Footer -->
+  <div data-ng-include="'/js/modules/layout/footer.html'"></div>
+
+  <!-- Scripts -->
+  <script src="/vendor/requirejs/require.js"></script>
+  <script>
+    // obtain requirejs config
+    require(['require', '/js/config-require.js'], function (require, config) {
+
+      // set cache beater
+      config.urlArgs = 'bust=v0.5.0';
+      config.baseUrl = '/';
+
+      // update global require config
+      window.require.config(config);
+
+      // load app
+      require(['./js/main']);
+    });
+  </script>
+
+</body>
+</html>

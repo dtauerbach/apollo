@@ -1,0 +1,10 @@
+.idea
+.sass-cache
+nginx.conf
+errors.log
+/build
+/coverage
+/selenium
+node_modules
+test-results-*.xml
+source/vendor

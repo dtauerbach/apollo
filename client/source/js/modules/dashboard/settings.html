@@ -1,0 +1,39 @@
+<div class="settings" data-ng-controller="DashboardSettingsBoxController">
+  <div class="settings-title">
+    <h1 class="subtitle">Default sharing policy</h1>
+  </div>
+  <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'"></div>
+</div>
+
+<div class="settings" data-ng-repeat="(streamId, stream) in privacy.streams" data-ng-controller="DashboardSettingsBoxController">
+  <div class="settings-title">
+    <h1 class="subtitle">
+      {{ stream.name }}
+      <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="isBoxOpen()" data-ng-click="closeBox()">Reset to default sharing policy</button>
+      <button class="btn btn-toggle btn-primary btn-xs" data-ng-hide="isBoxOpen()" data-ng-click="openBox()">Customize stream policy</button>
+    </h1>
+  </div>
+  <div data-ng-show="isBoxOpen()">
+    <div class="settings-body">
+      <div data-ng-include="'/js/partials/privacy_setting.html'"></div>
+      <div class="settings" data-ng-repeat="(projectId, project) in stream.projects" data-ng-controller="DashboardSettingsBoxController">
+        <div class="settings-title">
+          <h2 class="subtitle">
+              {{ project.name }}
+              <button class="btn btn-toggle btn-primary btn-xs" data-ng-show="isBoxOpen()" data-ng-click="closeBox()">Reset to {{ stream.name }} sharing policy</button>
+              <button class="btn btn-toggle btn-primary btn-xs" data-ng-hide="isBoxOpen()" data-ng-click="openBox()">Customize project sharing policy</button>
+          </h2>
+        </div>
+        <div class="settings-body" data-ng-include="'/js/partials/privacy_setting.html'" data-ng-show="isBoxOpen()"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div>
+  <button class="btn btn-toggle btn-primary" data-ng-click="reset()">Reset</button>
+  <button class="btn btn-toggle btn-primary" data-ng-click="save()">Save</button>
+</div>
+
+<!--<pre>{{ privacy | json }}</pre>-->

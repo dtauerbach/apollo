@@ -1,0 +1,62 @@
+.modal {
+
+  $borderColor: #c8c8c8;
+
+  &.modal-register {
+    width: 420px !important;
+  }
+
+  &.modal-login {
+    width: 420px !important;
+  }
+
+  &.modal-service {
+    width: 420px !important;
+  }
+
+  .modal-dialog {
+    width: auto;
+  }
+
+  .modal-content {
+    padding: 0 8px;
+    border-radius: 0;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid $borderColor;
+
+    .modal-title {
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: normal;
+    }
+  }
+
+  .modal-separator {
+    text-align:center;
+    position:relative;
+    z-index:2;
+
+    &:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:0;
+      right:0;
+      border-top: 1px solid $borderColor;
+      z-index:-1;
+    }
+
+    .line-center{
+      margin:0;padding:0 10px;
+      background:#fff;
+      display:inline-block;
+    }
+  }
+
+  .modal-footer {
+    margin-top: 0;
+  }
+}
+
