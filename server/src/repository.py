@@ -46,7 +46,7 @@ class User(db.Model, UserMixin):
     def get_or_connect_stream(self, stream_id):
         user_stream = None
         for us in self.connected_streams:
-            if us.stream.id is stream_id:
+            if us.stream.id == stream_id:
                 user_stream = us
         if not user_stream:
             stream = Stream.query.filter_by(id=stream_id).one()
@@ -131,7 +131,7 @@ class UserStream(db.Model):
     def get_or_connect_project(self, project_id):
         user_stream_project = None
         for usp in self.connected_projects:
-            if usp.project.id is project_id:
+            if usp.project.id == project_id:
                 user_stream_project = usp
         if not user_stream_project:
             project = Project.query.filter_by(id=project_id).one()

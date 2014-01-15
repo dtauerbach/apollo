@@ -62,6 +62,7 @@ def projects():
 def get_privacy():
     all_us_privacy = {}
     for us in current_user.connected_streams:
+        print us
         all_usp_privacy = {}
         for usp in us.connected_projects:
             all_usp_privacy.update({
@@ -91,13 +92,15 @@ def set_privacy():
     stream_policies = req['streams']
     for stream in stream_policies:
         if 'privacy' in stream_policies[stream]:
+            stream_id = int(stream)
             stream_privacy = stream_policies[stream]['privacy']
-            current_user.update_stream_privacy(stream, PRIVACY_CONST_INV[stream_privacy])
+            current_user.update_stream_privacy(stream_id, PRIVACY_CONST_INV[stream_privacy])
             project_policies = stream_policies[stream]['projects']
             for project in project_policies:
                 if 'privacy' in project_policies[project]:
+                    project_id = int(project)
                     project_privacy = project_policies[project]['privacy']
-                    current_user.update_project_privacy(stream, project, PRIVACY_CONST_INV[project_privacy])
+                    current_user.update_project_privacy(stream_id, project_id, PRIVACY_CONST_INV[project_privacy])
     return 'ok'
 
 
