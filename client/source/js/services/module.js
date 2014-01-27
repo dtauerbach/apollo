@@ -1,5 +1,5 @@
-define(['angular'], function (ng) {
+define(['angular', 'angular-ui-router'], function (ng) {
   'use strict';
 
-  return ng.module('app.services', ['app.constants']);
+  return ng.module('app.services', ['app.constants', 'ui.router']);
 });

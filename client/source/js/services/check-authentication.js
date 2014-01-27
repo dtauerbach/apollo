@@ -1,19 +1,13 @@
 define(['./module'], function(services) {
 
-  services.factory('CheckAuthentication', function($rootScope, $location, $http, User) {
+  services.factory('CheckAuthentication', function($rootScope, $state, $http, User) {
 
-    var currentRoute, prevRoute;
+    var currentRoute;
 
-    function checkRoute(current, prev) {
-      //console.log('checkroute invoked ----', current, prev, User.authenticated);
+    function checkRoute(current) {
       if (current.requireLogin && !User.authenticated) {
-        //console.log('redirecting to /');
-        $location.path('/');
-      }
+        $state.go('home');
 
-      // show/hide notifications
-      if (prev  && prev.requireLogin && !User.authenticated) {
-        //console.log(prev);
         $rootScope.notification = {
           type: 'warning',
           message: 'You must be authenticated to access this page, please login.'
@@ -28,12 +22,11 @@ define(['./module'], function(services) {
       applicationIsBootstraped: false,
 
       initAuth: function () {
-        $rootScope.$on('$stateChangeStart', _.bind(function(event, current, prev) {
+        $rootScope.$on('$stateChangeStart', _.bind(function(event, current) {
           currentRoute = current;
-          prevRoute = prev;
 
           if (this.applicationIsBootstraped) {
-            checkRoute(current, prev);
+            checkRoute(current);
           }
         }, this));
 
@@ -45,7 +38,7 @@ define(['./module'], function(services) {
           }
 
           if (currentRoute) {
-            checkRoute(currentRoute, prevRoute);
+            checkRoute(currentRoute);
           }
         }, this));
       }
