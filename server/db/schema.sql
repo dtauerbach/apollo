@@ -77,7 +77,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `privacy_setting` varchar(100) DEFAULT NULL,
+  `global_privacy` varchar(100) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL,
   `active` int(1) DEFAULT NULL,
   `confirmed_at` int(10) DEFAULT NULL,
