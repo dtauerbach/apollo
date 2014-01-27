@@ -1,20 +1,18 @@
 describe('E2E: Testing App', function () {
   "use strict";
 
-  var mockUser = function() {
-    var module = angular.module('app.services', []);
-    module.value('User', { authenticated: true });
-  };
-
   beforeEach(function () {
-    browser.addMockModule('app.services', mockUser);
-    browser.get('/dashboard');
-    browser.debugger();
+    runs(function () {
+      browser.get('/');
+      browser.executeScript('$(function() { $.post("/api/auth/login", { email: "dan@example.com", password: "pass" }); })');
+    });
 
-    browser.executeScript('$(function() { $.post("/api/auth/login", { email: "dan@example.com", password: "pass" }); })');
-    //console.log(browser);
+    waits(1000);
 
-    //browser.post('/api/auth/login', { email: 'dan@example.com', password: 'pass' });
+    runs(function () {
+      browser.get('/dashboard');
+      browser.debugger();
+    });
   });
 
   describe('Dashboard Home page', function () {

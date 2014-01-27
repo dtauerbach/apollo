@@ -7,6 +7,7 @@ define([
   'jquery',
   'underscore',
   'angular-ui-router',
+  'angular-bootstrap',
   './config',
   './services/index',
   './modules/public/index',
