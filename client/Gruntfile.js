@@ -41,7 +41,7 @@ module.exports = function (grunt) {
     sass: {
       main: {
         options: {
-          bundleExec: true,
+          //bundleExec: true,
           require: [
             './source/sass/sass_extensions.rb',
             'sass-globbing'
