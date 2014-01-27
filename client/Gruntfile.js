@@ -128,14 +128,14 @@ module.exports = function (grunt) {
         configFile: 'p.conf.js',
         keepAlive: true, // If false, the grunt process stops when the test fails.
         args: {
-          baseUrl: 'http://local.apollo.com', // Arguments passed to the command
+          baseUrl: 'http://apollo.dev', // Arguments passed to the command
           specs: ['source/js/**/*.e2e.js']
         }
       },
       source: {},
       build: {
         args: {
-          baseUrl: 'http://local.apollo.com/build'
+          baseUrl: 'http://apollo.dev/build'
         }
       }
     },
