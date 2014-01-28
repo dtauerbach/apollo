@@ -1,56 +1,20 @@
 <div class="researchers">
-
-  <div class="researchers_item layout">
-    <div class="layout_left">
-      <img src="http://lorempixel.com/g/300/200/abstract" />
-    </div>
-    <div class="layout_right">
-      <h2 class="title">Researcher One</h2>
-      <p>Lorem Ipsum</p>
-      <p>Curabitur lobortis tortor</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-  </div>
- 
-  <div class="researchers_item layout">
-    <div class="layout_left">
-      <img src="http://lorempixel.com/g/300/200/abstract" />
-    </div>
-    <div class="layout_right">
-      <h2 class="title">Researcher Two</h2>
-      <p>Lorem Ipsum</p>
-      <p>Curabitur lobortis tortor</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-  </div>
-    
-  <div class="researchers_item layout">
-    <div class="layout_left">
-      <img src="http://lorempixel.com/g/300/200/abstract" />
-    </div>
-    <div class="layout_right">
-      <h2 class="title">Researcher Three</h2>
-      <p>Lorem Ipsum</p>
-      <p>Curabitur lobortis tortor</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-  </div>
-   
-  <hr>
-
-  <div class="layout">
-    <div class="layout_left" style="width:300px"></div>
-    <div class="layout_right">
-      <h2 class="title">Researcher One</h2>
-      <p>Lorem Ipsum</p>
-      <p>Curabitur lobortis tortor</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-  </div>
-
+  <p>Lorem Ipsum</p>
+  <p>Curabitur lobortis tortor</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </div>
 
+<form class="form form__fieldset" data-ng-submit="submit()">
+  <h4 class="form__title">Please fill form below to contact us:</h4>
+  <div class="form-group">
+    <input type="text" class="form__field" placeholder="Your Name" data-ng-model="contact.name" required />
+  </div>
+  <div class="form-group">
+    <input type="email" class="form__field" placeholder="Your Email" data-ng-model="contact.email" required />
+  </div>
+  <div class="form-group">
+    <textarea class="form__field __full __textarea" placeholder="Your Interest" data-ng-model="contact.interest"></textarea>
+  </div>
+  <button type="submit" class="button">Contact Us</button>
+</form>
