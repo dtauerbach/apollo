@@ -227,10 +227,20 @@ module.exports = function (grunt) {
     grunt.task.run(this.data);
   });
 
+  grunt.registerTask('zip-build', 'Creates a tar gz of the build directory', function () {
+    var version = shelljs.grep(/.*var version.*(\d*\.\d*).*/, './source/index.html').match(/\d*\.\d*/);
+    var filename = 'republiq-client-' + version + '.tar.gz';
+    grunt.log.ok('Creating client artifact: ' + filename);
+    shelljs.exec('tar -zcf ' + filename + ' build');
+  });
+
   grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
   grunt.registerTask('build-css', ['css']);
   grunt.registerTask('build', ['build-js', 'build-css', 'modifyBuildIndex']);
+
   grunt.registerTask('test', ['karma:unitSingleRun', 'protractor:source', 'karma:ci', 'protractor:build']);
+
+  grunt.registerTask('assembly', ['build', 'karma:unitSingleRun', 'karma:ci', 'zip-build']);
 
   grunt.registerTask('default', ['build', 'test']);
 
