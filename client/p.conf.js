@@ -12,5 +12,9 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000
+  },
+
+  onCleanUp: function(exitCode) {
+    console.log(exitCode);
   }
 };

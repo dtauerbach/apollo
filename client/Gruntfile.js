@@ -126,7 +126,7 @@ module.exports = function (grunt) {
     protractor: {
       options: {
         configFile: 'p.conf.js',
-        keepAlive: true, // If false, the grunt process stops when the test fails.
+        keepAlive: false, // If false, the grunt process stops when the test fails.
         args: {
           baseUrl: 'http://apollo.dev', // Arguments passed to the command
           specs: ['source/js/**/*.e2e.js']
