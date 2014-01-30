@@ -6,6 +6,7 @@ from flask import Flask, make_response
 from flask.ext.login import current_user
 from flask.ext.mail import Mail
 from flask.ext.security import Security, login_required
+from flask_wtf.csrf import CsrfProtect
 from selenium import webdriver
 from flask import jsonify, request
 import config
@@ -29,6 +30,8 @@ if os.path.exists(LOG_PATH):
 else:
     logging.basicConfig(level=logging.DEBUG)
 logging.info('Starting server ...')
+
+CsrfProtect(app)
 
 mail = Mail(app)
 app.extensions['mail'] = mail

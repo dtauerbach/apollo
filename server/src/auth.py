@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
 from flask.ext.security import utils, current_user
+from flask_wtf.csrf import generate_csrf
 import repository
 import requests
 import json
@@ -11,16 +12,19 @@ user_repository = None
 
 social_login = Blueprint('social_login', __name__)
 
-
 @social_login.route('/api/auth/check_authentication')
 def check_authentication():
+    res = {}
     if current_user.is_authenticated():
-        return jsonify({
+        res.update({
             'email': current_user.email,
             'username': current_user.username,
             'privacy': repository.PRIVACY_CONST[current_user.global_privacy]
         })
-    return jsonify({})
+    res.update({
+        'csrf_token': generate_csrf()
+    })
+    return jsonify(res)
 
 
 @social_login.route('/api/auth/login', methods=['POST'])
