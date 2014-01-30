@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
+from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for, make_response
 from flask.ext.security import utils, current_user
 from flask_wtf.csrf import generate_csrf
 import repository
@@ -29,14 +29,18 @@ def check_authentication():
 
 @social_login.route('/api/auth/login', methods=['POST'])
 def login():
-    result = user_repository.login(request.form['email'], request.form['password'])
-    return jsonify({'success': result})
+    result = user_repository.login(request.json['email'], request.json['password'])
+    if result:
+        return check_authentication() 
+    return make_response('login failed', 403);
 
 
 @social_login.route('/api/auth/register', methods=['POST'])
 def register():
-    result = user_repository.register(request.form['username'], request.form['email'], request.form['password'])
-    return jsonify({'success': result})
+    result = user_repository.register(request.json['username'], request.json['email'], request.json['password'])
+    if result:
+        return check_authentication() 
+    return make_response('register failed', 400);
 
 
 @social_login.route('/api/auth/logout')

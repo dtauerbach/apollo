@@ -33,6 +33,8 @@ define(['./module'], function(services) {
         $http.get('/api/auth/check_authentication').success(_.bind(function (resp) {
           this.applicationIsBootstraped = true;
 
+          $http.defaults.headers.common['X-CSRFToken'] = resp.csrf_token;
+
           if (resp.username) {
             angular.extend(User, resp, { authenticated: true });
           }

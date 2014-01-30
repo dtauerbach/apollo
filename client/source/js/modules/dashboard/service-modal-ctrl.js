@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('DashboardServiceModalController', function ($scope) {
+  controllers.controller('DashboardServiceModalController', function ($scope, $http) {
 
     $scope.scrapeState = 'start';
 
@@ -13,19 +13,14 @@ define(['./module'], function (controllers) {
     $scope.connectStream = function() {
       $scope.scrapeState = 'pending';
 
-      $.ajax({
-        url: '/api/connect/23andme/1',
-        type: 'POST',
-        data: JSON.stringify({
-          scrapeEmail: $scope.scrapeEmail,
-          scrapePassword: $scope.scrapePassword
-        }),
-        contentType: 'application/json;charset=UTF-8',
-      }).done(function(response) {
-        $scope.scrapeState = 'done';
-        $scope.scrapeResponse = response;
-        $scope.$apply();
-      });
+      $http.post('/api/connect/23andme/1', {
+        scrapeEmail: $scope.scrapeEmail,
+        scrapePassword: $scope.scrapePassword
+      })
+        .success(function(response) {
+          $scope.scrapeState = 'done';
+          $scope.scrapeResponse = response;
+        });
     };
 
   });

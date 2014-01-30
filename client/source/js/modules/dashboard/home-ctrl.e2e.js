@@ -4,15 +4,28 @@ describe('E2E: Testing App', function () {
   beforeEach(function () {
     runs(function () {
       browser.get('/');
-      browser.executeScript('$(function() { $.post("/api/auth/login", { email: "dan@example.com", password: "pass" }); })');
+      browser.debugger();
+      element(by.css('.button-login')).click();
     });
 
     waits(1000);
 
     runs(function () {
-      browser.get('/dashboard');
-      browser.debugger();
+      var loginModal = element(by.css('.modal-login'));
+      loginModal.findElement(by.id('inputEmail')).sendKeys('dan@example.com');
+      loginModal.findElement(by.id('inputPassword')).sendKeys('pass');
+      loginModal.findElement(by.css('[type=submit]')).click();
     });
+
+    waits(2000);
+
+    runs(function () {
+      browser.get('/dashboard');
+    });
+  });
+
+  afterEach(function () {
+    element(by.css('.button-logout')).click();
   });
 
   describe('Dashboard Home page', function () {

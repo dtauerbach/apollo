@@ -5,7 +5,9 @@
 <div class="modal-body">
   <div class="text-center" data-ng-include="'/js/partials/social_authentication.html'"></div>
   <p class="modal-separator"><span  class="line-center">or sign up with email</span></p>
-  <div class="alert alert-danger" data-ng-show="errors.registration">Error creating your account.</div>
+  <div class="alert alert-danger" data-ng-show="errors.registration">
+    Error creating your account or username/email already exists.
+  </div>
   <form class="form register" data-ng-submit="submit()">
     <div class="form-group">
       <label for="inputUsername">Username</label>

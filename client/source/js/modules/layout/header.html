@@ -8,11 +8,11 @@
         <li><a data-ui-sref="home" class="user">Hello, {{ currentUser.email }}</a></li>
         <li><a data-ui-sref="dashboard-home" class="button">Dashboard</a></li>
         <li><a data-ui-sref="dashboard-settings" class="button">Settings</a></li>
-        <li><a ng-click="logout()" class="button">Logout</a></li>
+        <li><a ng-click="logout()" class="button button-logout">Logout</a></li>
       </ul>
       <ul class="header_topnav ng-cloak" data-ng-hide="currentUser.authenticated">
-        <li><a class="button" data-ng-click="login()">Sign in</a></li>
-        <li><a class="button" data-ng-click="register()">Join</a></li>
+        <li><a class="button button-login" data-ng-click="login()">Sign in</a></li>
+        <li><a class="button button-signin" data-ng-click="register()">Join</a></li>
       </ul>
       <ul class="menu">
         <li><a data-ui-sref="researchers">Researchers</a></li>
