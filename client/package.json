@@ -16,6 +16,7 @@
     "grunt-contrib-watch"       : "latest",
     "grunt-csso"                : "latest",
     "grunt-karma"               : "latest",
+    "grunt-html2js"             : "latest",
     "karma"                     : "latest",
     "karma-chrome-launcher"     : "latest",
     "karma-firefox-launcher"    : "latest",
