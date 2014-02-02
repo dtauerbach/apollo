@@ -31,7 +31,8 @@
     require(['/js/config-require.js'], function (config) {
 
       // set cache beater
-      config.urlArgs = 'bust=v0.5.0';
+      var version = '0.5';
+      config.urlArgs = 'bust=v' + version;
       config.baseUrl = '/';
 
       // update global require config
