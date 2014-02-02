@@ -24,6 +24,7 @@
     "karma-phantomjs-launcher"  : "latest",
     "karma-requirejs"           : "latest",
     "karma-script-launcher"     : "latest",
-    "karma-coverage"            : "latest"
+    "karma-coverage"            : "latest",
+    "grunt-cli"                 : "latest"
   }
 }
