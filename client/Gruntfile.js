@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
 
-  var assetsDir = 'source/assets/',
-    shell = require('shelljs');;
+  var assetsDir = 'source/assets/';
+  var shell = require('shelljs');
 
   function readBuildConfig () {
     var configBuild = {
@@ -227,11 +227,15 @@ module.exports = function (grunt) {
     grunt.task.run(this.data);
   });
 
-  grunt.registerTask('zip-build', 'Creates a tar gz of the build directory', function () {
-    var version = shelljs.grep(/.*var version.*(\d*\.\d*).*/, './source/index.html').match(/\d*\.\d*/);
+  grunt.registerTask('create-artifact', 'Creates a tar gz of the build directory', function () {
+    var version = shell.grep(/.*var version.*(\d*\.\d*).*/, './source/index.html').match(/\d*\.\d*/);
     var filename = 'republiq-client-' + version + '.tar.gz';
     grunt.log.ok('Creating client artifact: ' + filename);
-    shelljs.exec('tar -zcf ' + filename + ' build');
+    shell.exec('tar -zcf ' + filename + ' build');
+  });
+
+  grunt.registerTask('clean', 'Cleans the build folder', function(){
+    shell.exec('rm -r build');
   });
 
   grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
@@ -240,7 +244,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['karma:unitSingleRun', 'protractor:source', 'karma:ci', 'protractor:build']);
 
-  grunt.registerTask('assembly', ['build', 'karma:unitSingleRun', 'karma:ci', 'zip-build']);
+  // Used by CD
+  grunt.registerTask('assembly', ['clean', 'build', 'karma:unitSingleRun', 'karma:ci', 'create-artifact']);
 
   grunt.registerTask('default', ['build', 'test']);
 
