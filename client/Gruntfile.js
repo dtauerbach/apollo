@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         options: {
           base: './source/'
         },
-        src: [ 'source/js/modules/**/*.html' ],
+        src: [ 'source/js/**/*.html' ],
         dest: 'build/js/templates.js'
       }
     },
@@ -246,12 +246,12 @@ module.exports = function (grunt) {
   grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
   grunt.registerTask('build-css', ['css']);
   grunt.registerTask('build-html', ['html2js']);
-  grunt.registerTask('build', ['build-html', 'build-js', 'build-css', 'modifyBuildIndex']);
+  grunt.registerTask('build', ['clean', 'build-html', 'build-js', 'build-css', 'modifyBuildIndex']);
 
   grunt.registerTask('test', ['karma:unitSingleRun', 'protractor:source', 'karma:ci', 'protractor:build']);
 
   // Used by CD
-  grunt.registerTask('assembly', ['clean', 'build', 'karma:unitSingleRun', 'karma:ci', 'create-artifact']);
+  grunt.registerTask('assembly', ['build', 'karma:unitSingleRun', 'karma:ci', 'create-artifact']);
 
   grunt.registerTask('default', ['build', 'test']);
 
