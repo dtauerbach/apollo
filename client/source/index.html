@@ -33,13 +33,12 @@
       // set cache beater
       var version = '0.5';
       config.urlArgs = 'bust=v' + version;
-      config.baseUrl = '/';
 
       // update global require config
       window.require.config(config);
 
       // load app
-      require(['./js/main']);
+      require(['./main']);
     });
   </script>
 

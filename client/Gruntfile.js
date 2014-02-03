@@ -9,7 +9,8 @@ module.exports = function (grunt) {
       'name'                : 'main',
       'optimize'            : 'none',
       'out'                 : 'build/js/main-src.js',
-      'wrap'                : true
+      'wrap'                : true,
+      'excludeShallow'      : ['templates']
     };
 
     var configRequire = require('./source/js/config-require.js');
@@ -50,7 +51,7 @@ module.exports = function (grunt) {
           base: './source/'
         },
         src: [ 'source/js/modules/**/*.html' ],
-        dest: 'source/js/templates.js'
+        dest: 'build/js/templates.js'
       }
     },
     sass: {
@@ -209,8 +210,8 @@ module.exports = function (grunt) {
   grunt.registerTask('modifyBuildIndex', 'Adds js code required to start built app.', function () {
     shell.sed(
       '-i',
-      "require(['./js/main'])",
-      "require(['./js/main'], function () { require(['main']); })",
+      "require(['./main'])",
+      "require(['./main'], function () { require(['main']); })",
       'build/index.html'
     );
   });
