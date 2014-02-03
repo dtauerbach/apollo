@@ -12,7 +12,8 @@ define([
   './services/index',
   './modules/public/index',
   './modules/layout/index',
-  './modules/dashboard/index'
+  './modules/dashboard/index',
+  './templates'
 ], function (ng) {
   'use strict';
 
@@ -24,7 +25,8 @@ define([
       'app.layout',
       'app.services',
       'ui.bootstrap',
-      'ui.router'
+      'ui.router',
+      'templates-main'
     ])
 
     .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
