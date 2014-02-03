@@ -5,14 +5,11 @@ module.exports = function (grunt) {
 
   function readBuildConfig () {
     var configBuild = {
-      "wrap"                  : true,
-      "name"                  : "main",
-      "optimize"              : "none",
-      "baseUrl"               : "source/js",
-      "mainConfigFile"        : "source/js/main.js",
-      "out"                   : "build/js/main-src.js",
-      "disabled/exclude"      : ["main.js"],
-      "disabled/insertRequire": ["./main"]
+      'baseUrl'             : 'source/js',
+      'name'                : 'main',
+      'optimize'            : 'none',
+      'out'                 : 'build/js/main-src.js',
+      'wrap'                : true
     };
 
     var configRequire = require('./source/js/config-require.js');
@@ -36,6 +33,24 @@ module.exports = function (grunt) {
         },
         src    : assetsDir + 'css/main.css',
         dest   : assetsDir + 'css/main.css'
+      }
+    },
+    html2js: {
+      options: {
+        fileHeaderString: "define(['angular'], function (angular) {\r\n",
+        fileFooterString: "\r\n});",
+        quoteChar: '\'',
+        useStrict: true,
+        rename: function (moduleName) {
+          return '/' + moduleName;
+        }
+      },
+      main: {
+        options: {
+          base: './source/'
+        },
+        src: [ 'source/js/modules/**/*.html' ],
+        dest: 'source/js/templates.js'
       }
     },
     sass: {
@@ -135,7 +150,7 @@ module.exports = function (grunt) {
       source: {},
       build: {
         args: {
-          baseUrl: 'http://apollo.dev/build'
+          baseUrl: 'http://build.apollo.dev'
         }
       }
     },
@@ -198,18 +213,6 @@ module.exports = function (grunt) {
       "require(['./js/main'], function () { require(['main']); })",
       'build/index.html'
     );
-    shell.sed(
-      '-i',
-      "config.baseUrl = '/'",
-      "config.baseUrl = '/build/'",
-      'build/index.html'
-    );
-    shell.sed(
-      '-i',
-      '<base href="/">',
-      '<base href="/build/">',
-      'build/index.html'
-    );
   });
 
   grunt.loadNpmTasks('grunt-autoprefixer');
@@ -219,6 +222,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-csso');
   grunt.loadNpmTasks('grunt-karma');
 
@@ -240,7 +244,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
   grunt.registerTask('build-css', ['css']);
-  grunt.registerTask('build', ['build-js', 'build-css', 'modifyBuildIndex']);
+  grunt.registerTask('build-html', ['html2js']);
+  grunt.registerTask('build', ['build-html', 'build-js', 'build-css', 'modifyBuildIndex']);
 
   grunt.registerTask('test', ['karma:unitSingleRun', 'protractor:source', 'karma:ci', 'protractor:build']);
 

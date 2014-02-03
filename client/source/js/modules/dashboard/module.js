@@ -5,10 +5,15 @@
  * below, you can see we bring in our services and constants modules
  * which avails each controller of, for example, the `config` constants object.
  **/
-define(['angular', 'angular-ui-router', '../../config', '../../services/index'], function (ng) {
+define(['angular', 'angular-ui-router', '../../config', '../../services/index', '../../templates'], function (ng) {
   'use strict';
 
-  return ng.module('app.dashboard', ['app.constants', 'app.services', 'ui.router'])
+  return ng.module('app.dashboard', [
+    'app.constants',
+    'app.services',
+    'ui.router',
+    'templates-main'
+  ])
 
     .config(['$stateProvider', function ($stateProvider) {
 
