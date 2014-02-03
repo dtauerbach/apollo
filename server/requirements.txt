@@ -9,7 +9,7 @@ Flask-Script==0.6.5
 Flask-Security==1.6.9
 Flask-Social==1.6.2
 Flask-SuperAdmin==1.7.1
-Flask-WTF==0.9.3
+Flask-WTF==0.9.4
 Jinja2==2.7.1
 MarkupSafe==0.18
 MySQL-python==1.2.5
