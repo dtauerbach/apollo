@@ -1,18 +1,16 @@
 module.exports = function (grunt) {
 
-  var assetsDir = 'source/assets/',
-    shell = require('shelljs');;
+  var assetsDir = 'source/assets/';
+  var shell = require('shelljs');
 
   function readBuildConfig () {
     var configBuild = {
-      "wrap"                  : true,
-      "name"                  : "main",
-      "optimize"              : "none",
-      "baseUrl"               : "source/js",
-      "mainConfigFile"        : "source/js/main.js",
-      "out"                   : "build/js/main-src.js",
-      "disabled/exclude"      : ["main.js"],
-      "disabled/insertRequire": ["./main"]
+      'baseUrl'             : 'source/js',
+      'name'                : 'main',
+      'optimize'            : 'none',
+      'out'                 : 'build/js/main-src.js',
+      'wrap'                : true,
+      'excludeShallow'      : ['templates']
     };
 
     var configRequire = require('./source/js/config-require.js');
@@ -38,10 +36,28 @@ module.exports = function (grunt) {
         dest   : assetsDir + 'css/main.css'
       }
     },
+    html2js: {
+      options: {
+        fileHeaderString: "define(['angular'], function (angular) {\r\n",
+        fileFooterString: "\r\n});",
+        quoteChar: '\'',
+        useStrict: true,
+        rename: function (moduleName) {
+          return '/' + moduleName;
+        }
+      },
+      main: {
+        options: {
+          base: './source/'
+        },
+        src: [ 'source/js/**/*.html' ],
+        dest: 'build/js/templates.js'
+      }
+    },
     sass: {
       main: {
         options: {
-          bundleExec: true,
+          //bundleExec: true,
           require: [
             './source/sass/sass_extensions.rb',
             'sass-globbing'
@@ -126,16 +142,16 @@ module.exports = function (grunt) {
     protractor: {
       options: {
         configFile: 'p.conf.js',
-        keepAlive: true, // If false, the grunt process stops when the test fails.
+        keepAlive: false, // If false, the grunt process stops when the test fails.
         args: {
-          baseUrl: 'http://local.apollo.com', // Arguments passed to the command
+          baseUrl: 'http://apollo.dev', // Arguments passed to the command
           specs: ['source/js/**/*.e2e.js']
         }
       },
       source: {},
       build: {
         args: {
-          baseUrl: 'http://local.apollo.com/build'
+          baseUrl: 'http://build.apollo.dev'
         }
       }
     },
@@ -194,20 +210,8 @@ module.exports = function (grunt) {
   grunt.registerTask('modifyBuildIndex', 'Adds js code required to start built app.', function () {
     shell.sed(
       '-i',
-      "require(['./js/main'])",
-      "require(['./js/main'], function () { require(['main']); })",
-      'build/index.html'
-    );
-    shell.sed(
-      '-i',
-      "config.baseUrl = '/'",
-      "config.baseUrl = '/build/'",
-      'build/index.html'
-    );
-    shell.sed(
-      '-i',
-      '<base href="/">',
-      '<base href="/build/">',
+      "require(['./main'])",
+      "require(['./main'], function () { require(['main']); })",
       'build/index.html'
     );
   });
@@ -219,6 +223,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-csso');
   grunt.loadNpmTasks('grunt-karma');
 
@@ -227,10 +232,26 @@ module.exports = function (grunt) {
     grunt.task.run(this.data);
   });
 
+  grunt.registerTask('create-artifact', 'Creates a tar gz of the build directory', function () {
+    var version = shell.grep(/.*var version.*(\d*\.\d*).*/, './source/index.html').match(/\d*\.\d*/);
+    var filename = 'republiq-client-' + version + '.tar.gz';
+    grunt.log.ok('Creating client artifact: ' + filename);
+    shell.exec('tar -zcf ' + filename + ' build');
+  });
+
+  grunt.registerTask('clean', 'Cleans the build folder', function(){
+    shell.exec('rm -r build');
+  });
+
   grunt.registerTask('build-js', ['copy', 'requirejs', 'uglify']);
   grunt.registerTask('build-css', ['css']);
-  grunt.registerTask('build', ['build-js', 'build-css', 'modifyBuildIndex']);
+  grunt.registerTask('build-html', ['html2js']);
+  grunt.registerTask('build', ['clean', 'build-html', 'build-js', 'build-css', 'modifyBuildIndex']);
+
   grunt.registerTask('test', ['karma:unitSingleRun', 'protractor:source', 'karma:ci', 'protractor:build']);
+
+  // Used by CD
+  grunt.registerTask('assembly', ['build', 'karma:unitSingleRun', 'karma:ci', 'create-artifact']);
 
   grunt.registerTask('default', ['build', 'test']);
 

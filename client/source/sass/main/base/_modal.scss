@@ -1,21 +1,17 @@
 .modal {
-
+  width: auto;
   $borderColor: #c8c8c8;
 
-  &.modal-register {
+  &.modal-register .modal-dialog {
     width: 420px !important;
   }
 
-  &.modal-login {
+  &.modal-login .modal-dialog {
     width: 420px !important;
   }
 
-  &.modal-service {
+  &.modal-service .modal-dialog {
     width: 420px !important;
-  }
-
-  .modal-dialog {
-    width: auto;
   }
 
   .modal-content {

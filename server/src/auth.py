@@ -1,5 +1,6 @@
-from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
+from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for, make_response
 from flask.ext.security import utils, current_user
+from flask_wtf.csrf import generate_csrf
 import repository
 import requests
 import json
@@ -11,28 +12,35 @@ user_repository = None
 
 social_login = Blueprint('social_login', __name__)
 
-
 @social_login.route('/api/auth/check_authentication')
 def check_authentication():
+    res = {}
     if current_user.is_authenticated():
-        return jsonify({
+        res.update({
             'email': current_user.email,
             'username': current_user.username,
             'privacy': repository.PRIVACY_CONST[current_user.global_privacy]
         })
-    return jsonify({})
+    res.update({
+        'csrf_token': generate_csrf()
+    })
+    return jsonify(res)
 
 
 @social_login.route('/api/auth/login', methods=['POST'])
 def login():
-    result = user_repository.login(request.form['email'], request.form['password'])
-    return jsonify({'success': result})
+    result = user_repository.login(request.json['email'], request.json['password'])
+    if result:
+        return check_authentication() 
+    return make_response('login failed', 403);
 
 
 @social_login.route('/api/auth/register', methods=['POST'])
 def register():
-    result = user_repository.register(request.form['username'], request.form['email'], request.form['password'])
-    return jsonify({'success': result})
+    result = user_repository.register(request.json['username'], request.json['email'], request.json['password'])
+    if result:
+        return check_authentication() 
+    return make_response('register failed', 400);
 
 
 @social_login.route('/api/auth/logout')
@@ -99,7 +107,7 @@ def facebook_login_callback():
     user_req_url = "https://graph.facebook.com/me?" + urlencode(dict(access_token=access_token))
     user_data = json.loads(requests.get(user_req_url).content)
     login_or_register_by_email(user_data['email'])
-    return redirect(url_for('dashboard'))
+    return redirect('/dashboard')
 
 # These URLparams are static between the first two oAuth requests to Google.
 def get_google_urlparams():
@@ -140,4 +148,4 @@ def google_login_callback():
     if 'email' not in profile_obj:
         return "Could not get user e-mail."
     login_or_register_by_email(profile_obj['email'])
-    return redirect(url_for('dashboard'))
+    return redirect('/dashboard')

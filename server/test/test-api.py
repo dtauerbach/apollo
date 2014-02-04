@@ -9,12 +9,14 @@ from repository import User, Stream, Project
 
 
 class TestApi(unittest.TestCase):
+    json_headers = {'Content-type': 'application/json'}
 
     def setUp(self):
-        api.db.drop_all()
-        api.db.create_all()
+        db = api.db
+        db.drop_all()
+        db.create_all()
+        self.session = db.session
         self.client = api.app.test_client()
-        self.session = api.db.session
 
     def test_index(self):
         res = self.client.get('/api')
@@ -22,17 +24,28 @@ class TestApi(unittest.TestCase):
         assert 'API: is running.' in res.data
 
     def test_registration(self):
-        res = self.client.post('/api/auth/register', data=dict(username='me', email='foo', password='bar'))
+        res = self.client.post(
+            '/api/auth/register',
+            data=json.dumps({'username': 'me', 'email': 'foo', 'password': 'bar'}),
+            headers=self.json_headers
+        )
         assert res.status_code == 200
-        assert json.loads(res.data)['success'] is True
+        assert json.loads(res.data)['privacy'] == 'private'
 
-        res = self.client.post('/api/auth/register', data=dict(username='one', email='foo', password='two'))
-        assert res.status_code == 200
-        assert json.loads(res.data)['success'] is False
+        res = self.client.post(
+            '/api/auth/register',
+            data=json.dumps({'username': 'one', 'email': 'foo', 'password': 'two'}),
+            headers=self.json_headers
+        )
+        assert res.status_code == 400
 
-        res = self.client.post('/api/auth/login', data=dict(email='foo', password='bar'))
+        res = self.client.post(
+            '/api/auth/login',
+            data=json.dumps({'email': 'foo', 'password': 'bar'}),
+            headers=self.json_headers
+        )
         assert res.status_code == 200
-        assert json.loads(res.data)['success'] is True
+        assert json.loads(res.data)['privacy'] == 'private'
 
     def test_streams(self):
         self.session.add(Stream('sse', 'url1', 'i', 'none', repository.CONNECTION_TYPE_OAUTH))
@@ -76,7 +89,7 @@ class TestApi(unittest.TestCase):
             sess['user_id'] = user.id
             sess['_fresh'] = True  # http://pythonhosted.org/Flask-Login/#fresh-logins
 
-        res = self.client.post('/api/privacy', data=data, content_type='application/json')
+        res = self.client.post('/api/privacy', data=data, headers=self.json_headers)
         assert res.status_code == 200
 
 

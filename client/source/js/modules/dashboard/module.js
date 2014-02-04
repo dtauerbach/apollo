@@ -8,7 +8,11 @@
 define(['angular', 'angular-ui-router', '../../config', '../../services/index'], function (ng) {
   'use strict';
 
-  return ng.module('app.dashboard', ['app.constants', 'app.services', 'ui.router'])
+  return ng.module('app.dashboard', [
+    'app.constants',
+    'app.services',
+    'ui.router'
+  ])
 
     .config(['$stateProvider', function ($stateProvider) {
 

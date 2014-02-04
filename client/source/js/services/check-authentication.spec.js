@@ -6,18 +6,20 @@ define([
 
   describe('CheckAuthentication Service', function () {
 
-    var prevRoute, rootScope, location, checkAuthentication, User = {};
+    var rootScope, location, checkAuthentication,
+      User = {},
+      $state = { go: function () {} };
 
     beforeEach(module('app.services'));
 
     beforeEach(module(function ($provide) {
       $provide.value('User', User);
+      $provide.value('$state', $state);
     }));
 
-    function goToRoute(prevRoute, currentRoute) {
-      rootScope.$broadcast('$stateChangeStart', prevRoute);
+    function goToRoute(currentRoute) {
       if (currentRoute) {
-        rootScope.$broadcast('$stateChangeStart', currentRoute, prevRoute);
+        rootScope.$broadcast('$stateChangeStart', currentRoute);
       }
     }
 
@@ -31,33 +33,38 @@ define([
       checkAuthentication.initAuth();
 
       User.authenticated = false;
+
+      spyOn($state, 'go');
     }));
 
-    it('should not show warning for /', function() {
+    it('should not show warning for public page', function() {
+      goToRoute({ requireLogin: false, path: '/' });
+
+      expect(rootScope.notification).toBeUndefined();
+      expect($state.go).not.toHaveBeenCalled();
+    });
+
+    it('should show warning when accessing dashboard with non authenticated user', function() {
+      goToRoute({ requireLogin: true, path: '/account/dashboard' });
+
+      expect(rootScope.notification).toBeObject();
+      expect($state.go).toHaveBeenCalled();
+    });
+
+    it('should not show warning when accessing dashboard with authenticated user', function() {
+      User.authenticated = true;
+      goToRoute({ requireLogin: true, path: '/account/dashboard' });
+
+      expect(rootScope.notification).toBeUndefined();
+      expect($state.go).not.toHaveBeenCalled();
+    });
+
+    it('should remove warning next page', function() {
+      goToRoute({ requireLogin: true, path: '/account/dashboard' });
+      expect(rootScope.notification).toBeObject();
+
       goToRoute({ requireLogin: false, path: '/' });
       expect(rootScope.notification).toBeUndefined();
     });
-
-    it('should show warning when accessing dashboard', function() {
-      // when accessing the dashboard (i'm not logged in) then I get redirected to /
-      // so we are actually testing the end result of our navigation
-      goToRoute({ requireLogin: true, path: '/account/dashboard' }, { requireLogin: false, path: '/' });
-      expect(rootScope.notification).toBeObject();
-    });
-
-    it('after login should hide the warning', function() {
-      User.authenticated = true;
-      goToRoute({ requireLogin: true, path: '/account/dashboard' }, { requireLogin: false, path: '/' });
-      expect(rootScope.notification).toBeUndefined();
-    });
-
-//    it('while on private page, I logout and I get redirected to / without seeing the warning', function() {
-//      User.authenticated = true;
-//      goToRoute({ requireLogin: false, path: '/' }, { requireLogin: true, path: '/account/settings' });
-//      User.authenticated = false;
-//      goToRoute({ requireLogin: true, path: '/account/settings' }, { requireLogin: false, path: '/' });
-//      expect(rootScope.notification).toBeUndefined();
-//    });
-
   });
 });

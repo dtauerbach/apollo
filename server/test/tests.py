@@ -17,4 +17,5 @@ for t in modules:
         # else, just load all the test cases from the module.
         suite.addTest(unittest.defaultTestLoader.loadTestsFromName(t))
 
-unittest.TextTestRunner().run(suite)
+result = unittest.TextTestRunner().run(suite)
+exit(0 if result.wasSuccessful() else 1)

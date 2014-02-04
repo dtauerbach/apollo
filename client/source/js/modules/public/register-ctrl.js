@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('RegisterController', function ($scope, $modalInstance, User) {
+  controllers.controller('RegisterController', function ($scope, $modalInstance, $http, User) {
 
     $scope.user = {
       /*
@@ -32,18 +32,16 @@ define(['./module'], function (controllers) {
 
       $scope.errors.terms = false;
 
-      $.post('/api/auth/register', $scope.user, function(resp) {
-        if (resp.success) {
+      $http.post('/api/auth/register', $scope.user)
+        .success(function(resp) {
           $scope.errors = {};
           $modalInstance.close(true);
-          angular.extend(User, $scope.user, { authenticated: true });
-        } else {
+          angular.extend(User, resp, { authenticated: true });
+        })
+        .error(function (resp) {
           $scope.errors.registration = true;
           console.error(resp);
-        }
-
-        $scope.$apply();
-      });
+        });
     };
 
   });

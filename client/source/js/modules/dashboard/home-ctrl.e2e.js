@@ -1,20 +1,31 @@
 describe('E2E: Testing App', function () {
   "use strict";
 
-  var mockUser = function() {
-    var module = angular.module('app.services', []);
-    module.value('User', { authenticated: true });
-  };
-
   beforeEach(function () {
-    browser.addMockModule('app.services', mockUser);
-    browser.get('/dashboard');
-    browser.debugger();
+    runs(function () {
+      browser.get('/');
+      browser.debugger();
+      element(by.css('.button-login')).click();
+    });
 
-    browser.executeScript('$(function() { $.post("/api/auth/login", { email: "dan@example.com", password: "pass" }); })');
-    //console.log(browser);
+    waits(1000);
 
-    //browser.post('/api/auth/login', { email: 'dan@example.com', password: 'pass' });
+    runs(function () {
+      var loginModal = element(by.css('.modal-login'));
+      loginModal.findElement(by.id('inputEmail')).sendKeys('dan@example.com');
+      loginModal.findElement(by.id('inputPassword')).sendKeys('pass');
+      loginModal.findElement(by.css('[type=submit]')).click();
+    });
+
+    waits(2000);
+
+    runs(function () {
+      browser.get('/dashboard');
+    });
+  });
+
+  afterEach(function () {
+    element(by.css('.button-logout')).click();
   });
 
   describe('Dashboard Home page', function () {

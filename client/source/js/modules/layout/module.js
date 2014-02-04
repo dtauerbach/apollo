@@ -8,6 +8,9 @@
 define(['angular', '../../config', '../../services/module'], function (ng) {
   'use strict';
 
-  return ng.module('app.layout', ['app.constants', 'app.services']);
+  return ng.module('app.layout', [
+    'app.constants',
+    'app.services'
+  ]);
 
 });

@@ -7,11 +7,13 @@ define([
   'jquery',
   'underscore',
   'angular-ui-router',
+  'angular-bootstrap',
   './config',
   './services/index',
   './modules/public/index',
   './modules/layout/index',
-  './modules/dashboard/index'
+  './modules/dashboard/index',
+  './templates'
 ], function (ng) {
   'use strict';
 
@@ -23,7 +25,8 @@ define([
       'app.layout',
       'app.services',
       'ui.bootstrap',
-      'ui.router'
+      'ui.router',
+      'templates-main'
     ])
 
     .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
@@ -39,24 +42,10 @@ define([
       $locationProvider.html5Mode(true);
     }])
 
-    // Intercept POST requests, convert to standard form encoding
-//    .config(['$httpProvider', function ($httpProvider) {
-//      $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-//      $httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
-//        var key, result = [];
-//        for (key in data) {
-//          if (data.hasOwnProperty(key)) {
-//            result.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
-//          }
-//        }
-//        return result.join("&");
-//      });
-//    }])
-
-    .run(function($rootScope) {
+    .run(['$rootScope', function($rootScope) {
       $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.title;
         $rootScope.crumb = current.crumb;
       });
-    });
+    }]);
 });

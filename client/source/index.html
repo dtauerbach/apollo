@@ -28,17 +28,17 @@
   <script src="/vendor/requirejs/require.js"></script>
   <script>
     // obtain requirejs config
-    require(['require', '/js/config-require.js'], function (require, config) {
+    require(['/js/config-require.js'], function (config) {
 
       // set cache beater
-      config.urlArgs = 'bust=v0.5.0';
-      config.baseUrl = '/';
+      var version = '0.6';
+      config.urlArgs = 'bust=v' + version;
 
       // update global require config
       window.require.config(config);
 
       // load app
-      require(['./js/main']);
+      require(['./main']);
     });
   </script>
 

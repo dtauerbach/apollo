@@ -31,5 +31,6 @@ define({
     "angular-resource" : {
       "deps": ["angular"]
     }
-  }
+  },
+  "baseUrl": "/js"
 });

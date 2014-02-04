@@ -5,7 +5,7 @@
 define(['./module'], function (controllers) {
   'use strict';
 
-  controllers.controller('LoginController', function ($scope, $modalInstance, User) {
+  controllers.controller('LoginController', function ($scope, $modalInstance, $http, User) {
 
     $scope.user = {
       email: '',
@@ -21,17 +21,15 @@ define(['./module'], function (controllers) {
     };
 
     $scope.submit = function () {
-      $.post('/api/auth/login', $scope.user, function(resp) {
-        if (resp.success) {
+      $http.post('/api/auth/login', $scope.user)
+        .success(function (resp) {
           $scope.error = false;
           $modalInstance.close(true);
-          angular.extend(User, $scope.user, { authenticated: true });
-        } else {
+          angular.extend(User, resp, { authenticated: true });
+        })
+        .error(function () {
           $scope.error = true;
-        }
-
-        $scope.$apply();
-      });
+        });
     };
 
   });

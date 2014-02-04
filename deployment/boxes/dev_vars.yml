@@ -1,5 +1,5 @@
 ---
-  version: release/0.5
+  version: release/0.6
   source_dir_shared: false
   host_name: apollo.startersquad.com
   git_repository: git@github.com:dtauerbach/apollo.git

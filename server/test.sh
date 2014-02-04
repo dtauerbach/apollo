@@ -17,5 +17,9 @@ fi
 cd ./test
 
 ../env/bin/python tests.py
+EC=$?
 
 deactivate
+
+echo "Exit code:" ${EC}
+exit ${EC}
